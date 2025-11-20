@@ -1,5 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
+import { Amplify } from 'aws-amplify';
 import Dashboard from './components/Dashboard';
 import LandingPage from './components/LandingPage';
 import FeaturesPage from './components/FeaturesPage';
@@ -7,19 +8,27 @@ import { TaxProfile, PersonaType, EntityType, UserTier } from './types';
 import { PERSONA_DESCRIPTIONS, NIGERIAN_STATES, PRICING_PLANS } from './constants';
 import { 
   CheckCircle, ArrowRight, Building, User, 
-  Shield, Lock, Mail, Calculator, Wallet, PieChart, ChevronRight, Briefcase, FileText, MapPin, Phone, Check, ArrowLeft
+  Shield, Lock, Mail, Calculator, Wallet, PieChart, ChevronRight, Briefcase, FileText, MapPin, Phone, Check, ArrowLeft, Loader
 } from 'lucide-react';
 import Logo from './components/Logo';
 import PolicyModal from './components/PolicyModal';
+import { authSignUp, authSignIn, authSignOut, authGetCurrentUser, authIsAuthenticated } from './services/authService';
+import { createProfile, getProfile, updateProfile } from './services/amplifyService';
+import outputs from '../amplify_outputs.json';
 
-type AuthView = 'login' | 'register' | 'onboarding';
+// Configure Amplify
+Amplify.configure(outputs);
+
+type AuthView = 'login' | 'register' | 'onboarding' | 'confirm-email';
 
 // --- Main App Component ---
 
 const App: React.FC = () => {
   const [profile, setProfile] = useState<TaxProfile | null>(null);
   const [authView, setAuthView] = useState<AuthView>('login');
-  const [viewState, setViewState] = useState<'landing' | 'features' | 'auth'>('landing');
+  const [viewState, setViewState] = useState<'landing' | 'features' | 'auth' | 'loading'>('loading');
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   
   // Onboarding State
   const [step, setStep] = useState(1);
@@ -36,6 +45,7 @@ const App: React.FC = () => {
       tier: 'Free' as UserTier
   });
   const [disclaimerAgreed, setDisclaimerAgreed] = useState(false);
+  const [confirmationCode, setConfirmationCode] = useState('');
 
   // Policy Modal State
   const [policyModalOpen, setPolicyModalOpen] = useState(false);
@@ -46,38 +56,140 @@ const App: React.FC = () => {
       setPolicyModalOpen(true);
   };
 
-  // Persistence
+  // Initialize: Check if user is authenticated on app load
   useEffect(() => {
-      const savedProfile = localStorage.getItem('levymate_profile');
-      if (savedProfile) {
-          try {
-              const parsed = JSON.parse(savedProfile);
-              setProfile(parsed);
-              setViewState('auth'); // Effectively skips landing
-          } catch (e) {
-              console.error("Failed to load profile", e);
+    const initializeAuth = async () => {
+      try {
+        setIsLoading(true);
+        const isAuth = await authIsAuthenticated();
+        
+        if (isAuth) {
+          // User is signed in, load their profile from database
+          const userProfile = await getProfile();
+          if (userProfile) {
+            setProfile(userProfile as TaxProfile);
+            setViewState('auth');
+          } else {
+            // User authenticated but no profile yet - show onboarding
+            setViewState('auth');
+            setAuthView('onboarding');
+            setStep(1);
           }
+        } else {
+          // No authenticated user - show landing
+          setViewState('landing');
+        }
+      } catch (err) {
+        console.error('Auth initialization error:', err);
+        setViewState('landing');
+      } finally {
+        setIsLoading(false);
       }
+    };
+    
+    initializeAuth();
   }, []);
-
-  useEffect(() => {
-      if (profile) {
-          localStorage.setItem('levymate_profile', JSON.stringify(profile));
-      }
-  }, [profile]);
 
   const handleEnterApp = () => {
       setViewState('auth');
       setAuthView('register');
       setStep(1);
+      setError(null);
   };
 
   const handleLogin = () => {
       setViewState('auth');
       setAuthView('login');
+      setError(null);
   };
 
-  const handleStart = () => {
+  const handleSignUp = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError(null);
+    
+    if (!formData.email || !formData.password) {
+      setError('Email and password are required');
+      return;
+    }
+
+    try {
+      setIsLoading(true);
+      await authSignUp({
+        email: formData.email,
+        password: formData.password,
+        name: formData.name || formData.email,
+      });
+      
+      setAuthView('confirm-email');
+      setIsLoading(false);
+    } catch (err: any) {
+      setError(err.message || 'Sign up failed');
+      setIsLoading(false);
+    }
+  };
+
+  const handleConfirmEmail = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError(null);
+
+    if (!confirmationCode) {
+      setError('Confirmation code is required');
+      return;
+    }
+
+    try {
+      setIsLoading(true);
+      // Import confirmSignUp if available
+      const { confirmSignUp } = await import('./services/authService');
+      await confirmSignUp(formData.email, confirmationCode);
+      
+      // Auto sign in after confirming email
+      await authSignIn({
+        email: formData.email,
+        password: formData.password,
+      });
+      
+      setAuthView('onboarding');
+      setConfirmationCode('');
+      setIsLoading(false);
+    } catch (err: any) {
+      setError(err.message || 'Email confirmation failed');
+      setIsLoading(false);
+    }
+  };
+
+  const handleSignIn = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError(null);
+    
+    if (!formData.email || !formData.password) {
+      setError('Email and password are required');
+      return;
+    }
+
+    try {
+      setIsLoading(true);
+      await authSignIn({
+        email: formData.email,
+        password: formData.password,
+      });
+
+      // Load user's profile or show onboarding
+      const userProfile = await getProfile();
+      if (userProfile) {
+        setProfile(userProfile as TaxProfile);
+      } else {
+        setAuthView('onboarding');
+        setStep(1);
+      }
+      setIsLoading(false);
+    } catch (err: any) {
+      setError(err.message || 'Sign in failed');
+      setIsLoading(false);
+    }
+  };
+
+  const handleStart = async () => {
     if (!disclaimerAgreed) return;
 
     const today = new Date().toISOString().split('T')[0];
@@ -102,11 +214,50 @@ const App: React.FC = () => {
       preferredPolicy: '2026_PROPOSED'
     };
 
-    setProfile(newProfile);
+    try {
+      setIsLoading(true);
+      // Create profile in database
+      const createdProfile = await createProfile(newProfile);
+      setProfile(createdProfile as TaxProfile);
+      setIsLoading(false);
+    } catch (err) {
+      setError('Failed to create profile');
+      setIsLoading(false);
+    }
   };
 
+  const handleLogout = async () => {
+    try {
+      await authSignOut();
+      setProfile(null);
+      setFormData({
+        name: '',
+        email: '',
+        password: '',
+        entityType: EntityType.INDIVIDUAL,
+        persona: PersonaType.SALARY,
+        turnover: 0,
+        rentPaid: 0,
+        state: 'Lagos',
+        phone: '+234',
+        tier: 'Free'
+      });
+      setViewState('landing');
+    } catch (err) {
+      console.error('Logout error:', err);
+    }
+  };
+
+  if (isLoading && viewState === 'loading') {
+    return (
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <Loader className="animate-spin text-levy-blue" size={48} />
+      </div>
+    );
+  }
+
   if (profile) {
-    return <Dashboard profile={profile} onLogout={() => { setProfile(null); setViewState('landing'); }} />;
+    return <Dashboard profile={profile} onLogout={handleLogout} onProfileUpdate={setProfile} />;
   }
 
   if (viewState === 'features') {
@@ -178,34 +329,85 @@ const App: React.FC = () => {
                         <div className="space-y-6 animate-in fade-in duration-300 mt-6 lg:mt-0">
                              <div className="lg:hidden flex justify-center mb-6"><Logo variant="full" /></div>
                             <h2 className="text-2xl font-display font-bold text-gray-900 text-center lg:text-left">
-                                {authView === 'login' ? 'Welcome Back' : 'Create Account'}
+                                {authView === 'login' ? 'Welcome Back' : authView === 'register' ? 'Create Account' : 'Verify Email'}
                             </h2>
+
+                            {error && (
+                              <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl text-sm">
+                                {error}
+                              </div>
+                            )}
                             
-                            <div className="space-y-4">
+                            {authView === 'confirm-email' ? (
+                              <form onSubmit={handleConfirmEmail} className="space-y-4">
+                                <div>
+                                  <label className="text-xs font-bold text-gray-500 uppercase block mb-1">Confirmation Code</label>
+                                  <input 
+                                    type="text" 
+                                    value={confirmationCode}
+                                    onChange={(e) => setConfirmationCode(e.target.value)}
+                                    placeholder="Enter code from email"
+                                    className="w-full pl-4 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl outline-none focus:ring-2 focus:ring-levy-blue/20 transition-all text-gray-900 placeholder:text-gray-400"
+                                  />
+                                </div>
+                                <button 
+                                    type="submit"
+                                    disabled={isLoading}
+                                    className="w-full bg-levy-blue text-white py-3.5 rounded-xl font-bold hover:bg-blue-800 transition-all disabled:opacity-50"
+                                >
+                                    {isLoading ? 'Verifying...' : 'Confirm Email'}
+                                </button>
+                              </form>
+                            ) : (
+                              <form onSubmit={authView === 'login' ? handleSignIn : handleSignUp} className="space-y-4">
+                                {authView === 'register' && (
+                                  <input 
+                                    type="text" 
+                                    value={formData.name}
+                                    onChange={(e) => setFormData({...formData, name: e.target.value})}
+                                    className="w-full pl-4 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl outline-none focus:ring-2 focus:ring-levy-blue/20 transition-all text-gray-900 placeholder:text-gray-400"
+                                    placeholder="Full Name"
+                                  />
+                                )}
                                 <input 
                                     type="email" 
+                                    value={formData.email}
+                                    onChange={(e) => setFormData({...formData, email: e.target.value})}
                                     className="w-full pl-4 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl outline-none focus:ring-2 focus:ring-levy-blue/20 transition-all text-gray-900 placeholder:text-gray-400"
                                     placeholder="Email Address"
                                 />
                                 <input 
                                     type="password" 
+                                    value={formData.password}
+                                    onChange={(e) => setFormData({...formData, password: e.target.value})}
                                     className="w-full pl-4 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl outline-none focus:ring-2 focus:ring-levy-blue/20 transition-all text-gray-900 placeholder:text-gray-400"
                                     placeholder="Password"
                                 />
-                            </div>
 
-                            <button 
-                                onClick={() => authView === 'register' ? setAuthView('onboarding') : handleStart()} // Mock login bypass for demo
-                                className="w-full bg-levy-blue text-white py-3.5 rounded-xl font-bold hover:bg-blue-800 transition-all"
-                            >
-                                {authView === 'login' ? 'Sign In' : 'Start Onboarding'}
-                            </button>
+                                <button 
+                                    type="submit"
+                                    disabled={isLoading}
+                                    className="w-full bg-levy-blue text-white py-3.5 rounded-xl font-bold hover:bg-blue-800 transition-all disabled:opacity-50"
+                                >
+                                    {isLoading ? (authView === 'login' ? 'Signing In...' : 'Creating Account...') : (authView === 'login' ? 'Sign In' : 'Create Account')}
+                                </button>
+                              </form>
+                            )}
                             
-                            <div className="text-center text-sm">
-                                <button onClick={() => setAuthView(authView === 'login' ? 'register' : 'login')} className="text-levy-blue font-bold hover:underline">
+                            {authView !== 'confirm-email' && (
+                              <div className="text-center text-sm">
+                                <button 
+                                  type="button"
+                                  onClick={() => {
+                                    setAuthView(authView === 'login' ? 'register' : 'login');
+                                    setError(null);
+                                  }} 
+                                  className="text-levy-blue font-bold hover:underline"
+                                >
                                     {authView === 'login' ? 'Create Account' : 'Log In'}
                                 </button>
-                            </div>
+                              </div>
+                            )}
                         </div>
                     )}
 

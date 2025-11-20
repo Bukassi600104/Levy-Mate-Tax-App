@@ -16,11 +16,12 @@ import UpgradeModal from './UpgradeModal';
 interface DashboardProps {
   profile: TaxProfile;
   onLogout: () => void;
+  onProfileUpdate?: (profile: TaxProfile) => void;
 }
 
 type TabType = 'home' | 'transactions' | 'reports' | 'tax' | 'learn' | 'settings';
 
-const Dashboard: React.FC<DashboardProps> = ({ profile, onLogout }) => {
+const Dashboard: React.FC<DashboardProps> = ({ profile, onLogout, onProfileUpdate }) => {
   const [activeTab, setActiveTab] = useState<TabType>('home');
   const [currentProfile, setCurrentProfile] = useState<TaxProfile>(profile);
   const [taxResult, setTaxResult] = useState<TaxResult | null>(null);
