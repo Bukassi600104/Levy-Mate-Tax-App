@@ -3,11 +3,15 @@ import { GoogleGenAI, Type } from "@google/genai";
 import { TaxProfile, Transaction } from '../types';
 
 // Initialize Gemini AI
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+// Safely handle missing API key to prevent crash on load
+const apiKey = process.env.API_KEY || '';
+const ai = apiKey ? new GoogleGenAI({ apiKey }) : null;
 
 const MODEL_NAME = "gemini-2.5-flash";
 
 export const getTaxAdvice = async (profile: TaxProfile, question: string): Promise<string> => {
+  if (!ai) return "AI Service Unavailable: API Key not configured.";
+  
   try {
     const totalIncome = profile.transactions
       .filter(t => t.type === 'income')
