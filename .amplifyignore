@@ -1,0 +1,4 @@
+# Ignore Amplify backend to avoid credential requirements
+amplify/backend/
+amplify/auth/
+amplify/data/
