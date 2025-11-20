@@ -4,6 +4,7 @@ import { TaxProfile, Transaction, TransactionType, EntityType } from '../types';
 import { INCOME_CATEGORIES, EXPENSE_CATEGORIES } from '../constants';
 import { Plus, Trash2, Camera, Filter, Search, X, Calendar, ArrowUpCircle, ArrowDownCircle, Zap, MoreHorizontal, Lock, Smartphone } from 'lucide-react';
 import { parseReceiptImage } from '../services/geminiService';
+import { createTransaction, deleteTransaction as deleteTransactionDB, updateTransaction } from '../services/amplifyService';
 
 interface TransactionManagerProps {
   profile: TaxProfile;
@@ -27,11 +28,14 @@ const TransactionManager: React.FC<TransactionManagerProps> = ({ profile, setPro
     hasInputVat: false
   });
 
-  const addTransaction = () => {
+  const addTransaction = async () => {
     if (!form.amount || !form.description) return;
+    if (!profile.id) {
+      console.error('Profile ID required to add transaction');
+      return;
+    }
     
-    const newTx: Transaction = {
-      id: Math.random().toString(36).substr(2, 9),
+    const newTx: Omit<Transaction, 'id'> = {
       type: form.type as TransactionType,
       amount: Number(form.amount),
       category: form.category || 'Other',
@@ -43,12 +47,18 @@ const TransactionManager: React.FC<TransactionManagerProps> = ({ profile, setPro
       hasInputVat: form.hasInputVat
     };
     
-    setProfile({
-      ...profile,
-      transactions: [newTx, ...profile.transactions]
-    });
-    setIsAddModalOpen(false);
-    setForm({
+    try {
+      // Save to database
+      const createdTx = await createTransaction(profile.id, newTx);
+      
+      // Update local state
+      setProfile({
+        ...profile,
+        transactions: [...profile.transactions, { id: createdTx.id, ...newTx }]
+      });
+      
+      setIsAddModalOpen(false);
+      setForm({
         type: 'income',
         amount: 0,
         category: INCOME_CATEGORIES[0],
@@ -56,14 +66,27 @@ const TransactionManager: React.FC<TransactionManagerProps> = ({ profile, setPro
         description: '',
         isTaxDeductible: true,
         hasInputVat: false
-    });
+      });
+    } catch (err) {
+      console.error('Error creating transaction:', err);
+      alert('Failed to save transaction. Please try again.');
+    }
   };
 
-  const deleteTransaction = (id: string) => {
-    setProfile({
+  const deleteTransaction = async (id: string) => {
+    try {
+      // Delete from database
+      await deleteTransactionDB(id);
+      
+      // Update local state
+      setProfile({
         ...profile,
         transactions: profile.transactions.filter(t => t.id !== id)
-    });
+      });
+    } catch (err) {
+      console.error('Error deleting transaction:', err);
+      alert('Failed to delete transaction. Please try again.');
+    }
   };
 
   const isCompany = profile.entityType === EntityType.COMPANY;

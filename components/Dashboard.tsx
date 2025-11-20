@@ -7,6 +7,7 @@ import EducationHub from './EducationHub';
 import TransactionManager from './TransactionManager';
 import Analytics from './Analytics';
 import { TaxEngine } from '../services/taxEngine';
+import { updateProfile } from '../services/amplifyService';
 import { COMPLIANCE_DATES } from '../constants';
 import Logo from './Logo';
 import CreditCard from './CreditCard';
@@ -27,11 +28,37 @@ const Dashboard: React.FC<DashboardProps> = ({ profile, onLogout, onProfileUpdat
   const [taxResult, setTaxResult] = useState<TaxResult | null>(null);
   const [policyModalOpen, setPolicyModalOpen] = useState(false);
   const [upgradeModalOpen, setUpgradeModalOpen] = useState(false);
+  const [syncTimeout, setSyncTimeout] = useState<NodeJS.Timeout | null>(null);
   
   // Auto-calculate latest tax result for dashboard stats
   useEffect(() => {
     const result = TaxEngine.calculate(currentProfile, currentProfile.preferredPolicy);
     setTaxResult(result);
+  }, [currentProfile]);
+
+  // Sync profile changes to database (debounced)
+  useEffect(() => {
+    // Clear previous timeout
+    if (syncTimeout) clearTimeout(syncTimeout);
+
+    // Only sync if profile has an ID (meaning it's already in database)
+    if (!profile.id) return;
+
+    // Debounce database update by 2 seconds to avoid too many writes
+    const timeoutId = setTimeout(async () => {
+      try {
+        await updateProfile(profile.id!, currentProfile);
+        onProfileUpdate?.(currentProfile); // Notify parent of update
+      } catch (err) {
+        console.error('Error syncing profile to database:', err);
+      }
+    }, 2000);
+
+    setSyncTimeout(timeoutId);
+
+    return () => {
+      if (timeoutId) clearTimeout(timeoutId);
+    };
   }, [currentProfile]);
 
   const handleUpgrade = () => {
