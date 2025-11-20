@@ -1,4 +1,2 @@
-# Ignore Amplify backend to avoid credential requirements
-amplify/backend/
-amplify/auth/
-amplify/data/
+# Amplify backend is now included in deployment
+# No files to ignore

@@ -4,7 +4,7 @@ import { data } from './data/resource';
 
 /**
  * Backend Entry Point
- * Combines Auth and Data resources.
+ * Combines Auth and Data resources into unified backend
  */
 defineBackend({
   auth,

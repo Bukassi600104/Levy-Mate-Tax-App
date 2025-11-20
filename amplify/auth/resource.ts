@@ -2,7 +2,7 @@ import { defineAuth } from '@aws-amplify/backend';
 
 /**
  * Authentication Configuration
- * Uses Email/Password for sign-up.
+ * Uses AWS Cognito User Pool with Email/Password authentication
  */
 export const auth = defineAuth({
   loginWith: {
