@@ -14,7 +14,7 @@ import Logo from './components/Logo';
 import PolicyModal from './components/PolicyModal';
 import { authSignUp, authSignIn, authSignOut, authGetCurrentUser, authIsAuthenticated } from './services/authService';
 import { createProfile, getProfile, updateProfile } from './services/amplifyService';
-import outputs from '../amplify_outputs.json';
+import outputs from './amplify_outputs.json';
 
 // Configure Amplify
 Amplify.configure(outputs);
