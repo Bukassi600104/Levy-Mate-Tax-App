@@ -1051,7 +1051,7 @@ const App: React.FC = () => {
                                     <div className="flex gap-3 pt-2">
                                         <button onClick={() => setStep(4)} className="px-6 py-3 text-gray-500 font-bold hover:bg-gray-100 rounded-xl transition-colors">Back</button>
                                         <button 
-                                            onClick={handleStart} 
+                                            onClick={() => handleStart()} 
                                             disabled={!disclaimerAgreed}
                                             className="flex-1 bg-levy-blue text-white py-3.5 rounded-xl font-bold disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-blue-900/10 hover:shadow-blue-900/20 transition-all"
                                         >
