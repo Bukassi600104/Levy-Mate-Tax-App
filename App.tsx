@@ -8,6 +8,7 @@ import {
 import Logo from './components/Logo';
 import PolicyModal from './components/PolicyModal';
 import CreditCard from './components/CreditCard';
+import CheckoutModal from './components/CheckoutModal';
 import { authSignUp, authSignIn, authSignOut, authGetCurrentUser, authIsAuthenticated, authResendSignUpCode, authForgotPassword, authConfirmResetPassword } from './services/authService';
 import { createProfile, getProfile, updateProfile } from './services/amplifyService';
 
@@ -68,6 +69,7 @@ const App: React.FC = () => {
   // Policy Modal State
   const [policyModalOpen, setPolicyModalOpen] = useState(false);
   const [policyType, setPolicyType] = useState<'privacy' | 'usage'>('usage');
+  const [checkoutModalOpen, setCheckoutModalOpen] = useState(false);
 
   const openPolicy = (type: 'privacy' | 'usage') => {
       setPolicyType(type);
@@ -226,6 +228,12 @@ const App: React.FC = () => {
   const handleStart = async () => {
     if (!disclaimerAgreed) return;
 
+    // If Pro is selected, require checkout first
+    if (formData.tier === 'Pro' && !checkoutModalOpen) {
+        setCheckoutModalOpen(true);
+        return;
+    }
+
     const today = new Date().toISOString().split('T')[0];
     
     const newProfile: TaxProfile = {
@@ -383,6 +391,16 @@ const App: React.FC = () => {
   return (
     <div className="min-h-screen bg-white flex flex-col font-sans">
         <PolicyModal isOpen={policyModalOpen} onClose={() => setPolicyModalOpen(false)} type={policyType} />
+        <CheckoutModal 
+            isOpen={checkoutModalOpen} 
+            onClose={() => setCheckoutModalOpen(false)} 
+            onSuccess={() => {
+                setCheckoutModalOpen(false);
+                handleStart(); // Proceed with profile creation
+            }}
+            planPrice={PRICING_PLANS.find(p => p.id === 'Pro')?.price || 2999}
+            planName="Business Pro"
+        />
         
         <div className="flex-1 flex flex-col lg:flex-row">
             {/* Left Panel - Dynamic 3D Cards */}

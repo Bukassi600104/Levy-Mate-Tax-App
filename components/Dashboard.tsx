@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { TaxProfile, TaxResult, TaxPolicyYear, EntityType } from '../types';
 import { Wallet, BookOpen, Home, Settings, Plus, Crown, BarChart, List, PieChart, TrendingUp, Calendar, AlertTriangle, FileText } from 'lucide-react';
@@ -8,11 +7,12 @@ import TransactionManager from './TransactionManager';
 import Analytics from './Analytics';
 import { TaxEngine } from '../services/taxEngine';
 import { updateProfile } from '../services/amplifyService';
-import { COMPLIANCE_DATES } from '../constants';
+import { COMPLIANCE_DATES, PRICING_PLANS } from '../constants';
 import Logo from './Logo';
 import CreditCard from './CreditCard';
 import PolicyModal from './PolicyModal';
 import UpgradeModal from './UpgradeModal';
+import CheckoutModal from './CheckoutModal';
 
 interface DashboardProps {
   profile: TaxProfile;
@@ -28,6 +28,7 @@ const Dashboard: React.FC<DashboardProps> = ({ profile, onLogout, onProfileUpdat
   const [taxResult, setTaxResult] = useState<TaxResult | null>(null);
   const [policyModalOpen, setPolicyModalOpen] = useState(false);
   const [upgradeModalOpen, setUpgradeModalOpen] = useState(false);
+  const [checkoutModalOpen, setCheckoutModalOpen] = useState(false);
   const [syncTimeout, setSyncTimeout] = useState<NodeJS.Timeout | null>(null);
   
   // Auto-calculate latest tax result for dashboard stats
@@ -62,8 +63,13 @@ const Dashboard: React.FC<DashboardProps> = ({ profile, onLogout, onProfileUpdat
   }, [currentProfile]);
 
   const handleUpgrade = () => {
-    setCurrentProfile(prev => ({ ...prev, tier: 'Pro' }));
     setUpgradeModalOpen(false);
+    setCheckoutModalOpen(true);
+  };
+
+  const handleCheckoutSuccess = () => {
+    setCurrentProfile(prev => ({ ...prev, tier: 'Pro' }));
+    setCheckoutModalOpen(false);
   };
 
   const formatNaira = (num: number) => {
@@ -178,6 +184,13 @@ const Dashboard: React.FC<DashboardProps> = ({ profile, onLogout, onProfileUpdat
     <div className="min-h-screen flex bg-levy-offWhite">
       <PolicyModal isOpen={policyModalOpen} onClose={() => setPolicyModalOpen(false)} type="usage" />
       <UpgradeModal isOpen={upgradeModalOpen} onClose={() => setUpgradeModalOpen(false)} onConfirm={handleUpgrade} />
+      <CheckoutModal 
+        isOpen={checkoutModalOpen} 
+        onClose={() => setCheckoutModalOpen(false)} 
+        onSuccess={handleCheckoutSuccess}
+        planPrice={PRICING_PLANS.find(p => p.id === 'Pro')?.price || 2999}
+        planName="Business Pro"
+      />
 
       {/* Desktop Sidebar */}
       <aside className="hidden lg:flex w-64 bg-[#0f172a] flex-col fixed h-full z-10 border-r border-white/5 shadow-2xl">
