@@ -16,6 +16,7 @@ import { createProfile, getProfile, updateProfile } from './services/amplifyServ
 const Dashboard = lazy(() => import('./components/Dashboard'));
 const LandingPage = lazy(() => import('./components/LandingPage'));
 const FeaturesPage = lazy(() => import('./components/FeaturesPage'));
+const HowItWorksPage = lazy(() => import('./components/HowItWorksPage'));
 
 type AuthView = 'login' | 'register' | 'onboarding' | 'confirm-email' | 'forgot-password' | 'reset-password';
 
@@ -24,7 +25,7 @@ type AuthView = 'login' | 'register' | 'onboarding' | 'confirm-email' | 'forgot-
 const App: React.FC = () => {
   const [profile, setProfile] = useState<TaxProfile | null>(null);
   const [authView, setAuthView] = useState<AuthView>('login');
-  const [viewState, setViewState] = useState<'landing' | 'features' | 'auth' | 'loading'>('loading');
+  const [viewState, setViewState] = useState<'landing' | 'features' | 'how-it-works' | 'auth' | 'loading'>('loading');
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   
@@ -380,6 +381,18 @@ const App: React.FC = () => {
       );
   }
 
+  if (viewState === 'how-it-works') {
+      return (
+        <Suspense fallback={
+            <div className="min-h-screen bg-white flex items-center justify-center">
+                <Loader className="animate-spin text-levy-blue" size={48} />
+            </div>
+        }>
+            <HowItWorksPage onBack={() => setViewState('landing')} onGetStarted={handleEnterApp} />
+        </Suspense>
+      );
+  }
+
   if (viewState === 'landing') {
       return (
         <Suspense fallback={
@@ -392,6 +405,7 @@ const App: React.FC = () => {
                 onLogin={handleLogin} 
                 openPolicy={openPolicy} 
                 onViewFeatures={() => setViewState('features')} 
+                onViewHowItWorks={() => setViewState('how-it-works')}
             />
             <PolicyModal isOpen={policyModalOpen} onClose={() => setPolicyModalOpen(false)} type={policyType} />
         </Suspense>

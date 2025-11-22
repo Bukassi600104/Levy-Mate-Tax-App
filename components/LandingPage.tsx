@@ -9,9 +9,10 @@ interface LandingPageProps {
   onLogin: () => void;
   openPolicy?: (type: 'privacy' | 'usage') => void;
   onViewFeatures: () => void;
+  onViewHowItWorks: () => void;
 }
 
-const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted, onLogin, openPolicy, onViewFeatures }) => {
+const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted, onLogin, openPolicy, onViewFeatures, onViewHowItWorks }) => {
   
   return (
     <div className="min-h-screen bg-white font-sans text-levy-text overflow-x-hidden flex flex-col">
@@ -21,6 +22,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted, onLogin, openPo
         
         <div className="hidden md:flex items-center gap-8 text-sm font-medium text-levy-slate">
           <a href="#" className="hover:text-levy-mate transition-colors">Home</a>
+          <button onClick={onViewHowItWorks} className="hover:text-levy-mate transition-colors">How It Works</button>
           <button onClick={onViewFeatures} className="hover:text-levy-mate transition-colors">Features</button>
           <button 
             onClick={onLogin}
