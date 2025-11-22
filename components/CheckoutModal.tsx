@@ -25,7 +25,7 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose, onSucces
     email: email,
     amount: planPrice * 100, // Amount is in kobo
     publicKey: 'pk_live_7dd455a1cdfca998d8708e1ed0c1ce8b32409680',
-    plan: billingCycle === 'Monthly' ? 'PLN_6yev8be7l6wtw4u' : undefined, // Only use plan code for monthly if yearly code isn't provided
+    plan: billingCycle === 'Monthly' ? 'PLN_6yev8be7l6wtw4u' : 'PLN_co22o7xiaq48wmq',
   };
 
   const initializePayment = usePaystackPayment(config);
