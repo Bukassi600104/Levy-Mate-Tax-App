@@ -67,8 +67,22 @@ const Dashboard: React.FC<DashboardProps> = ({ profile, onLogout, onProfileUpdat
     setCheckoutModalOpen(true);
   };
 
-  const handleCheckoutSuccess = () => {
-    setCurrentProfile(prev => ({ ...prev, tier: 'Pro' }));
+  const handleCheckoutSuccess = (plan: 'Monthly' | 'Yearly') => {
+    const now = new Date();
+    const expiryDate = new Date(now);
+    
+    if (plan === 'Monthly') {
+        expiryDate.setDate(expiryDate.getDate() + 30);
+    } else {
+        expiryDate.setDate(expiryDate.getDate() + 365);
+    }
+
+    setCurrentProfile(prev => ({ 
+        ...prev, 
+        tier: 'Pro',
+        subscriptionPlan: plan,
+        subscriptionExpiryDate: expiryDate.toISOString()
+    }));
     setCheckoutModalOpen(false);
   };
 
@@ -77,6 +91,11 @@ const Dashboard: React.FC<DashboardProps> = ({ profile, onLogout, onProfileUpdat
   };
 
   const isPro = currentProfile.tier === 'Pro';
+
+  // Check for subscription expiry
+  const daysToExpiry = currentProfile.subscriptionExpiryDate 
+    ? Math.ceil((new Date(currentProfile.subscriptionExpiryDate).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24))
+    : null;
 
   const NavItem = ({ tab, icon: Icon, label }: { tab: TabType, icon: any, label: string }) => (
     <button 
@@ -96,6 +115,30 @@ const Dashboard: React.FC<DashboardProps> = ({ profile, onLogout, onProfileUpdat
   const renderHome = () => {
     return (
     <div className="space-y-6 pb-24 lg:pb-0">
+        {/* Subscription Renewal Alert */}
+        {isPro && daysToExpiry !== null && daysToExpiry <= 7 && (
+            <div className="bg-indigo-50 border-l-4 border-indigo-500 p-4 rounded-r-lg flex justify-between items-center animate-in fade-in slide-in-from-top-2">
+                <div className="flex gap-3 items-center">
+                    <div className="bg-indigo-100 p-2 rounded-full text-indigo-600">
+                        <Calendar size={20} />
+                    </div>
+                    <div>
+                        <h4 className="font-bold text-indigo-900 text-sm">Subscription Renewing Soon</h4>
+                        <p className="text-xs text-indigo-700">
+                            Your Pro plan expires in <span className="font-bold">{daysToExpiry} days</span>. 
+                            {daysToExpiry <= 0 ? " Please renew to keep access." : " Auto-renewal is active."}
+                        </p>
+                    </div>
+                </div>
+                <button 
+                    onClick={() => setCheckoutModalOpen(true)}
+                    className="bg-indigo-600 text-white text-xs font-bold px-4 py-2 rounded-lg hover:bg-indigo-700 transition-colors"
+                >
+                    Renew Now
+                </button>
+            </div>
+        )}
+
         <header className="flex justify-between items-center mb-2">
             <div>
                 <h1 className="text-2xl font-display font-bold text-levy-text flex items-center gap-2">
@@ -188,7 +231,6 @@ const Dashboard: React.FC<DashboardProps> = ({ profile, onLogout, onProfileUpdat
         isOpen={checkoutModalOpen} 
         onClose={() => setCheckoutModalOpen(false)} 
         onSuccess={handleCheckoutSuccess}
-        planPrice={PRICING_PLANS.find(p => p.id === 'Pro')?.price || 2999}
         planName="Business Pro"
       />
 

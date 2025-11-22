@@ -2,17 +2,18 @@ import React, { useState, useEffect } from 'react';
 import { X, Lock, ShieldCheck, CreditCard as CardIcon, Check } from 'lucide-react';
 import CreditCard from './CreditCard';
 import Logo from './Logo';
+import { PRO_PRICE_MONTHLY, PRO_PRICE_YEARLY } from '../constants';
 
 interface CheckoutModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSuccess: () => void;
-  planPrice: number;
+  onSuccess: (plan: 'Monthly' | 'Yearly') => void;
   planName: string;
 }
 
-const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose, onSuccess, planPrice, planName }) => {
+const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose, onSuccess, planName }) => {
   const [isProcessing, setIsProcessing] = useState(false);
+  const [billingCycle, setBillingCycle] = useState<'Monthly' | 'Yearly'>('Monthly');
   const [cardDetails, setCardDetails] = useState({
     number: '',
     expiry: '',
@@ -20,10 +21,14 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose, onSucces
     name: ''
   });
 
+  const planPrice = billingCycle === 'Monthly' ? PRO_PRICE_MONTHLY : PRO_PRICE_YEARLY;
+  const yearlyDiscount = Math.round(((PRO_PRICE_MONTHLY * 12) - PRO_PRICE_YEARLY) / (PRO_PRICE_MONTHLY * 12) * 100);
+
   // Reset state when modal opens
   useEffect(() => {
     if (isOpen) {
       setIsProcessing(false);
+      setBillingCycle('Monthly');
       setCardDetails({ number: '', expiry: '', cvc: '', name: '' });
     }
   }, [isOpen]);
@@ -37,7 +42,7 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose, onSucces
     // Simulate payment gateway delay
     setTimeout(() => {
       setIsProcessing(false);
-      onSuccess();
+      onSuccess(billingCycle);
     }, 2000);
   };
 
@@ -88,10 +93,28 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose, onSucces
                 <span className="text-slate-400">Plan</span>
                 <span className="font-bold">{planName} Subscription</span>
               </div>
+              
+              {/* Billing Cycle Toggle */}
               <div className="flex justify-between items-center border-b border-slate-700 pb-4">
                 <span className="text-slate-400">Billing Cycle</span>
-                <span className="font-bold">Monthly</span>
+                <div className="flex bg-slate-800 rounded-lg p-1">
+                    <button 
+                        type="button"
+                        onClick={() => setBillingCycle('Monthly')}
+                        className={`px-3 py-1 text-xs font-bold rounded-md transition-all ${billingCycle === 'Monthly' ? 'bg-levy-blue text-white shadow-sm' : 'text-slate-400 hover:text-white'}`}
+                    >
+                        Monthly
+                    </button>
+                    <button 
+                        type="button"
+                        onClick={() => setBillingCycle('Yearly')}
+                        className={`px-3 py-1 text-xs font-bold rounded-md transition-all flex items-center gap-1 ${billingCycle === 'Yearly' ? 'bg-levy-blue text-white shadow-sm' : 'text-slate-400 hover:text-white'}`}
+                    >
+                        Yearly <span className="bg-green-500 text-white text-[9px] px-1 rounded">-{yearlyDiscount}%</span>
+                    </button>
+                </div>
               </div>
+
               <div className="flex justify-between items-center text-lg">
                 <span className="text-slate-300">Total due today</span>
                 <span className="font-bold text-levy-mate">₦{planPrice.toLocaleString()}</span>

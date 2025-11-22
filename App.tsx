@@ -225,16 +225,25 @@ const App: React.FC = () => {
     }
   };
 
-  const handleStart = async () => {
+  const handleStart = async (plan?: 'Monthly' | 'Yearly') => {
     if (!disclaimerAgreed) return;
 
     // If Pro is selected, require checkout first
-    if (formData.tier === 'Pro' && !checkoutModalOpen) {
+    if (formData.tier === 'Pro' && !checkoutModalOpen && !plan) {
         setCheckoutModalOpen(true);
         return;
     }
 
     const today = new Date().toISOString().split('T')[0];
+    
+    // Calculate expiry if Pro
+    let expiryDate: string | undefined;
+    if (formData.tier === 'Pro' && plan) {
+        const date = new Date();
+        if (plan === 'Monthly') date.setDate(date.getDate() + 30);
+        else date.setDate(date.getDate() + 365);
+        expiryDate = date.toISOString();
+    }
     
     const newProfile: TaxProfile = {
       name: formData.name,
@@ -251,6 +260,8 @@ const App: React.FC = () => {
       lifeInsurance: 0,
       transactions: [],
       tier: formData.tier,
+      subscriptionPlan: plan,
+      subscriptionExpiryDate: expiryDate,
       aiQueriesToday: 0,
       lastLoginDate: today,
       preferredPolicy: 'ACT_2026_PROPOSED'
@@ -394,11 +405,10 @@ const App: React.FC = () => {
         <CheckoutModal 
             isOpen={checkoutModalOpen} 
             onClose={() => setCheckoutModalOpen(false)} 
-            onSuccess={() => {
+            onSuccess={(plan) => {
                 setCheckoutModalOpen(false);
-                handleStart(); // Proceed with profile creation
+                handleStart(plan); // Proceed with profile creation
             }}
-            planPrice={PRICING_PLANS.find(p => p.id === 'Pro')?.price || 2999}
             planName="Business Pro"
         />
         

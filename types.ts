@@ -1,4 +1,3 @@
-
 // Fix for missing JSX.IntrinsicElements definitions in the environment
 declare global {
   namespace JSX {
@@ -64,6 +63,8 @@ export interface TaxProfile {
   // Data
   transactions: Transaction[];
   tier: UserTier;
+  subscriptionExpiryDate?: string; // ISO Date string
+  subscriptionPlan?: 'Monthly' | 'Yearly';
   aiQueriesToday: number;
   lastLoginDate: string; 
   preferredPolicy: TaxPolicyYear;
