@@ -169,3 +169,30 @@ export const authIsAuthenticated = async (): Promise<boolean> => {
   const user = await authGetCurrentUser();
   return user !== null;
 };
+
+/**
+ * Delete the current user
+ */
+export const authDeleteUser = async (): Promise<void> => {
+  try {
+    const { deleteUser } = await import('aws-amplify/auth');
+    await deleteUser();
+  } catch (error) {
+    console.error('Delete user error:', error);
+    throw error;
+  }
+};
+
+/**
+ * Request a verification code for account deletion (Mock)
+ * In a real app, this would trigger a Lambda to send an email
+ */
+export const authRequestDeleteCode = async (): Promise<string> => {
+    // Simulate network delay
+    await new Promise(resolve => setTimeout(resolve, 1500));
+    // In a real scenario, this code is sent to email. 
+    // For this demo, we'll return it or log it.
+    const code = Math.floor(100000 + Math.random() * 900000).toString();
+    console.log('Mock Delete Code:', code);
+    return code;
+};

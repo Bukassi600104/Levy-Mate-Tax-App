@@ -13,6 +13,7 @@ import CreditCard from './CreditCard';
 import PolicyModal from './PolicyModal';
 import UpgradeModal from './UpgradeModal';
 import CheckoutModal from './CheckoutModal';
+import DeleteAccountModal from './DeleteAccountModal';
 
 interface DashboardProps {
   profile: TaxProfile;
@@ -29,6 +30,7 @@ const Dashboard: React.FC<DashboardProps> = ({ profile, onLogout, onProfileUpdat
   const [policyModalOpen, setPolicyModalOpen] = useState(false);
   const [upgradeModalOpen, setUpgradeModalOpen] = useState(false);
   const [checkoutModalOpen, setCheckoutModalOpen] = useState(false);
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [syncTimeout, setSyncTimeout] = useState<NodeJS.Timeout | null>(null);
   
   // Auto-calculate latest tax result for dashboard stats
@@ -220,6 +222,19 @@ const Dashboard: React.FC<DashboardProps> = ({ profile, onLogout, onProfileUpdat
                 </div>
             </div>
         )}
+
+        {/* Account Management (Mobile Visible) */}
+        <div className="lg:hidden pt-8 pb-4 border-t border-gray-200 mt-8">
+            <h4 className="text-xs font-bold text-gray-400 uppercase mb-4">Account Management</h4>
+            <div className="space-y-3">
+                <button onClick={onLogout} className="w-full bg-white border border-gray-200 p-3 rounded-xl text-gray-700 font-bold text-sm flex items-center justify-center gap-2">
+                    <Settings size={16} /> Log Out
+                </button>
+                <button onClick={() => setDeleteModalOpen(true)} className="w-full bg-red-50 border border-red-100 p-3 rounded-xl text-red-600 font-bold text-sm flex items-center justify-center gap-2">
+                    <AlertTriangle size={16} /> Delete Account
+                </button>
+            </div>
+        </div>
     </div>
   )};
 
@@ -232,6 +247,12 @@ const Dashboard: React.FC<DashboardProps> = ({ profile, onLogout, onProfileUpdat
         onClose={() => setCheckoutModalOpen(false)} 
         onSuccess={handleCheckoutSuccess}
         planName="Business Pro"
+      />
+      <DeleteAccountModal 
+        isOpen={deleteModalOpen} 
+        onClose={() => setDeleteModalOpen(false)} 
+        profileId={currentProfile.id!} 
+        onDeleteSuccess={onLogout}
       />
 
       {/* Desktop Sidebar */}
@@ -262,8 +283,11 @@ const Dashboard: React.FC<DashboardProps> = ({ profile, onLogout, onProfileUpdat
             <button onClick={() => setPolicyModalOpen(true)} className="text-gray-500 hover:text-white text-xs flex items-center gap-2 mb-4 w-full pl-2">
                 <FileText size={12} /> Legal & Policies
             </button>
-            <button onClick={onLogout} className="text-gray-400 hover:text-white text-sm flex items-center gap-2 w-full pl-2">
+            <button onClick={onLogout} className="text-gray-400 hover:text-white text-sm flex items-center gap-2 w-full pl-2 mb-4">
                 <Settings size={16} /> Log Out
+            </button>
+            <button onClick={() => setDeleteModalOpen(true)} className="text-red-900/50 hover:text-red-500 text-xs flex items-center gap-2 w-full pl-2 transition-colors">
+                <AlertTriangle size={12} /> Delete Account
             </button>
         </div>
       </aside>
