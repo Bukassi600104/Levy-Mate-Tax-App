@@ -18,7 +18,7 @@ export const getTaxAdvice = async (profile: TaxProfile, question: string): Promi
       .reduce((acc, curr) => acc + curr.amount, 0) || profile.annualGrossIncome;
 
     const systemInstruction = `
-      You are LevyMate AI, a helpful Nigerian tax assistant. 
+      You are Levy, a helpful Nigerian tax assistant. 
       Your goal is to explain Nigerian tax laws (PITA, CITA, Finance Acts) in simple terms.
       
       Context for the user:
@@ -127,51 +127,3 @@ export const parseReceiptImage = async (base64Image: string): Promise<Partial<Tr
   }
 };
 
-export const parseWhatsAppChat = async (chatText: string): Promise<Partial<Transaction>[]> => {
-  try {
-    const prompt = `
-      Parse this WhatsApp chat export to find financial transactions.
-      Look for patterns like "Paid 50k for rent", "Received 20000 from client", "Sent 5k for data".
-      Ignore general conversation.
-      Return a JSON list of transactions.
-      For date, use today's date if not specified in text.
-      
-      Chat Log:
-      ${chatText.substring(0, 10000)} 
-    `;
-
-    const response = await ai.models.generateContent({
-      model: MODEL_NAME,
-      contents: prompt,
-      config: {
-        responseMimeType: "application/json",
-        responseSchema: {
-          type: Type.ARRAY,
-          items: {
-            type: Type.OBJECT,
-            properties: {
-              type: { type: Type.STRING, enum: ["income", "expense"] },
-              amount: { type: Type.NUMBER },
-              description: { type: Type.STRING },
-              category: { type: Type.STRING },
-              date: { type: Type.STRING }
-            }
-          }
-        }
-      }
-    });
-
-    if (response.text) {
-      const data = JSON.parse(response.text);
-      return data.map((t: any) => ({
-        ...t,
-        source: 'whatsapp',
-        id: Math.random().toString(36).substr(2, 9)
-      }));
-    }
-    return [];
-  } catch (error) {
-    console.error("WhatsApp Parse Error:", error);
-    return [];
-  }
-};

@@ -1,0 +1,2308 @@
+{
+  "version": "48.0.0",
+  "artifacts": {
+    "amplify-levymateapp-USER-sandbox-a49917ca2a.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "amplify-levymateapp-USER-sandbox-a49917ca2a.assets.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+      }
+    },
+    "amplify-levymateapp-USER-sandbox-a49917ca2a": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://unknown-account/unknown-region",
+      "properties": {
+        "templateFile": "amplify-levymateapp-USER-sandbox-a49917ca2a.template.json",
+        "terminationProtection": false,
+        "tags": {
+          "amplify:deployment-type": "sandbox",
+          "created-by": "amplify"
+        },
+        "validateOnSynth": false,
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-${AWS::Region}",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-${AWS::Region}",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/11f271908f821abe9a76660150b05f92e67198968d9c5a11922bad8b4ef0764e.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
+        "additionalDependencies": [
+          "amplify-levymateapp-USER-sandbox-a49917ca2a.assets"
+        ],
+        "lookupRole": {
+          "arn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-lookup-role-${AWS::AccountId}-${AWS::Region}",
+          "requiresBootstrapStackVersion": 8,
+          "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+        }
+      },
+      "dependencies": [
+        "amplify-levymateapp-USER-sandbox-a49917ca2a.assets"
+      ],
+      "metadata": {
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a": [
+          {
+            "type": "aws:cdk:stack-tags",
+            "data": [
+              {
+                "Key": "amplify:deployment-type",
+                "Value": "sandbox"
+              },
+              {
+                "Key": "created-by",
+                "Value": "amplify"
+              }
+            ]
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/deploymentType": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "deploymentType"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/region": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "region"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/auth/amplifyAuth/UserPool/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyAuthUserPool4BA7F805"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/auth/amplifyAuth/UserPoolAppClient/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyAuthUserPoolAppClient2626C6F8"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/auth/amplifyAuth/IdentityPool": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyAuthIdentityPool3FDE84CC"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/auth/amplifyAuth/authenticatedUserRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyAuthauthenticatedUserRoleD8DA3689"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/auth/amplifyAuth/unauthenticatedUserRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyAuthunauthenticatedUserRole2B524D9E"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/auth/amplifyAuth/IdentityPoolRoleAttachment": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyAuthIdentityPoolRoleAttachment045F17C8"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/auth/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/auth/CDKMetadata/Condition": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadataAvailable"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/auth/amplifylevymateappUSERsandboxa49917ca2aauthamplifyAuthUserPool4716D99CRef": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifylevymateappUSERsandboxa49917ca2aauthamplifyAuthUserPool4716D99CRef"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/auth/amplifylevymateappUSERsandboxa49917ca2aauthamplifyAuthUserPoolAppClient8B2693C5Ref": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifylevymateappUSERsandboxa49917ca2aauthamplifyAuthUserPoolAppClient8B2693C5Ref"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/auth/amplifylevymateappUSERsandboxa49917ca2aauthamplifyAuthIdentityPoolBA2D88B6Ref": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifylevymateappUSERsandboxa49917ca2aauthamplifyAuthIdentityPoolBA2D88B6Ref"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/auth/amplifylevymateappUSERsandboxa49917ca2aauthamplifyAuthauthenticatedUserRole367B16F5Ref": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifylevymateappUSERsandboxa49917ca2aauthamplifyAuthauthenticatedUserRole367B16F5Ref"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/auth/amplifylevymateappUSERsandboxa49917ca2aauthamplifyAuthunauthenticatedUserRole43CEF93ARef": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifylevymateappUSERsandboxa49917ca2aauthamplifyAuthunauthenticatedUserRole43CEF93ARef"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/auth.NestedStack/auth.NestedStackResource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "auth179371D7"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/userPoolId": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "userPoolId"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/webClientId": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "webClientId"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/identityPoolId": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "identityPoolId"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/authRegion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "authRegion"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/allowUnauthenticatedIdentities": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "allowUnauthenticatedIdentities"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/signupAttributes": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "signupAttributes"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/usernameAttributes": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "usernameAttributes"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/verificationMechanisms": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "verificationMechanisms"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/passwordPolicyMinLength": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "passwordPolicyMinLength"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/passwordPolicyRequirements": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "passwordPolicyRequirements"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/mfaConfiguration": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "mfaConfiguration"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/mfaTypes": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "mfaTypes"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/socialProviders": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "socialProviders"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/oauthCognitoDomain": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "oauthCognitoDomain"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/oauthScope": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "oauthScope"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/oauthRedirectSignIn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "oauthRedirectSignIn"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/oauthRedirectSignOut": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "oauthRedirectSignOut"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/oauthResponseType": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "oauthResponseType"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/oauthClientId": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "oauthClientId"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/groups": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "groups"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/GraphQLAPI/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyDataGraphQLAPI42A6FA33"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/GraphQLAPI/TransformerSchema": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyDataGraphQLAPITransformerSchemaFF50A789"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/GraphQLAPI/NONE_DS": [
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "NONE_DS"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/GraphQLAPI/NONE_DS/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyDataGraphQLAPINONEDS684BF699"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "NONE_DS"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/AmplifyTableManager/AmplifyManagedTableIsCompleteRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AmplifyManagedTableIsCompleteRoleF825222C"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/AmplifyTableManager/AmplifyManagedTableOnEventRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AmplifyManagedTableOnEventRoleB4E71DEA"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/AmplifyTableManager/AmplifyManagedTableOnEventRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AmplifyManagedTableOnEventRoleDefaultPolicyF6DABCB6"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/AmplifyTableManager/TableManagerCustomProvider/framework-onEvent/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "TableManagerCustomProviderframeworkonEvent1DFC2ECC"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/AmplifyTableManager/TableManagerCustomProvider/framework-isComplete/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "TableManagerCustomProviderframeworkisComplete2E51021B"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/AmplifyTableManager/AmplifyTableWaiterStateMachine/Role/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AmplifyTableWaiterStateMachineRole470BE899"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/AmplifyTableManager/AmplifyTableWaiterStateMachine/Role/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AmplifyTableWaiterStateMachineRoleDefaultPolicy89F3836A"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/AmplifyTableManager/AmplifyTableWaiterStateMachine/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AmplifyTableWaiterStateMachine060600BC"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/AmplifyTableManager/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/AmplifyTableManager/CDKMetadata/Condition": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadataAvailable"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/AmplifyTableManager/reference-to-amplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPIE6D92EEEApiId": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPIE6D92EEEApiId"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/AmplifyTableManager/amplifylevymateappUSERsandboxa49917ca2adataamplifyDataAmplifyTableManagerTableManagerCustomProviderframeworkonEvent50C09C3FArn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifylevymateappUSERsandboxa49917ca2adataamplifyDataAmplifyTableManagerTableManagerCustomProviderframeworkonEvent50C09C3FArn"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/AmplifyTableManager.NestedStack/AmplifyTableManager.NestedStackResource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyDataAmplifyTableManagerNestedStackAmplifyTableManagerNestedStackResource86290833"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TaxProfile/DynamoDBModelTableReadIOPS": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBModelTableReadIOPS"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TaxProfile/DynamoDBModelTableWriteIOPS": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBModelTableWriteIOPS"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TaxProfile/DynamoDBBillingMode": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBBillingMode"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TaxProfile/DynamoDBEnablePointInTimeRecovery": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBEnablePointInTimeRecovery"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TaxProfile/DynamoDBEnableServerSideEncryption": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBEnableServerSideEncryption"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TaxProfile/HasEnvironmentParameter": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "HasEnvironmentParameter"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TaxProfile/ShouldUsePayPerRequestBilling": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ShouldUsePayPerRequestBilling"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TaxProfile/ShouldUsePointInTimeRecovery": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ShouldUsePointInTimeRecovery"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TaxProfile/TaxProfileTable": [
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "TaxProfile"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TaxProfile/TaxProfileTable/Default/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "TaxProfileTable"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "TaxProfile"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TaxProfile/CustomTableTaxProfileTable": [
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "TaxProfile"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TaxProfile/GetAttTaxProfileTableStreamArn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "GetAttTaxProfileTableStreamArn"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TaxProfile/GetAttTaxProfileTableName": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "GetAttTaxProfileTableName"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TaxProfile/TaxProfileIAMRole": [
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "TaxProfileIAMRole"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TaxProfile/TaxProfileIAMRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "TaxProfileIAMRole1071EDA3"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "TaxProfileIAMRole"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TaxProfile/TaxProfileDataSource": [
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "TaxProfileTable"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TaxProfile/TaxProfileDataSource/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "TaxProfileDataSource"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "TaxProfileTable"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TaxProfile/QuerygetTaxProfileauth0Function/QuerygetTaxProfileauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuerygetTaxProfileauth0FunctionQuerygetTaxProfileauth0FunctionAppSyncFunctionBAC161C8"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QuerygetTaxProfileauth0Function"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TaxProfile/QuerygetTaxProfilepostAuth0Function/QuerygetTaxProfilepostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuerygetTaxProfilepostAuth0FunctionQuerygetTaxProfilepostAuth0FunctionAppSyncFunctionBFB3A646"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QuerygetTaxProfilepostAuth0Function"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TaxProfile/QueryGetTaxProfileDataResolverFn/QueryGetTaxProfileDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QueryGetTaxProfileDataResolverFnQueryGetTaxProfileDataResolverFnAppSyncFunctionF2ECF078"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QueryGetTaxProfileDataResolverFn"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TaxProfile/queryGetTaxProfileResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "GetTaxProfileResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Query.getTaxProfile"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TaxProfile/QuerylistTaxProfilesauth0Function/QuerylistTaxProfilesauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuerylistTaxProfilesauth0FunctionQuerylistTaxProfilesauth0FunctionAppSyncFunctionDFBD5A8D"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QuerylistTaxProfilesauth0Function"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TaxProfile/QuerylistTaxProfilespostAuth0Function/QuerylistTaxProfilespostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuerylistTaxProfilespostAuth0FunctionQuerylistTaxProfilespostAuth0FunctionAppSyncFunction8AA55DEC"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QuerylistTaxProfilespostAuth0Function"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TaxProfile/QueryListTaxProfilesDataResolverFn/QueryListTaxProfilesDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QueryListTaxProfilesDataResolverFnQueryListTaxProfilesDataResolverFnAppSyncFunctionC606D4C6"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QueryListTaxProfilesDataResolverFn"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TaxProfile/queryListTaxProfilesResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ListTaxProfileResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Query.listTaxProfiles"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TaxProfile/MutationcreateTaxProfileinit0Function/MutationcreateTaxProfileinit0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationcreateTaxProfileinit0FunctionMutationcreateTaxProfileinit0FunctionAppSyncFunctionC18BE1C2"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationcreateTaxProfileinit0Function"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TaxProfile/MutationcreateTaxProfileauth0Function/MutationcreateTaxProfileauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationcreateTaxProfileauth0FunctionMutationcreateTaxProfileauth0FunctionAppSyncFunction6DC87EA8"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationcreateTaxProfileauth0Function"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TaxProfile/MutationcreateTaxProfilepostAuth0Function/MutationcreateTaxProfilepostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationcreateTaxProfilepostAuth0FunctionMutationcreateTaxProfilepostAuth0FunctionAppSyncFunction4731E67F"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationcreateTaxProfilepostAuth0Function"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TaxProfile/MutationCreateTaxProfileDataResolverFn/MutationCreateTaxProfileDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationCreateTaxProfileDataResolverFnMutationCreateTaxProfileDataResolverFnAppSyncFunction8DC0CAC3"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationCreateTaxProfileDataResolverFn"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TaxProfile/mutationCreateTaxProfileResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CreateTaxProfileResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Mutation.createTaxProfile"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TaxProfile/MutationupdateTaxProfileinit0Function/MutationupdateTaxProfileinit0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationupdateTaxProfileinit0FunctionMutationupdateTaxProfileinit0FunctionAppSyncFunction42A58BD2"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationupdateTaxProfileinit0Function"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TaxProfile/MutationupdateTaxProfileauth0Function/MutationupdateTaxProfileauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationupdateTaxProfileauth0FunctionMutationupdateTaxProfileauth0FunctionAppSyncFunctionA8E0DB0D"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationupdateTaxProfileauth0Function"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TaxProfile/MutationupdateTaxProfilepostAuth0Function/MutationupdateTaxProfilepostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationupdateTaxProfilepostAuth0FunctionMutationupdateTaxProfilepostAuth0FunctionAppSyncFunctionD31BABA3"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationupdateTaxProfilepostAuth0Function"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TaxProfile/MutationUpdateTaxProfileDataResolverFn/MutationUpdateTaxProfileDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationUpdateTaxProfileDataResolverFnMutationUpdateTaxProfileDataResolverFnAppSyncFunctionDD853219"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationUpdateTaxProfileDataResolverFn"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TaxProfile/mutationUpdateTaxProfileResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "UpdateTaxProfileResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Mutation.updateTaxProfile"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TaxProfile/MutationdeleteTaxProfileauth0Function/MutationdeleteTaxProfileauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationdeleteTaxProfileauth0FunctionMutationdeleteTaxProfileauth0FunctionAppSyncFunction73C034DA"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationdeleteTaxProfileauth0Function"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TaxProfile/MutationdeleteTaxProfilepostAuth0Function/MutationdeleteTaxProfilepostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationdeleteTaxProfilepostAuth0FunctionMutationdeleteTaxProfilepostAuth0FunctionAppSyncFunctionC7625AE2"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationdeleteTaxProfilepostAuth0Function"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TaxProfile/MutationDeleteTaxProfileDataResolverFn/MutationDeleteTaxProfileDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationDeleteTaxProfileDataResolverFnMutationDeleteTaxProfileDataResolverFnAppSyncFunctionF82F7A04"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationDeleteTaxProfileDataResolverFn"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TaxProfile/mutationDeleteTaxProfileResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DeleteTaxProfileResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Mutation.deleteTaxProfile"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TaxProfile/SubscriptiononCreateTaxProfileauth0Function/SubscriptiononCreateTaxProfileauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononCreateTaxProfileauth0FunctionSubscriptiononCreateTaxProfileauth0FunctionAppSyncFunction852DD4FF"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptiononCreateTaxProfileauth0Function"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TaxProfile/SubscriptiononCreateTaxProfilepostAuth0Function/SubscriptiononCreateTaxProfilepostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononCreateTaxProfilepostAuth0FunctionSubscriptiononCreateTaxProfilepostAuth0FunctionAppSyncFunction61CA241C"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptiononCreateTaxProfilepostAuth0Function"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TaxProfile/SubscriptionOnCreateTaxProfileDataResolverFn/SubscriptionOnCreateTaxProfileDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptionOnCreateTaxProfileDataResolverFnSubscriptionOnCreateTaxProfileDataResolverFnAppSyncFunction82828DCB"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptionOnCreateTaxProfileDataResolverFn"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TaxProfile/subscriptionOnCreateTaxProfileResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononCreateTaxProfileResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Subscription.onCreateTaxProfile"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TaxProfile/SubscriptiononUpdateTaxProfileauth0Function/SubscriptiononUpdateTaxProfileauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononUpdateTaxProfileauth0FunctionSubscriptiononUpdateTaxProfileauth0FunctionAppSyncFunction87FCEFF6"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptiononUpdateTaxProfileauth0Function"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TaxProfile/SubscriptiononUpdateTaxProfilepostAuth0Function/SubscriptiononUpdateTaxProfilepostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononUpdateTaxProfilepostAuth0FunctionSubscriptiononUpdateTaxProfilepostAuth0FunctionAppSyncFunction590305A2"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptiononUpdateTaxProfilepostAuth0Function"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TaxProfile/SubscriptionOnUpdateTaxProfileDataResolverFn/SubscriptionOnUpdateTaxProfileDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptionOnUpdateTaxProfileDataResolverFnSubscriptionOnUpdateTaxProfileDataResolverFnAppSyncFunction889D0380"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptionOnUpdateTaxProfileDataResolverFn"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TaxProfile/subscriptionOnUpdateTaxProfileResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononUpdateTaxProfileResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Subscription.onUpdateTaxProfile"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TaxProfile/SubscriptiononDeleteTaxProfileauth0Function/SubscriptiononDeleteTaxProfileauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononDeleteTaxProfileauth0FunctionSubscriptiononDeleteTaxProfileauth0FunctionAppSyncFunction446B7102"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptiononDeleteTaxProfileauth0Function"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TaxProfile/SubscriptiononDeleteTaxProfilepostAuth0Function/SubscriptiononDeleteTaxProfilepostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononDeleteTaxProfilepostAuth0FunctionSubscriptiononDeleteTaxProfilepostAuth0FunctionAppSyncFunction63218216"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptiononDeleteTaxProfilepostAuth0Function"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TaxProfile/SubscriptionOnDeleteTaxProfileDataResolverFn/SubscriptionOnDeleteTaxProfileDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptionOnDeleteTaxProfileDataResolverFnSubscriptionOnDeleteTaxProfileDataResolverFnAppSyncFunctionAA003F64"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptionOnDeleteTaxProfileDataResolverFn"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TaxProfile/subscriptionOnDeleteTaxProfileResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononDeleteTaxProfileResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Subscription.onDeleteTaxProfile"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TaxProfile/TaxProfileOwnerDataResolverFn/TaxProfileOwnerDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "TaxProfileOwnerDataResolverFnTaxProfileOwnerDataResolverFnAppSyncFunctionD74371E2"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "TaxProfileOwnerDataResolverFn"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TaxProfile/taxProfileOwnerResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "TaxProfileownerResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "TaxProfile.owner"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TaxProfile/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TaxProfile/CDKMetadata/Condition": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadataAvailable"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TaxProfile/reference-to-amplifylevymateappUSERsandboxa49917ca2adataamplifyDataAmplifyTableManagerNestedStackAmplifyTableManagerNestedStackResourceAA2D69BEOutputs.amplifylevymateappUSERsandboxa49917ca2adataamplifyDataAmplifyTableManagerTableManagerCustomProviderframeworkonEvent50C09C3FArn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataAmplifyTableManagerNestedStackAmplifyTableManagerNestedStackResourceAA2D69BEOutputsamplifylevymateappUSERsandboxa49917ca2adataamplifyDataAmplifyTableManagerTableManagerCustomPF955149E"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TaxProfile/reference-to-amplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPIE6D92EEEApiId": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPIE6D92EEEApiId"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TaxProfile/reference-to-amplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPINONEDS4BD729D2Name": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPINONEDS4BD729D2Name"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TaxProfile/reference-to-amplifylevymateappUSERsandboxa49917ca2aauthNestedStackauthNestedStackResource03F9E02FOutputs.amplifylevymateappUSERsandboxa49917ca2aauthamplifyAuthauthenticatedUserRole367B16F5Ref": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifylevymateappUSERsandboxa49917ca2aauthNestedStackauthNestedStackResource03F9E02FOutputsamplifylevymateappUSERsandboxa49917ca2aauthamplifyAuthauthenticatedUserRole367B16F5Ref"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TaxProfile/reference-to-amplifylevymateappUSERsandboxa49917ca2aauthNestedStackauthNestedStackResource03F9E02FOutputs.amplifylevymateappUSERsandboxa49917ca2aauthamplifyAuthunauthenticatedUserRole43CEF93ARef": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifylevymateappUSERsandboxa49917ca2aauthNestedStackauthNestedStackResource03F9E02FOutputsamplifylevymateappUSERsandboxa49917ca2aauthamplifyAuthunauthenticatedUserRole43CEF93ARef"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TaxProfile/reference-to-amplifylevymateappUSERsandboxa49917ca2aauthNestedStackauthNestedStackResource03F9E02FOutputs.amplifylevymateappUSERsandboxa49917ca2aauthamplifyAuthIdentityPoolBA2D88B6Ref": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifylevymateappUSERsandboxa49917ca2aauthNestedStackauthNestedStackResource03F9E02FOutputsamplifylevymateappUSERsandboxa49917ca2aauthamplifyAuthIdentityPoolBA2D88B6Ref"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TaxProfile/amplifylevymateappUSERsandboxa49917ca2adataamplifyDataTaxProfileTaxProfileDataSource5F6EC2C2Name": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifylevymateappUSERsandboxa49917ca2adataamplifyDataTaxProfileTaxProfileDataSource5F6EC2C2Name"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TaxProfile/amplifylevymateappUSERsandboxa49917ca2adataamplifyDataTaxProfileTaxProfileTableF447C3E9TableArn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifylevymateappUSERsandboxa49917ca2adataamplifyDataTaxProfileTaxProfileTableF447C3E9TableArn"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TaxProfile.NestedStack/TaxProfile.NestedStackResource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyDataTaxProfileNestedStackTaxProfileNestedStackResource79EA802D"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/DynamoDBModelTableReadIOPS": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBModelTableReadIOPS"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/DynamoDBModelTableWriteIOPS": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBModelTableWriteIOPS"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/DynamoDBBillingMode": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBBillingMode"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/DynamoDBEnablePointInTimeRecovery": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBEnablePointInTimeRecovery"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/DynamoDBEnableServerSideEncryption": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBEnableServerSideEncryption"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/HasEnvironmentParameter": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "HasEnvironmentParameter"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/ShouldUsePayPerRequestBilling": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ShouldUsePayPerRequestBilling"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/ShouldUsePointInTimeRecovery": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ShouldUsePointInTimeRecovery"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/TransactionModelTable": [
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "TransactionModel"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/TransactionModelTable/Default/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "TransactionModelTable"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "TransactionModel"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/CustomTableTransactionModelTable": [
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "TransactionModel"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/GetAttTransactionModelTableStreamArn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "GetAttTransactionModelTableStreamArn"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/GetAttTransactionModelTableName": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "GetAttTransactionModelTableName"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/TransactionModelIAMRole": [
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "TransactionModelIAMRole"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/TransactionModelIAMRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "TransactionModelIAMRole5CEB5E25"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "TransactionModelIAMRole"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/TransactionModelDataSource": [
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "TransactionModelTable"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/TransactionModelDataSource/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "TransactionModelDataSource"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "TransactionModelTable"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/QuerygetTransactionModelauth0Function/QuerygetTransactionModelauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuerygetTransactionModelauth0FunctionQuerygetTransactionModelauth0FunctionAppSyncFunctionCC4EF4B9"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QuerygetTransactionModelauth0Function"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/QuerygetTransactionModelpostAuth0Function/QuerygetTransactionModelpostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuerygetTransactionModelpostAuth0FunctionQuerygetTransactionModelpostAuth0FunctionAppSyncFunctionEB0341EA"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QuerygetTransactionModelpostAuth0Function"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/QueryGetTransactionModelDataResolverFn/QueryGetTransactionModelDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QueryGetTransactionModelDataResolverFnQueryGetTransactionModelDataResolverFnAppSyncFunction7B5B84AE"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QueryGetTransactionModelDataResolverFn"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/queryGetTransactionModelResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "GetTransactionModelResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Query.getTransactionModel"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/QuerylistTransactionModelsauth0Function/QuerylistTransactionModelsauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuerylistTransactionModelsauth0FunctionQuerylistTransactionModelsauth0FunctionAppSyncFunctionC6A722F4"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QuerylistTransactionModelsauth0Function"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/QuerylistTransactionModelspostAuth0Function/QuerylistTransactionModelspostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuerylistTransactionModelspostAuth0FunctionQuerylistTransactionModelspostAuth0FunctionAppSyncFunction77219BCF"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QuerylistTransactionModelspostAuth0Function"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/QueryListTransactionModelsDataResolverFn/QueryListTransactionModelsDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QueryListTransactionModelsDataResolverFnQueryListTransactionModelsDataResolverFnAppSyncFunctionDBECDB73"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QueryListTransactionModelsDataResolverFn"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/queryListTransactionModelsResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ListTransactionModelResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Query.listTransactionModels"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/MutationcreateTransactionModelinit0Function/MutationcreateTransactionModelinit0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationcreateTransactionModelinit0FunctionMutationcreateTransactionModelinit0FunctionAppSyncFunction9C29C302"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationcreateTransactionModelinit0Function"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/MutationcreateTransactionModelauth0Function/MutationcreateTransactionModelauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationcreateTransactionModelauth0FunctionMutationcreateTransactionModelauth0FunctionAppSyncFunctionE1ACE756"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationcreateTransactionModelauth0Function"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/MutationcreateTransactionModelpostAuth0Function/MutationcreateTransactionModelpostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationcreateTransactionModelpostAuth0FunctionMutationcreateTransactionModelpostAuth0FunctionAppSyncFunction0BC66C85"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationcreateTransactionModelpostAuth0Function"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/MutationCreateTransactionModelDataResolverFn/MutationCreateTransactionModelDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationCreateTransactionModelDataResolverFnMutationCreateTransactionModelDataResolverFnAppSyncFunctionDE8F3FB4"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationCreateTransactionModelDataResolverFn"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/mutationCreateTransactionModelResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CreateTransactionModelResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Mutation.createTransactionModel"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/MutationupdateTransactionModelinit0Function/MutationupdateTransactionModelinit0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationupdateTransactionModelinit0FunctionMutationupdateTransactionModelinit0FunctionAppSyncFunctionC7FE4890"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationupdateTransactionModelinit0Function"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/MutationupdateTransactionModelauth0Function/MutationupdateTransactionModelauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationupdateTransactionModelauth0FunctionMutationupdateTransactionModelauth0FunctionAppSyncFunction17332ACA"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationupdateTransactionModelauth0Function"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/MutationupdateTransactionModelpostAuth0Function/MutationupdateTransactionModelpostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationupdateTransactionModelpostAuth0FunctionMutationupdateTransactionModelpostAuth0FunctionAppSyncFunctionEE2CB72B"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationupdateTransactionModelpostAuth0Function"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/MutationUpdateTransactionModelDataResolverFn/MutationUpdateTransactionModelDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationUpdateTransactionModelDataResolverFnMutationUpdateTransactionModelDataResolverFnAppSyncFunctionC8441CC8"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationUpdateTransactionModelDataResolverFn"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/mutationUpdateTransactionModelResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "UpdateTransactionModelResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Mutation.updateTransactionModel"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/MutationdeleteTransactionModelauth0Function/MutationdeleteTransactionModelauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationdeleteTransactionModelauth0FunctionMutationdeleteTransactionModelauth0FunctionAppSyncFunctionFCE26E1B"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationdeleteTransactionModelauth0Function"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/MutationdeleteTransactionModelpostAuth0Function/MutationdeleteTransactionModelpostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationdeleteTransactionModelpostAuth0FunctionMutationdeleteTransactionModelpostAuth0FunctionAppSyncFunction2B5CC859"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationdeleteTransactionModelpostAuth0Function"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/MutationDeleteTransactionModelDataResolverFn/MutationDeleteTransactionModelDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationDeleteTransactionModelDataResolverFnMutationDeleteTransactionModelDataResolverFnAppSyncFunctionB4F3404E"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationDeleteTransactionModelDataResolverFn"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/mutationDeleteTransactionModelResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DeleteTransactionModelResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Mutation.deleteTransactionModel"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/SubscriptiononCreateTransactionModelauth0Function/SubscriptiononCreateTransactionModelauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononCreateTransactionModelauth0FunctionSubscriptiononCreateTransactionModelauth0FunctionAppSyncFunctionABEC641C"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptiononCreateTransactionModelauth0Function"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/SubscriptiononCreateTransactionModelpostAuth0Function/SubscriptiononCreateTransactionModelpostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononCreateTransactionModelpostAuth0FunctionSubscriptiononCreateTransactionModelpostAuth0FunctionAppSyncFunction12DB9998"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptiononCreateTransactionModelpostAuth0Function"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/SubscriptionOnCreateTransactionModelDataResolverFn/SubscriptionOnCreateTransactionModelDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptionOnCreateTransactionModelDataResolverFnSubscriptionOnCreateTransactionModelDataResolverFnAppSyncFunction06A4DE6A"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptionOnCreateTransactionModelDataResolverFn"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/subscriptionOnCreateTransactionModelResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononCreateTransactionModelResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Subscription.onCreateTransactionModel"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/SubscriptiononUpdateTransactionModelauth0Function/SubscriptiononUpdateTransactionModelauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononUpdateTransactionModelauth0FunctionSubscriptiononUpdateTransactionModelauth0FunctionAppSyncFunctionE00F946B"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptiononUpdateTransactionModelauth0Function"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/SubscriptiononUpdateTransactionModelpostAuth0Function/SubscriptiononUpdateTransactionModelpostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononUpdateTransactionModelpostAuth0FunctionSubscriptiononUpdateTransactionModelpostAuth0FunctionAppSyncFunction889E02B8"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptiononUpdateTransactionModelpostAuth0Function"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/SubscriptionOnUpdateTransactionModelDataResolverFn/SubscriptionOnUpdateTransactionModelDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptionOnUpdateTransactionModelDataResolverFnSubscriptionOnUpdateTransactionModelDataResolverFnAppSyncFunction128786AA"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptionOnUpdateTransactionModelDataResolverFn"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/subscriptionOnUpdateTransactionModelResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononUpdateTransactionModelResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Subscription.onUpdateTransactionModel"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/SubscriptiononDeleteTransactionModelauth0Function/SubscriptiononDeleteTransactionModelauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononDeleteTransactionModelauth0FunctionSubscriptiononDeleteTransactionModelauth0FunctionAppSyncFunction39031177"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptiononDeleteTransactionModelauth0Function"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/SubscriptiononDeleteTransactionModelpostAuth0Function/SubscriptiononDeleteTransactionModelpostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononDeleteTransactionModelpostAuth0FunctionSubscriptiononDeleteTransactionModelpostAuth0FunctionAppSyncFunctionF7B4C042"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptiononDeleteTransactionModelpostAuth0Function"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/SubscriptionOnDeleteTransactionModelDataResolverFn/SubscriptionOnDeleteTransactionModelDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptionOnDeleteTransactionModelDataResolverFnSubscriptionOnDeleteTransactionModelDataResolverFnAppSyncFunction3684422B"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptionOnDeleteTransactionModelDataResolverFn"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/subscriptionOnDeleteTransactionModelResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononDeleteTransactionModelResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Subscription.onDeleteTransactionModel"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/TransactionModelOwnerDataResolverFn/TransactionModelOwnerDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "TransactionModelOwnerDataResolverFnTransactionModelOwnerDataResolverFnAppSyncFunctionA453CC3D"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "TransactionModelOwnerDataResolverFn"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/transactionModelOwnerResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "TransactionModelownerResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "TransactionModel.owner"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/CDKMetadata/Condition": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadataAvailable"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/reference-to-amplifylevymateappUSERsandboxa49917ca2adataamplifyDataAmplifyTableManagerNestedStackAmplifyTableManagerNestedStackResourceAA2D69BEOutputs.amplifylevymateappUSERsandboxa49917ca2adataamplifyDataAmplifyTableManagerTableManagerCustomProviderframeworkonEvent50C09C3FArn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataAmplifyTableManagerNestedStackAmplifyTableManagerNestedStackResourceAA2D69BEOutputsamplifylevymateappUSERsandboxa49917ca2adataamplifyDataAmplifyTableManagerTableManagerCustomPF955149E"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/reference-to-amplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPIE6D92EEEApiId": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPIE6D92EEEApiId"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/reference-to-amplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPINONEDS4BD729D2Name": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPINONEDS4BD729D2Name"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/reference-to-amplifylevymateappUSERsandboxa49917ca2aauthNestedStackauthNestedStackResource03F9E02FOutputs.amplifylevymateappUSERsandboxa49917ca2aauthamplifyAuthauthenticatedUserRole367B16F5Ref": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifylevymateappUSERsandboxa49917ca2aauthNestedStackauthNestedStackResource03F9E02FOutputsamplifylevymateappUSERsandboxa49917ca2aauthamplifyAuthauthenticatedUserRole367B16F5Ref"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/reference-to-amplifylevymateappUSERsandboxa49917ca2aauthNestedStackauthNestedStackResource03F9E02FOutputs.amplifylevymateappUSERsandboxa49917ca2aauthamplifyAuthunauthenticatedUserRole43CEF93ARef": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifylevymateappUSERsandboxa49917ca2aauthNestedStackauthNestedStackResource03F9E02FOutputsamplifylevymateappUSERsandboxa49917ca2aauthamplifyAuthunauthenticatedUserRole43CEF93ARef"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/reference-to-amplifylevymateappUSERsandboxa49917ca2aauthNestedStackauthNestedStackResource03F9E02FOutputs.amplifylevymateappUSERsandboxa49917ca2aauthamplifyAuthIdentityPoolBA2D88B6Ref": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifylevymateappUSERsandboxa49917ca2aauthNestedStackauthNestedStackResource03F9E02FOutputsamplifylevymateappUSERsandboxa49917ca2aauthamplifyAuthIdentityPoolBA2D88B6Ref"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/amplifylevymateappUSERsandboxa49917ca2adataamplifyDataTransactionModelTransactionModelDataSource63EAE93BName": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifylevymateappUSERsandboxa49917ca2adataamplifyDataTransactionModelTransactionModelDataSource63EAE93BName"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/amplifylevymateappUSERsandboxa49917ca2adataamplifyDataTransactionModelTransactionModelTableFEFA973BTableArn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifylevymateappUSERsandboxa49917ca2adataamplifyDataTransactionModelTransactionModelTableFEFA973BTableArn"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel.NestedStack/TransactionModel.NestedStackResource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyDataTransactionModelNestedStackTransactionModelNestedStackResource456AECC8"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/ConnectionStack/TaxProfiletransactionsauth0Function/TaxProfiletransactionsauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "TaxProfiletransactionsauth0FunctionTaxProfiletransactionsauth0FunctionAppSyncFunctionBE6FFE95"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "TaxProfiletransactionsauth0Function"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/ConnectionStack/TaxProfileTransactionsDataResolverFn/TaxProfileTransactionsDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "TaxProfileTransactionsDataResolverFnTaxProfileTransactionsDataResolverFnAppSyncFunctionB1036E00"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "TaxProfileTransactionsDataResolverFn"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/ConnectionStack/taxProfileTransactionsResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "TaxProfiletransactionsResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "TaxProfile.transactions"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/ConnectionStack/TransactionModelprofileauth0Function/TransactionModelprofileauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "TransactionModelprofileauth0FunctionTransactionModelprofileauth0FunctionAppSyncFunctionBCC42520"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "TransactionModelprofileauth0Function"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/ConnectionStack/TransactionModelProfileDataResolverFn/TransactionModelProfileDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "TransactionModelProfileDataResolverFnTransactionModelProfileDataResolverFnAppSyncFunction0F5470FD"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "TransactionModelProfileDataResolverFn"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/ConnectionStack/transactionModelProfileResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "TransactionModelprofileResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "TransactionModel.profile"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/ConnectionStack/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/ConnectionStack/CDKMetadata/Condition": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadataAvailable"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/ConnectionStack/reference-to-amplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPIE6D92EEEApiId": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPIE6D92EEEApiId"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/ConnectionStack/reference-to-amplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPINONEDS4BD729D2Name": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPINONEDS4BD729D2Name"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/ConnectionStack/reference-to-amplifylevymateappUSERsandboxa49917ca2adataamplifyDataTransactionModelNestedStackTransactionModelNestedStackResource73D15AD4Outputs.amplifylevymateappUSERsandboxa49917ca2adataamplifyDataTransactionModelTransactionModelDataSource63EAE93BName": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataTransactionModelNestedStackTransactionModelNestedStackResource73D15AD4OutputsamplifylevymateappUSERsandboxa49917ca2adataamplifyDataTransactionModelTransactionModelDataSource63EAE93BName"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/ConnectionStack/reference-to-amplifylevymateappUSERsandboxa49917ca2adataamplifyDataTransactionModelNestedStackTransactionModelNestedStackResource73D15AD4Outputs.amplifylevymateappUSERsandboxa49917ca2adataamplifyDataTransactionModelTransactionModelTableFEFA973BTableArn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataTransactionModelNestedStackTransactionModelNestedStackResource73D15AD4OutputsamplifylevymateappUSERsandboxa49917ca2adataamplifyDataTransactionModelTransactionModelTableFEFA973BTableArn"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/ConnectionStack/reference-to-amplifylevymateappUSERsandboxa49917ca2aauthNestedStackauthNestedStackResource03F9E02FOutputs.amplifylevymateappUSERsandboxa49917ca2aauthamplifyAuthauthenticatedUserRole367B16F5Ref": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifylevymateappUSERsandboxa49917ca2aauthNestedStackauthNestedStackResource03F9E02FOutputsamplifylevymateappUSERsandboxa49917ca2aauthamplifyAuthauthenticatedUserRole367B16F5Ref"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/ConnectionStack/reference-to-amplifylevymateappUSERsandboxa49917ca2aauthNestedStackauthNestedStackResource03F9E02FOutputs.amplifylevymateappUSERsandboxa49917ca2aauthamplifyAuthunauthenticatedUserRole43CEF93ARef": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifylevymateappUSERsandboxa49917ca2aauthNestedStackauthNestedStackResource03F9E02FOutputsamplifylevymateappUSERsandboxa49917ca2aauthamplifyAuthunauthenticatedUserRole43CEF93ARef"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/ConnectionStack/reference-to-amplifylevymateappUSERsandboxa49917ca2aauthNestedStackauthNestedStackResource03F9E02FOutputs.amplifylevymateappUSERsandboxa49917ca2aauthamplifyAuthIdentityPoolBA2D88B6Ref": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifylevymateappUSERsandboxa49917ca2aauthNestedStackauthNestedStackResource03F9E02FOutputsamplifylevymateappUSERsandboxa49917ca2aauthamplifyAuthIdentityPoolBA2D88B6Ref"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/ConnectionStack/reference-to-amplifylevymateappUSERsandboxa49917ca2adataamplifyDataTaxProfileNestedStackTaxProfileNestedStackResourceD30CFB5EOutputs.amplifylevymateappUSERsandboxa49917ca2adataamplifyDataTaxProfileTaxProfileDataSource5F6EC2C2Name": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataTaxProfileNestedStackTaxProfileNestedStackResourceD30CFB5EOutputsamplifylevymateappUSERsandboxa49917ca2adataamplifyDataTaxProfileTaxProfileDataSource5F6EC2C2Name"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/ConnectionStack/reference-to-amplifylevymateappUSERsandboxa49917ca2adataamplifyDataTaxProfileNestedStackTaxProfileNestedStackResourceD30CFB5EOutputs.amplifylevymateappUSERsandboxa49917ca2adataamplifyDataTaxProfileTaxProfileTableF447C3E9TableArn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataTaxProfileNestedStackTaxProfileNestedStackResourceD30CFB5EOutputsamplifylevymateappUSERsandboxa49917ca2adataamplifyDataTaxProfileTaxProfileTableF447C3E9TableArn"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/ConnectionStack.NestedStack/ConnectionStack.NestedStackResource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyDataConnectionStackNestedStackConnectionStackNestedStackResourceAB0F312B"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/AmplifyCodegenAssets/AmplifyCodegenAssetsBucket/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyDataAmplifyCodegenAssetsAmplifyCodegenAssetsBucket9CCB4ACA"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/AmplifyCodegenAssets/AmplifyCodegenAssetsBucket/Policy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyDataAmplifyCodegenAssetsAmplifyCodegenAssetsBucketPolicyF1C1C548"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/AmplifyCodegenAssets/AmplifyCodegenAssetsBucket/AutoDeleteObjectsCustomResource/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyDataAmplifyCodegenAssetsAmplifyCodegenAssetsBucketAutoDeleteObjectsCustomResource437F26F5"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/AmplifyCodegenAssets/AmplifyCodegenAssetsDeployment/AwsCliLayer/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyDataAmplifyCodegenAssetsAmplifyCodegenAssetsDeploymentAwsCliLayerE322F905"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/AmplifyCodegenAssets/AmplifyCodegenAssetsDeployment/CustomResource-1536MiB/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyDataAmplifyCodegenAssetsAmplifyCodegenAssetsDeploymentCustomResource1536MiB21775929"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/DynamoDBModelTableReadIOPS": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBModelTableReadIOPS"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/DynamoDBModelTableWriteIOPS": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBModelTableWriteIOPS"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/DynamoDBBillingMode": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBBillingMode"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/DynamoDBEnablePointInTimeRecovery": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBEnablePointInTimeRecovery"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/DynamoDBEnableServerSideEncryption": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBEnableServerSideEncryption"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/Custom::S3AutoDeleteObjectsCustomResourceProvider": [
+          {
+            "type": "aws:cdk:is-custom-resource-handler-customResourceProvider",
+            "data": true
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/Custom::S3AutoDeleteObjectsCustomResourceProvider/Role": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/Custom::S3AutoDeleteObjectsCustomResourceProvider/Handler": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CustomS3AutoDeleteObjectsCustomResourceProviderHandler9D90184F"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/Custom::CDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C1536MiB": [
+          {
+            "type": "aws:cdk:is-custom-resource-handler-singleton",
+            "data": true
+          },
+          {
+            "type": "aws:cdk:is-custom-resource-handler-runtime-family",
+            "data": 2
+          },
+          {
+            "type": "aws:cdk:is-custom-resource-handler-singleton",
+            "data": true
+          },
+          {
+            "type": "aws:cdk:is-custom-resource-handler-runtime-family",
+            "data": 2
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/Custom::CDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C1536MiB/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C1536MiBServiceRoleA41FC8C2"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/Custom::CDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C1536MiB/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C1536MiBServiceRoleDefaultPolicyFF1C635B"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/Custom::CDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C1536MiB/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C1536MiBC5D8AB21"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/modelIntrospectionSchemaBucket/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "modelIntrospectionSchemaBucketF566B665"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/modelIntrospectionSchemaBucket/Policy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "modelIntrospectionSchemaBucketPolicy4DAB0D15"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/modelIntrospectionSchemaBucket/AutoDeleteObjectsCustomResource/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "modelIntrospectionSchemaBucketAutoDeleteObjectsCustomResourceFE57309F"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/modelIntrospectionSchemaBucketDeployment/AwsCliLayer/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "modelIntrospectionSchemaBucketDeploymentAwsCliLayer13C432F7"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/modelIntrospectionSchemaBucketDeployment/CustomResource-1536MiB/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "modelIntrospectionSchemaBucketDeploymentCustomResource1536MiB104B97EC"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/AMPLIFY_DATA_GRAPHQL_ENDPOINTParameter/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AMPLIFYDATAGRAPHQLENDPOINTParameter1C2CBB16"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/AMPLIFY_DATA_MODEL_INTROSPECTION_SCHEMA_BUCKET_NAMEParameter/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AMPLIFYDATAMODELINTROSPECTIONSCHEMABUCKETNAMEParameter47BF4F44"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/AMPLIFY_DATA_MODEL_INTROSPECTION_SCHEMA_KEYParameter/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AMPLIFYDATAMODELINTROSPECTIONSCHEMAKEYParameterB6AEAE8A"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/AMPLIFY_DATA_DEFAULT_NAMEParameter/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AMPLIFYDATADEFAULTNAMEParameterE7C23CC4"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/CDKMetadata/Condition": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadataAvailable"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/reference-to-amplifylevymateappUSERsandboxa49917ca2aauthNestedStackauthNestedStackResource03F9E02FOutputs.amplifylevymateappUSERsandboxa49917ca2aauthamplifyAuthUserPool4716D99CRef": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifylevymateappUSERsandboxa49917ca2aauthNestedStackauthNestedStackResource03F9E02FOutputsamplifylevymateappUSERsandboxa49917ca2aauthamplifyAuthUserPool4716D99CRef"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/reference-to-amplifylevymateappUSERsandboxa49917ca2aauthNestedStackauthNestedStackResource03F9E02FOutputs.amplifylevymateappUSERsandboxa49917ca2aauthamplifyAuthauthenticatedUserRole367B16F5Ref": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifylevymateappUSERsandboxa49917ca2aauthNestedStackauthNestedStackResource03F9E02FOutputsamplifylevymateappUSERsandboxa49917ca2aauthamplifyAuthauthenticatedUserRole367B16F5Ref"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/reference-to-amplifylevymateappUSERsandboxa49917ca2aauthNestedStackauthNestedStackResource03F9E02FOutputs.amplifylevymateappUSERsandboxa49917ca2aauthamplifyAuthunauthenticatedUserRole43CEF93ARef": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifylevymateappUSERsandboxa49917ca2aauthNestedStackauthNestedStackResource03F9E02FOutputsamplifylevymateappUSERsandboxa49917ca2aauthamplifyAuthunauthenticatedUserRole43CEF93ARef"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/reference-to-amplifylevymateappUSERsandboxa49917ca2aauthNestedStackauthNestedStackResource03F9E02FOutputs.amplifylevymateappUSERsandboxa49917ca2aauthamplifyAuthIdentityPoolBA2D88B6Ref": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifylevymateappUSERsandboxa49917ca2aauthNestedStackauthNestedStackResource03F9E02FOutputsamplifylevymateappUSERsandboxa49917ca2aauthamplifyAuthIdentityPoolBA2D88B6Ref"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPIE6D92EEEApiId": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPIE6D92EEEApiId"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPIE6D92EEEGraphQLUrl": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPIE6D92EEEGraphQLUrl"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifylevymateappUSERsandboxa49917ca2adataamplifyDataAmplifyCodegenAssetsAmplifyCodegenAssetsDeploymentCustomResource1536MiBE4630C6ADestinationBucketArn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifylevymateappUSERsandboxa49917ca2adataamplifyDataAmplifyCodegenAssetsAmplifyCodegenAssetsDeploymentCustomResource1536MiBE4630C6ADestinationBucketArn"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/data.NestedStack/data.NestedStackResource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "data7552DF31"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/awsAppsyncApiId": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "awsAppsyncApiId"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/awsAppsyncApiEndpoint": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "awsAppsyncApiEndpoint"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/awsAppsyncAuthenticationType": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "awsAppsyncAuthenticationType"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/awsAppsyncRegion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "awsAppsyncRegion"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/amplifyApiModelSchemaS3Uri": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyApiModelSchemaS3Uri"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/awsAppsyncAdditionalAuthenticationTypes": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "awsAppsyncAdditionalAuthenticationTypes"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/CDKMetadata/Condition": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadataAvailable"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/BootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BootstrapVersion"
+          }
+        ],
+        "/amplify-levymateapp-USER-sandbox-a49917ca2a/CheckBootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CheckBootstrapVersion"
+          }
+        ]
+      },
+      "displayName": "amplify-levymateapp-USER-sandbox-a49917ca2a"
+    },
+    "Tree": {
+      "type": "cdk:tree",
+      "properties": {
+        "file": "tree.json"
+      }
+    },
+    "aws-cdk-lib/feature-flag-report": {
+      "type": "cdk:feature-flag-report",
+      "properties": {
+        "module": "aws-cdk-lib",
+        "flags": {
+          "@aws-cdk/aws-signer:signingProfileNamePassedToCfn": {
+            "recommendedValue": true,
+            "explanation": "Pass signingProfileName to CfnSigningProfile"
+          },
+          "@aws-cdk/core:newStyleStackSynthesis": {
+            "recommendedValue": true,
+            "explanation": "Switch to new stack synthesis method which enables CI/CD",
+            "unconfiguredBehavesLike": {
+              "v2": true
+            }
+          },
+          "@aws-cdk/core:stackRelativeExports": {
+            "recommendedValue": true,
+            "explanation": "Name exports based on the construct paths relative to the stack, rather than the global construct path",
+            "unconfiguredBehavesLike": {
+              "v2": true
+            }
+          },
+          "@aws-cdk/aws-ecs-patterns:secGroupsDisablesImplicitOpenListener": {
+            "recommendedValue": true,
+            "explanation": "Disable implicit openListener when custom security groups are provided"
+          },
+          "@aws-cdk/aws-rds:lowercaseDbIdentifier": {
+            "recommendedValue": true,
+            "explanation": "Force lowercasing of RDS Cluster names in CDK",
+            "unconfiguredBehavesLike": {
+              "v2": true
+            }
+          },
+          "@aws-cdk/aws-apigateway:usagePlanKeyOrderInsensitiveId": {
+            "recommendedValue": true,
+            "explanation": "Allow adding/removing multiple UsagePlanKeys independently",
+            "unconfiguredBehavesLike": {
+              "v2": true
+            }
+          },
+          "@aws-cdk/aws-lambda:recognizeVersionProps": {
+            "recommendedValue": true,
+            "explanation": "Enable this feature flag to opt in to the updated logical id calculation for Lambda Version created using the  `fn.currentVersion`.",
+            "unconfiguredBehavesLike": {
+              "v2": true
+            }
+          },
+          "@aws-cdk/aws-lambda:recognizeLayerVersion": {
+            "recommendedValue": true,
+            "explanation": "Enable this feature flag to opt in to the updated logical id calculation for Lambda Version created using the `fn.currentVersion`."
+          },
+          "@aws-cdk/aws-cloudfront:defaultSecurityPolicyTLSv1.2_2021": {
+            "recommendedValue": true,
+            "explanation": "Enable this feature flag to have cloudfront distributions use the security policy TLSv1.2_2021 by default.",
+            "unconfiguredBehavesLike": {
+              "v2": true
+            }
+          },
+          "@aws-cdk/core:checkSecretUsage": {
+            "recommendedValue": true,
+            "explanation": "Enable this flag to make it impossible to accidentally use SecretValues in unsafe locations"
+          },
+          "@aws-cdk/core:target-partitions": {
+            "recommendedValue": [
+              "aws",
+              "aws-cn"
+            ],
+            "explanation": "What regions to include in lookup tables of environment agnostic stacks"
+          },
+          "@aws-cdk-containers/ecs-service-extensions:enableDefaultLogDriver": {
+            "recommendedValue": true,
+            "explanation": "ECS extensions will automatically add an `awslogs` driver if no logging is specified"
+          },
+          "@aws-cdk/aws-ec2:uniqueImdsv2TemplateName": {
+            "recommendedValue": true,
+            "explanation": "Enable this feature flag to have Launch Templates generated by the `InstanceRequireImdsv2Aspect` use unique names."
+          },
+          "@aws-cdk/aws-ecs:arnFormatIncludesClusterName": {
+            "recommendedValue": true,
+            "explanation": "ARN format used by ECS. In the new ARN format, the cluster name is part of the resource ID."
+          },
+          "@aws-cdk/aws-iam:minimizePolicies": {
+            "recommendedValue": true,
+            "explanation": "Minimize IAM policies by combining Statements"
+          },
+          "@aws-cdk/core:validateSnapshotRemovalPolicy": {
+            "recommendedValue": true,
+            "explanation": "Error on snapshot removal policies on resources that do not support it."
+          },
+          "@aws-cdk/aws-codepipeline:crossAccountKeyAliasStackSafeResourceName": {
+            "recommendedValue": true,
+            "explanation": "Generate key aliases that include the stack name"
+          },
+          "@aws-cdk/aws-s3:createDefaultLoggingPolicy": {
+            "recommendedValue": true,
+            "explanation": "Enable this feature flag to create an S3 bucket policy by default in cases where an AWS service would automatically create the Policy if one does not exist."
+          },
+          "@aws-cdk/aws-sns-subscriptions:restrictSqsDescryption": {
+            "recommendedValue": true,
+            "explanation": "Restrict KMS key policy for encrypted Queues a bit more"
+          },
+          "@aws-cdk/aws-apigateway:disableCloudWatchRole": {
+            "recommendedValue": true,
+            "explanation": "Make default CloudWatch Role behavior safe for multiple API Gateways in one environment"
+          },
+          "@aws-cdk/core:enablePartitionLiterals": {
+            "recommendedValue": true,
+            "explanation": "Make ARNs concrete if AWS partition is known"
+          },
+          "@aws-cdk/aws-events:eventsTargetQueueSameAccount": {
+            "recommendedValue": true,
+            "explanation": "Event Rules may only push to encrypted SQS queues in the same account"
+          },
+          "@aws-cdk/aws-ecs:disableExplicitDeploymentControllerForCircuitBreaker": {
+            "recommendedValue": true,
+            "explanation": "Avoid setting the \"ECS\" deployment controller when adding a circuit breaker"
+          },
+          "@aws-cdk/aws-iam:importedRoleStackSafeDefaultPolicyName": {
+            "recommendedValue": true,
+            "explanation": "Enable this feature to create default policy names for imported roles that depend on the stack the role is in."
+          },
+          "@aws-cdk/aws-s3:serverAccessLogsUseBucketPolicy": {
+            "recommendedValue": true,
+            "explanation": "Use S3 Bucket Policy instead of ACLs for Server Access Logging"
+          },
+          "@aws-cdk/aws-route53-patters:useCertificate": {
+            "recommendedValue": true,
+            "explanation": "Use the official `Certificate` resource instead of `DnsValidatedCertificate`"
+          },
+          "@aws-cdk/customresources:installLatestAwsSdkDefault": {
+            "recommendedValue": false,
+            "explanation": "Whether to install the latest SDK by default in AwsCustomResource"
+          },
+          "@aws-cdk/aws-rds:databaseProxyUniqueResourceName": {
+            "recommendedValue": true,
+            "explanation": "Use unique resource name for Database Proxy"
+          },
+          "@aws-cdk/aws-codedeploy:removeAlarmsFromDeploymentGroup": {
+            "recommendedValue": true,
+            "explanation": "Remove CloudWatch alarms from deployment group"
+          },
+          "@aws-cdk/aws-apigateway:authorizerChangeDeploymentLogicalId": {
+            "recommendedValue": true,
+            "explanation": "Include authorizer configuration in the calculation of the API deployment logical ID."
+          },
+          "@aws-cdk/aws-ec2:launchTemplateDefaultUserData": {
+            "recommendedValue": true,
+            "explanation": "Define user data for a launch template by default when a machine image is provided."
+          },
+          "@aws-cdk/aws-secretsmanager:useAttachedSecretResourcePolicyForSecretTargetAttachments": {
+            "recommendedValue": true,
+            "explanation": "SecretTargetAttachments uses the ResourcePolicy of the attached Secret."
+          },
+          "@aws-cdk/aws-redshift:columnId": {
+            "recommendedValue": true,
+            "explanation": "Whether to use an ID to track Redshift column changes"
+          },
+          "@aws-cdk/aws-stepfunctions-tasks:enableEmrServicePolicyV2": {
+            "recommendedValue": true,
+            "explanation": "Enable AmazonEMRServicePolicy_v2 managed policies"
+          },
+          "@aws-cdk/aws-ec2:restrictDefaultSecurityGroup": {
+            "recommendedValue": true,
+            "explanation": "Restrict access to the VPC default security group"
+          },
+          "@aws-cdk/aws-apigateway:requestValidatorUniqueId": {
+            "recommendedValue": true,
+            "explanation": "Generate a unique id for each RequestValidator added to a method"
+          },
+          "@aws-cdk/aws-kms:aliasNameRef": {
+            "recommendedValue": true,
+            "explanation": "KMS Alias name and keyArn will have implicit reference to KMS Key"
+          },
+          "@aws-cdk/aws-kms:applyImportedAliasPermissionsToPrincipal": {
+            "recommendedValue": true,
+            "explanation": "Enable grant methods on Aliases imported by name to use kms:ResourceAliases condition"
+          },
+          "@aws-cdk/aws-autoscaling:generateLaunchTemplateInsteadOfLaunchConfig": {
+            "recommendedValue": true,
+            "explanation": "Generate a launch template when creating an AutoScalingGroup"
+          },
+          "@aws-cdk/core:includePrefixInUniqueNameGeneration": {
+            "recommendedValue": true,
+            "explanation": "Include the stack prefix in the stack name generation process"
+          },
+          "@aws-cdk/aws-efs:denyAnonymousAccess": {
+            "recommendedValue": true,
+            "explanation": "EFS denies anonymous clients accesses"
+          },
+          "@aws-cdk/aws-opensearchservice:enableOpensearchMultiAzWithStandby": {
+            "recommendedValue": true,
+            "explanation": "Enables support for Multi-AZ with Standby deployment for opensearch domains"
+          },
+          "@aws-cdk/aws-lambda-nodejs:useLatestRuntimeVersion": {
+            "recommendedValue": true,
+            "explanation": "Enables aws-lambda-nodejs.Function to use the latest available NodeJs runtime as the default"
+          },
+          "@aws-cdk/aws-efs:mountTargetOrderInsensitiveLogicalId": {
+            "recommendedValue": true,
+            "explanation": "When enabled, mount targets will have a stable logicalId that is linked to the associated subnet."
+          },
+          "@aws-cdk/aws-rds:auroraClusterChangeScopeOfInstanceParameterGroupWithEachParameters": {
+            "recommendedValue": true,
+            "explanation": "When enabled, a scope of InstanceParameterGroup for AuroraClusterInstance with each parameters will change."
+          },
+          "@aws-cdk/aws-appsync:useArnForSourceApiAssociationIdentifier": {
+            "recommendedValue": true,
+            "explanation": "When enabled, will always use the arn for identifiers for CfnSourceApiAssociation in the GraphqlApi construct rather than id."
+          },
+          "@aws-cdk/aws-rds:preventRenderingDeprecatedCredentials": {
+            "recommendedValue": true,
+            "explanation": "When enabled, creating an RDS database cluster from a snapshot will only render credentials for snapshot credentials."
+          },
+          "@aws-cdk/aws-codepipeline-actions:useNewDefaultBranchForCodeCommitSource": {
+            "recommendedValue": true,
+            "explanation": "When enabled, the CodeCommit source action is using the default branch name 'main'."
+          },
+          "@aws-cdk/aws-cloudwatch-actions:changeLambdaPermissionLogicalIdForLambdaAction": {
+            "recommendedValue": true,
+            "explanation": "When enabled, the logical ID of a Lambda permission for a Lambda action includes an alarm ID."
+          },
+          "@aws-cdk/aws-codepipeline:crossAccountKeysDefaultValueToFalse": {
+            "recommendedValue": true,
+            "explanation": "Enables Pipeline to set the default value for crossAccountKeys to false."
+          },
+          "@aws-cdk/aws-codepipeline:defaultPipelineTypeToV2": {
+            "recommendedValue": true,
+            "explanation": "Enables Pipeline to set the default pipeline type to V2."
+          },
+          "@aws-cdk/aws-kms:reduceCrossAccountRegionPolicyScope": {
+            "recommendedValue": true,
+            "explanation": "When enabled, IAM Policy created from KMS key grant will reduce the resource scope to this key only."
+          },
+          "@aws-cdk/pipelines:reduceAssetRoleTrustScope": {
+            "recommendedValue": true,
+            "explanation": "Remove the root account principal from PipelineAssetsFileRole trust policy",
+            "unconfiguredBehavesLike": {
+              "v2": true
+            }
+          },
+          "@aws-cdk/aws-eks:nodegroupNameAttribute": {
+            "recommendedValue": true,
+            "explanation": "When enabled, nodegroupName attribute of the provisioned EKS NodeGroup will not have the cluster name prefix."
+          },
+          "@aws-cdk/aws-ec2:ebsDefaultGp3Volume": {
+            "recommendedValue": true,
+            "explanation": "When enabled, the default volume type of the EBS volume will be GP3"
+          },
+          "@aws-cdk/aws-ecs:removeDefaultDeploymentAlarm": {
+            "recommendedValue": true,
+            "explanation": "When enabled, remove default deployment alarm settings"
+          },
+          "@aws-cdk/custom-resources:logApiResponseDataPropertyTrueDefault": {
+            "recommendedValue": false,
+            "explanation": "When enabled, the custom resource used for `AwsCustomResource` will configure the `logApiResponseData` property as true by default"
+          },
+          "@aws-cdk/aws-s3:keepNotificationInImportedBucket": {
+            "recommendedValue": false,
+            "explanation": "When enabled, Adding notifications to a bucket in the current stack will not remove notification from imported stack."
+          },
+          "@aws-cdk/aws-stepfunctions-tasks:useNewS3UriParametersForBedrockInvokeModelTask": {
+            "recommendedValue": true,
+            "explanation": "When enabled, use new props for S3 URI field in task definition of state machine for bedrock invoke model.",
+            "unconfiguredBehavesLike": {
+              "v2": true
+            }
+          },
+          "@aws-cdk/core:explicitStackTags": {
+            "recommendedValue": true,
+            "explanation": "When enabled, stack tags need to be assigned explicitly on a Stack."
+          },
+          "@aws-cdk/aws-ecs:enableImdsBlockingDeprecatedFeature": {
+            "recommendedValue": false,
+            "explanation": "When set to true along with canContainersAccessInstanceRole=false in ECS cluster, new updated commands will be added to UserData to block container accessing IMDS. **Applicable to Linux only. IMPORTANT: See [details.](#aws-cdkaws-ecsenableImdsBlockingDeprecatedFeature)**"
+          },
+          "@aws-cdk/aws-ecs:disableEcsImdsBlocking": {
+            "recommendedValue": true,
+            "explanation": "When set to true, CDK synth will throw exception if canContainersAccessInstanceRole is false. **IMPORTANT: See [details.](#aws-cdkaws-ecsdisableEcsImdsBlocking)**"
+          },
+          "@aws-cdk/aws-ecs:reduceEc2FargateCloudWatchPermissions": {
+            "recommendedValue": true,
+            "explanation": "When enabled, we will only grant the necessary permissions when users specify cloudwatch log group through logConfiguration"
+          },
+          "@aws-cdk/aws-dynamodb:resourcePolicyPerReplica": {
+            "recommendedValue": true,
+            "explanation": "When enabled will allow you to specify a resource policy per replica, and not copy the source table policy to all replicas"
+          },
+          "@aws-cdk/aws-ec2:ec2SumTImeoutEnabled": {
+            "recommendedValue": true,
+            "explanation": "When enabled, initOptions.timeout and resourceSignalTimeout values will be summed together."
+          },
+          "@aws-cdk/aws-appsync:appSyncGraphQLAPIScopeLambdaPermission": {
+            "recommendedValue": true,
+            "explanation": "When enabled, a Lambda authorizer Permission created when using GraphqlApi will be properly scoped with a SourceArn."
+          },
+          "@aws-cdk/aws-rds:setCorrectValueForDatabaseInstanceReadReplicaInstanceResourceId": {
+            "recommendedValue": true,
+            "explanation": "When enabled, the value of property `instanceResourceId` in construct `DatabaseInstanceReadReplica` will be set to the correct value which is `DbiResourceId` instead of currently `DbInstanceArn`"
+          },
+          "@aws-cdk/core:cfnIncludeRejectComplexResourceUpdateCreatePolicyIntrinsics": {
+            "recommendedValue": true,
+            "explanation": "When enabled, CFN templates added with `cfn-include` will error if the template contains Resource Update or Create policies with CFN Intrinsics that include non-primitive values."
+          },
+          "@aws-cdk/aws-lambda-nodejs:sdkV3ExcludeSmithyPackages": {
+            "recommendedValue": true,
+            "explanation": "When enabled, both `@aws-sdk` and `@smithy` packages will be excluded from the Lambda Node.js 18.x runtime to prevent version mismatches in bundled applications."
+          },
+          "@aws-cdk/aws-stepfunctions-tasks:fixRunEcsTaskPolicy": {
+            "recommendedValue": true,
+            "explanation": "When enabled, the resource of IAM Run Ecs policy generated by SFN EcsRunTask will reference the definition, instead of constructing ARN."
+          },
+          "@aws-cdk/aws-ec2:bastionHostUseAmazonLinux2023ByDefault": {
+            "recommendedValue": true,
+            "explanation": "When enabled, the BastionHost construct will use the latest Amazon Linux 2023 AMI, instead of Amazon Linux 2."
+          },
+          "@aws-cdk/core:aspectStabilization": {
+            "recommendedValue": true,
+            "explanation": "When enabled, a stabilization loop will be run when invoking Aspects during synthesis.",
+            "unconfiguredBehavesLike": {
+              "v2": true
+            }
+          },
+          "@aws-cdk/aws-route53-targets:userPoolDomainNameMethodWithoutCustomResource": {
+            "recommendedValue": true,
+            "explanation": "When enabled, use a new method for DNS Name of user pool domain target without creating a custom resource."
+          },
+          "@aws-cdk/aws-elasticloadbalancingV2:albDualstackWithoutPublicIpv4SecurityGroupRulesDefault": {
+            "recommendedValue": true,
+            "explanation": "When enabled, the default security group ingress rules will allow IPv6 ingress from anywhere"
+          },
+          "@aws-cdk/aws-iam:oidcRejectUnauthorizedConnections": {
+            "recommendedValue": true,
+            "explanation": "When enabled, the default behaviour of OIDC provider will reject unauthorized connections"
+          },
+          "@aws-cdk/core:enableAdditionalMetadataCollection": {
+            "recommendedValue": true,
+            "explanation": "When enabled, CDK will expand the scope of usage data collected to better inform CDK development and improve communication for security concerns and emerging issues."
+          },
+          "@aws-cdk/aws-lambda:createNewPoliciesWithAddToRolePolicy": {
+            "recommendedValue": false,
+            "explanation": "[Deprecated] When enabled, Lambda will create new inline policies with AddToRolePolicy instead of adding to the Default Policy Statement"
+          },
+          "@aws-cdk/aws-s3:setUniqueReplicationRoleName": {
+            "recommendedValue": true,
+            "explanation": "When enabled, CDK will automatically generate a unique role name that is used for s3 object replication."
+          },
+          "@aws-cdk/pipelines:reduceStageRoleTrustScope": {
+            "recommendedValue": true,
+            "explanation": "Remove the root account principal from Stage addActions trust policy",
+            "unconfiguredBehavesLike": {
+              "v2": true
+            }
+          },
+          "@aws-cdk/aws-events:requireEventBusPolicySid": {
+            "recommendedValue": true,
+            "explanation": "When enabled, grantPutEventsTo() will use resource policies with Statement IDs for service principals."
+          },
+          "@aws-cdk/core:aspectPrioritiesMutating": {
+            "recommendedValue": true,
+            "explanation": "When set to true, Aspects added by the construct library on your behalf will be given a priority of MUTATING."
+          },
+          "@aws-cdk/aws-dynamodb:retainTableReplica": {
+            "recommendedValue": true,
+            "explanation": "When enabled, table replica will be default to the removal policy of source table unless specified otherwise."
+          },
+          "@aws-cdk/cognito:logUserPoolClientSecretValue": {
+            "recommendedValue": false,
+            "explanation": "When disabled, the value of the user pool client secret will not be logged in the custom resource lambda function logs."
+          },
+          "@aws-cdk/pipelines:reduceCrossAccountActionRoleTrustScope": {
+            "recommendedValue": true,
+            "explanation": "When enabled, scopes down the trust policy for the cross-account action role",
+            "unconfiguredBehavesLike": {
+              "v2": true
+            }
+          },
+          "@aws-cdk/aws-stepfunctions:useDistributedMapResultWriterV2": {
+            "recommendedValue": true,
+            "explanation": "When enabled, the resultWriterV2 property of DistributedMap will be used insted of resultWriter"
+          },
+          "@aws-cdk/s3-notifications:addS3TrustKeyPolicyForSnsSubscriptions": {
+            "recommendedValue": true,
+            "explanation": "Add an S3 trust policy to a KMS key resource policy for SNS subscriptions."
+          },
+          "@aws-cdk/aws-ec2:requirePrivateSubnetsForEgressOnlyInternetGateway": {
+            "recommendedValue": true,
+            "explanation": "When enabled, the EgressOnlyGateway resource is only created if private subnets are defined in the dual-stack VPC."
+          },
+          "@aws-cdk/aws-ec2-alpha:useResourceIdForVpcV2Migration": {
+            "recommendedValue": false,
+            "explanation": "When enabled, use resource IDs for VPC V2 migration"
+          },
+          "@aws-cdk/aws-s3:publicAccessBlockedByDefault": {
+            "recommendedValue": true,
+            "explanation": "When enabled, setting any combination of options for BlockPublicAccess will automatically set true for any options not defined."
+          },
+          "@aws-cdk/aws-lambda:useCdkManagedLogGroup": {
+            "recommendedValue": true,
+            "explanation": "When enabled, CDK creates and manages loggroup for the lambda function"
+          },
+          "@aws-cdk/aws-elasticloadbalancingv2:networkLoadBalancerWithSecurityGroupByDefault": {
+            "recommendedValue": true,
+            "explanation": "When enabled, Network Load Balancer will be created with a security group by default."
+          },
+          "@aws-cdk/aws-stepfunctions-tasks:httpInvokeDynamicJsonPathEndpoint": {
+            "recommendedValue": true,
+            "explanation": "When enabled, allows using a dynamic apiEndpoint with JSONPath format in HttpInvoke tasks.",
+            "unconfiguredBehavesLike": {
+              "v2": true
+            }
+          },
+          "@aws-cdk/aws-ecs-patterns:uniqueTargetGroupId": {
+            "recommendedValue": true,
+            "explanation": "When enabled, ECS patterns will generate unique target group IDs to prevent conflicts during load balancer replacement"
+          }
+        }
+      }
+    }
+  },
+  "minimumCliVersion": "2.1033.0"
+}

@@ -4,6 +4,7 @@ import { TaxProfile, ChatMessage } from '../types';
 import { getTaxAdvice } from '../services/geminiService';
 import { DISCLAIMER_TEXT, AI_QUERY_LIMIT_FREE, LEARNING_ARTICLES } from '../constants';
 import { Send, Bot, User, ShieldAlert, ChevronRight, Lock, ArrowLeft, BookOpen, ChevronLeft } from 'lucide-react';
+import { LogoIcon } from './Logo';
 
 interface EducationHubProps {
   profile: TaxProfile;
@@ -13,7 +14,7 @@ interface EducationHubProps {
 const EducationHub: React.FC<EducationHubProps> = ({ profile, onUsageUpdate }) => {
   const [query, setQuery] = useState('');
   const [history, setHistory] = useState<ChatMessage[]>([
-    { role: 'model', text: `Hello ${profile.name}! I'm LevyMate AI. I can explain tax laws or analyze your potential deductions. What's on your mind?` }
+    { role: 'model', text: `Hello ${profile.name}! I'm Levy. I can explain tax laws or analyze your potential deductions. What's on your mind?` }
   ]);
   const [loading, setLoading] = useState(false);
   const [readingArticleId, setReadingArticleId] = useState<number | null>(null);
@@ -150,11 +151,10 @@ const EducationHub: React.FC<EducationHubProps> = ({ profile, onUsageUpdate }) =
             <div className="p-4 border-b border-gray-100 bg-gray-50 flex items-center justify-between">
                 <div className="flex items-center gap-3">
                     <div className="bg-levy-teal text-white p-1.5 rounded-lg">
-                        <Bot size={20} />
+                        <LogoIcon className="w-5 h-5" white />
                     </div>
                     <div>
-                        <h3 className="font-semibold text-gray-800">Tax Assistant</h3>
-                        <p className="text-xs text-gray-500">Powered by Gemini AI</p>
+                        <h3 className="font-semibold text-gray-800">What do you want to know about Tax</h3>
                     </div>
                 </div>
                 <div className="flex items-center gap-2">
@@ -173,10 +173,10 @@ const EducationHub: React.FC<EducationHubProps> = ({ profile, onUsageUpdate }) =
                 <div key={idx} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                     <div className={`flex gap-3 max-w-[85%] ${msg.role === 'user' ? 'flex-row-reverse' : 'flex-row'}`}>
                     <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${msg.role === 'user' ? 'bg-gray-900 text-white' : 'bg-levy-teal text-white'}`}>
-                        {msg.role === 'user' ? <User size={16} /> : <Bot size={16} />}
+                        {msg.role === 'user' ? <User size={16} /> : <LogoIcon className="w-5 h-5" white />}
                     </div>
                     <div className={`p-3 rounded-2xl text-sm leading-relaxed ${
-                        msg.role === 'user' 
+                        msg.role === 'user'  
                         ? 'bg-gray-100 text-gray-800 rounded-tr-none' 
                         : 'bg-levy-tealLight text-gray-800 rounded-tl-none'
                     }`}>

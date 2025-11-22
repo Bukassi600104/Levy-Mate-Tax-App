@@ -1,0 +1,74 @@
+type TaxProfile @model @auth(rules: [{allow: owner, ownerField: "owner"}])
+{
+  name: String!
+  email: String
+  entityType: TaxProfileEntityType
+  persona: TaxProfilePersona
+  stateOfResidence: String!
+  phoneNumber: String
+  annualGrossIncome: Float
+  annualTurnover: Float
+  totalFixedAssets: Float
+  pensionContribution: Float
+  nhfContribution: Float
+  rentPaid: Float
+  lifeInsurance: Float
+  tier: TaxProfileTier
+  aiQueriesToday: Int
+  lastLoginDate: String
+  preferredPolicy: TaxProfilePreferredPolicy
+  transactions: [TransactionModel] @hasMany(references: ["profileId"])
+  createdAt: String
+  updatedAt: String
+}
+
+type TransactionModel @model @auth(rules: [{allow: owner, ownerField: "owner"}])
+{
+  profileId: ID!
+  profile: TaxProfile @belongsTo(references: ["profileId"])
+  type: TransactionModelType
+  date: String!
+  amount: Float!
+  category: String!
+  description: String
+  source: TransactionModelSource
+  isVerified: Boolean
+  isTaxDeductible: Boolean
+  hasInputVat: Boolean
+  createdAt: String
+  updatedAt: String
+}
+
+enum TaxProfileEntityType {
+  Individual
+  Company
+}
+
+enum TaxProfilePersona {
+  SalaryEarner
+  SoleProprietor
+  Freelancer
+  LimitedLiability
+  CryptoTrader
+}
+
+enum TaxProfileTier {
+  Free
+  Pro
+}
+
+enum TaxProfilePreferredPolicy {
+  ACT_2024
+  ACT_2026_PROPOSED
+}
+
+enum TransactionModelType {
+  income
+  expense
+}
+
+enum TransactionModelSource {
+  manual
+  ocr
+  whatsapp
+}

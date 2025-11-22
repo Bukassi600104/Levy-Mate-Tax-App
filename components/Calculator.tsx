@@ -43,11 +43,11 @@ const Calculator: React.FC<CalculatorProps> = ({ profile, setProfile, onResultUp
                 {isCompany ? <Briefcase className="text-levy-amber"/> : <User className="text-levy-blue"/>}
                 {isCompany ? 'Corporate Tax Engine' : 'Personal Tax Engine'}
             </h1>
-            <p className="text-sm text-gray-500">{policy === '2026_PROPOSED' ? 'Using Nigeria Tax Act 2025 Logic' : 'Using Finance Act 2020 Logic'}</p>
+            <p className="text-sm text-gray-500">{policy === 'ACT_2026_PROPOSED' ? 'Using Nigeria Tax Act 2025 Logic' : 'Using Finance Act 2020 Logic'}</p>
           </div>
           <div className="bg-gray-100 p-1 rounded-lg inline-flex text-xs font-bold">
-              <button onClick={() => setPolicy('2024_ACT')} className={`px-3 py-2 rounded-md transition-all ${policy === '2024_ACT' ? 'bg-white shadow text-gray-900' : 'text-gray-500'}`}>2020 Rules</button>
-              <button onClick={() => setPolicy('2026_PROPOSED')} className={`px-3 py-2 rounded-md transition-all flex items-center gap-1 ${policy === '2026_PROPOSED' ? 'bg-levy-blue shadow text-white' : 'text-gray-500'}`}>
+              <button onClick={() => setPolicy('ACT_2024')} className={`px-3 py-2 rounded-md transition-all ${policy === 'ACT_2024' ? 'bg-white shadow text-gray-900' : 'text-gray-500'}`}>2020 Rules</button>
+              <button onClick={() => setPolicy('ACT_2026_PROPOSED')} className={`px-3 py-2 rounded-md transition-all flex items-center gap-1 ${policy === 'ACT_2026_PROPOSED' ? 'bg-levy-blue shadow text-white' : 'text-gray-500'}`}>
                   2026 Rules <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
               </button>
           </div>
@@ -109,7 +109,7 @@ const Calculator: React.FC<CalculatorProps> = ({ profile, setProfile, onResultUp
                                     onChange={(e) => handleInputChange('rentPaid', parseFloat(e.target.value) || 0)}
                                     className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-levy-blue/30 bg-gray-50 focus:bg-white text-gray-900"
                                 />
-                                {policy === '2026_PROPOSED' && (
+                                {policy === 'ACT_2026_PROPOSED' && (
                                     <p className="text-[10px] text-green-600 mt-1 font-medium">
                                         Deduction: {formatNaira(Math.min(profile.rentPaid * 0.2, 500000))}
                                     </p>

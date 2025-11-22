@@ -19,8 +19,8 @@ const schema = a.schema({
     // User Identity
     name: a.string().required(),
     email: a.string(),
-    entityType: a.enum(['Individual', 'Company']).required(), // From EntityType enum
-    persona: a.enum(['Salary Earner', 'Sole Proprietor / Enterprise', 'Freelancer', 'Limited Liability Co (Ltd)', 'Crypto Trader']).required(),
+    entityType: a.enum(['Individual', 'Company']), // From EntityType enum
+    persona: a.enum(['SalaryEarner', 'SoleProprietor', 'Freelancer', 'LimitedLiability', 'CryptoTrader']),
     
     // Contact & Compliance
     stateOfResidence: a.string().required(),
@@ -38,12 +38,12 @@ const schema = a.schema({
     lifeInsurance: a.float(), // annual
 
     // Subscription & Usage
-    tier: a.enum(['Free', 'Pro']).required(),
+    tier: a.enum(['Free', 'Pro']),
     aiQueriesToday: a.integer(), // Resets daily (handled in service)
     lastLoginDate: a.string(), // ISO 8601 date
 
     // Tax Policy Preference
-    preferredPolicy: a.enum(['2024_ACT', '2026_PROPOSED']).required(),
+    preferredPolicy: a.enum(['ACT_2024', 'ACT_2026_PROPOSED']),
 
     // Related Transactions (one-to-many relationship)
     transactions: a.hasMany('TransactionModel', 'profileId'),
@@ -67,7 +67,7 @@ const schema = a.schema({
     profile: a.belongsTo('TaxProfile', 'profileId'),
 
     // Transaction Details
-    type: a.enum(['income', 'expense']).required(),
+    type: a.enum(['income', 'expense']),
     date: a.string().required(), // ISO 8601
     amount: a.float().required(), // In Naira
     category: a.string().required(), // e.g. 'Salary', 'Supplies', 'Rent'

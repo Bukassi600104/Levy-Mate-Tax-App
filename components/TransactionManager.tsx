@@ -2,9 +2,10 @@
 import React, { useState, useRef } from 'react';
 import { TaxProfile, Transaction, TransactionType, EntityType } from '../types';
 import { INCOME_CATEGORIES, EXPENSE_CATEGORIES } from '../constants';
-import { Plus, Trash2, Camera, Filter, Search, X, Calendar, ArrowUpCircle, ArrowDownCircle, Zap, MoreHorizontal, Lock, Smartphone } from 'lucide-react';
+import { Plus, Trash2, Camera, Filter, Search, X, Calendar, ArrowUpCircle, ArrowDownCircle, Zap, MoreHorizontal, Lock, Smartphone, Download } from 'lucide-react';
 import { parseReceiptImage } from '../services/geminiService';
 import { createTransaction, deleteTransaction as deleteTransactionDB, updateTransaction } from '../services/amplifyService';
+import { validateAndSecureFile } from '../services/security';
 
 interface TransactionManagerProps {
   profile: TaxProfile;
@@ -15,6 +16,8 @@ const TransactionManager: React.FC<TransactionManagerProps> = ({ profile, setPro
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [viewFilter, setViewFilter] = useState<'all' | 'income' | 'expense'>('all');
   const [searchTerm, setSearchTerm] = useState('');
+  const [isScanning, setIsScanning] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const isPro = profile.tier === 'Pro';
   
   // Form State
@@ -28,11 +31,79 @@ const TransactionManager: React.FC<TransactionManagerProps> = ({ profile, setPro
     hasInputVat: false
   });
 
+  const handleScanClick = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setIsScanning(true);
+    try {
+        // 1. Security Check
+        const secureFile = await validateAndSecureFile(file);
+        
+        // 2. Convert to Base64 for Gemini
+        const reader = new FileReader();
+        reader.onloadend = async () => {
+            const base64String = reader.result as string;
+            // Remove data URL prefix (e.g., "data:image/jpeg;base64,")
+            const base64Content = base64String.split(',')[1];
+            
+            try {
+                const extractedData = await parseReceiptImage(base64Content);
+                
+                // 3. Populate Form
+                setForm(prev => ({
+                    ...prev,
+                    amount: extractedData.amount || prev.amount,
+                    date: extractedData.date || prev.date,
+                    description: extractedData.description || prev.description,
+                    category: extractedData.category || prev.category,
+                    type: 'expense' // Receipts are usually expenses
+                }));
+                
+                setIsAddModalOpen(true);
+            } catch (err) {
+                console.error(err);
+                alert("Failed to extract data from receipt. Please try again.");
+            } finally {
+                setIsScanning(false);
+            }
+        };
+        reader.readAsDataURL(secureFile);
+        
+    } catch (error: any) {
+        alert(error.message);
+        setIsScanning(false);
+    }
+    
+    // Reset input
+    if (fileInputRef.current) fileInputRef.current.value = '';
+  };
+
   const addTransaction = async () => {
     if (!form.amount || !form.description) return;
     if (!profile.id) {
       console.error('Profile ID required to add transaction');
       return;
+    }
+
+    // Check Limits for Free Plan
+    if (!isPro) {
+        const currentMonth = new Date().getMonth();
+        const currentYear = new Date().getFullYear();
+        
+        const monthlyTransactions = profile.transactions.filter(t => {
+            const tDate = new Date(t.date);
+            return tDate.getMonth() === currentMonth && tDate.getFullYear() === currentYear && t.type === form.type;
+        });
+
+        if (monthlyTransactions.length >= 50) {
+            alert(`You have reached your monthly limit of 50 ${form.type} entries. Upgrade to Pro for unlimited entries.`);
+            return;
+        }
     }
     
     const newTx: Omit<Transaction, 'id'> = {
@@ -89,6 +160,87 @@ const TransactionManager: React.FC<TransactionManagerProps> = ({ profile, setPro
     }
   };
 
+  const exportReport = () => {
+    if (!profile.transactions.length) return;
+
+    // Simple HTML escaping to prevent XSS
+    const escapeHtml = (unsafe: string) => {
+        return unsafe
+             .replace(/&/g, "&amp;")
+             .replace(/</g, "&lt;")
+             .replace(/>/g, "&gt;")
+             .replace(/"/g, "&quot;")
+             .replace(/'/g, "&#039;");
+    };
+
+    const htmlContent = `
+      <!DOCTYPE html>
+      <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>LevyMate Transaction Report</title>
+        <style>
+          body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; padding: 40px; max-width: 1000px; margin: 0 auto; color: #333; }
+          h1 { color: #1D4ED8; margin-bottom: 10px; }
+          .meta { margin-bottom: 30px; color: #666; font-size: 14px; }
+          table { width: 100%; border-collapse: collapse; margin-top: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+          th { background-color: #f8fafc; text-align: left; padding: 12px 16px; font-weight: 600; border-bottom: 2px solid #e2e8f0; color: #475569; }
+          td { padding: 12px 16px; border-bottom: 1px solid #e2e8f0; font-size: 14px; }
+          tr:hover { background-color: #f8fafc; }
+          .amount { text-align: right; font-family: monospace; font-weight: 600; }
+          .income { color: #16a34a; }
+          .expense { color: #dc2626; }
+          .footer { margin-top: 40px; font-size: 12px; color: #94a3b8; text-align: center; border-top: 1px solid #e2e8f0; padding-top: 20px; }
+        </style>
+      </head>
+      <body>
+        <h1>Transaction Report</h1>
+        <div class="meta">
+          <p><strong>Generated for:</strong> ${escapeHtml(profile.name)}</p>
+          <p><strong>Date:</strong> ${new Date().toLocaleDateString()}</p>
+        </div>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Description</th>
+              <th>Category</th>
+              <th style="text-align: right">Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${profile.transactions.map(t => `
+              <tr>
+                <td>${escapeHtml(t.date)}</td>
+                <td>${escapeHtml(t.description)}</td>
+                <td><span style="background: #f1f5f9; padding: 2px 8px; border-radius: 12px; font-size: 12px;">${escapeHtml(t.category)}</span></td>
+                <td class="amount ${t.type === 'income' ? 'income' : 'expense'}">
+                  ${t.type === 'income' ? '+' : '-'} ₦${t.amount.toLocaleString()}
+                </td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+
+        <div class="footer">
+          Generated by LevyMate Tax App
+        </div>
+      </body>
+      </html>
+    `;
+
+    const blob = new Blob([htmlContent], { type: 'text/html;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.setAttribute('href', url);
+    link.setAttribute('download', `levymate_report_${new Date().toISOString().split('T')[0]}.html`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   const isCompany = profile.entityType === EntityType.COMPANY;
 
   // Filter transactions
@@ -106,25 +258,40 @@ const TransactionManager: React.FC<TransactionManagerProps> = ({ profile, setPro
                 <p className="text-sm text-gray-500">Track income and {isCompany ? 'Input VAT' : 'deductible expenses'}.</p>
             </div>
             <div className="flex gap-2">
+                <input 
+                    type="file" 
+                    ref={fileInputRef} 
+                    className="hidden" 
+                    accept=".pdf,.png,.jpg,.jpeg"
+                    onChange={handleFileChange}
+                />
                 {/* Pro Features Locked for Free Users */}
                 <button 
-                    disabled={!isPro}
+                    disabled={!isPro || isScanning}
+                    onClick={handleScanClick}
                     className={`px-3 py-2.5 rounded-lg font-medium flex items-center gap-2 transition-colors ${
                         isPro ? 'bg-white border border-gray-200 text-gray-700 hover:bg-gray-50' : 'bg-gray-100 text-gray-400 cursor-not-allowed'
                     }`}
                     title={isPro ? "Scan Receipt" : "Upgrade to Pro to use Receipt Scanning"}
                 >
-                    {isPro ? <Camera size={20} /> : <Lock size={16} />}
-                    <span className="hidden md:inline">Scan Receipt</span>
+                    {isScanning ? (
+                        <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-gray-700"></div>
+                    ) : (
+                        isPro ? <Camera size={20} /> : <Lock size={16} />
+                    )}
+                    <span className="hidden md:inline">{isScanning ? 'Scanning...' : 'Scan Receipt'}</span>
                 </button>
+                
                 <button 
                     disabled={!isPro}
+                    onClick={exportReport}
                     className={`px-3 py-2.5 rounded-lg font-medium flex items-center gap-2 transition-colors ${
                         isPro ? 'bg-white border border-gray-200 text-gray-700 hover:bg-gray-50' : 'bg-gray-100 text-gray-400 cursor-not-allowed'
                     }`}
-                    title={isPro ? "Import from WhatsApp" : "Upgrade to Pro to use WhatsApp Import"}
+                    title={isPro ? "Export Data to HTML Report" : "Upgrade to Pro to Export Data"}
                 >
-                    {isPro ? <Smartphone size={20} /> : <Lock size={16} />}
+                    {isPro ? <Download size={20} /> : <Lock size={16} />}
+                    <span className="hidden md:inline">Export Report</span>
                 </button>
 
                 <button 
@@ -132,7 +299,7 @@ const TransactionManager: React.FC<TransactionManagerProps> = ({ profile, setPro
                         setForm(prev => ({ ...prev, type: 'income' }));
                         setIsAddModalOpen(true);
                     }}
-                    className="bg-levy-teal text-white px-5 py-2.5 rounded-lg font-medium flex items-center gap-2 shadow-md hover:bg-blue-700 transition-colors"
+                    className="bg-levy-blue text-white px-5 py-2.5 rounded-lg font-medium flex items-center gap-2 shadow-md hover:bg-blue-700 transition-colors"
                 >
                     <Plus size={20} /> Record Entry
                 </button>
@@ -231,7 +398,7 @@ const TransactionManager: React.FC<TransactionManagerProps> = ({ profile, setPro
                                     <td className="px-6 py-4 text-right">
                                         <button 
                                             onClick={() => deleteTransaction(t.id)}
-                                            className="text-gray-300 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-all"
+                                            className="text-gray-300 hover:text-red-500 transition-all"
                                             title="Delete Transaction"
                                         >
                                             <Trash2 size={16} />

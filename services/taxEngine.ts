@@ -30,7 +30,7 @@ export class TaxEngine {
   }
 
   // --- MAIN CALCULATOR ---
-  public static calculate(profile: TaxProfile, policy: TaxPolicyYear = '2026_PROPOSED'): TaxResult {
+  public static calculate(profile: TaxProfile, policy: TaxPolicyYear = 'ACT_2026_PROPOSED'): TaxResult {
     const { grossIncome, allowableExpenses, inputVatClaims } = this.getFinancials(profile);
     
     // Assessable Profit (Net Income before tax adjustments)
@@ -62,7 +62,7 @@ export class TaxEngine {
     let citTax = 0;
     let devLevy = 0;
 
-    if (policy === '2026_PROPOSED') {
+    if (policy === 'ACT_2026_PROPOSED') {
       // 1. Small Company Test (Page 8 of Research)
       if (isSmallCompany) {
         citRate = 0;
@@ -146,7 +146,7 @@ export class TaxEngine {
     const nhf = profile.nhfContribution * 12;
     const lifeIns = profile.lifeInsurance; // Annual
 
-    if (policy === '2024_ACT') {
+    if (policy === 'ACT_2024') {
       // Old Logic: CRA
       const craFixed = 200000;
       const craPercent = grossIncome * 0.01;

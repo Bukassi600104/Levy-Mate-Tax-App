@@ -49,7 +49,7 @@ npm run dev
 - **Email Verification**: Real Cognito User Pool integration
 - **Cloud Data Persistence**: DynamoDB sync
 - **Multi-Device Sync**: Access profiles from any device
-- **AI Assistant**: Receipt OCR and WhatsApp parsing
+- **AI Assistant**: Receipt OCR
 - **Tax Reports**: PDF export of calculations
 
 ## Architecture

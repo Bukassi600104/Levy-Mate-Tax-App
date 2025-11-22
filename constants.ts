@@ -1,4 +1,3 @@
-
 import { PersonaType } from './types';
 
 // --- 2024 OLD REGIME (Finance Act 2020) ---
@@ -35,6 +34,14 @@ export const PERSONA_DESCRIPTIONS: Record<PersonaType, string> = {
   [PersonaType.CRYPTO]: "Digital Asset Trader. Capital Gains Tax applies."
 };
 
+export const PERSONA_LABELS: Record<PersonaType, string> = {
+  [PersonaType.SALARY]: "Salary Earner",
+  [PersonaType.BUSINESS]: "Sole Proprietor / Enterprise",
+  [PersonaType.FREELANCER]: "Freelancer",
+  [PersonaType.COMPANY]: "Limited Liability Co (Ltd)",
+  [PersonaType.CRYPTO]: "Crypto Trader"
+};
+
 export const INCOME_CATEGORIES = [
   "Salary", "Business Sales", "Freelance Project", "Crypto Gains", "Rental Income", "Severance Package", "Other"
 ];
@@ -67,14 +74,16 @@ export const PLAN_FEATURES = {
     Free: [
         "Basic Tax Calculator (PIT/CIT)",
         "Manual Income & Expense Tracking",
+        "Limit: 50 Income & 50 Expense Entries / Month",
         "Basic Yearly Reporting",
         "5 AI Tax Queries / Day",
         "Access to Education Hub"
     ],
     Pro: [
         "Everything in Free",
+        "Unlimited Income & Expense Entries",
         "Smart Receipt Scanning (OCR)",
-        "WhatsApp Chat Import",
+        "Export Data to CSV",
         "Advanced Monthly/Quarterly Trends",
         "Unlimited AI Tax Assistant",
         "VAT Input Credit Optimization",

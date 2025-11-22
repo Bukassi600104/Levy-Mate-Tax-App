@@ -1,0 +1,595 @@
+{
+ "Resources": {
+  "TaxProfiletransactionsauth0FunctionTaxProfiletransactionsauth0FunctionAppSyncFunctionBE6FFE95": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPIE6D92EEEApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPINONEDS4BD729D2Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "TaxProfiletransactionsauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/d93611dca70c178d77b1a4c37d837804654d130af6ed41494edf2a38dd838ce6.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/ConnectionStack/TaxProfiletransactionsauth0Function/TaxProfiletransactionsauth0Function.AppSyncFunction"
+   }
+  },
+  "TaxProfileTransactionsDataResolverFnTaxProfileTransactionsDataResolverFnAppSyncFunctionB1036E00": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPIE6D92EEEApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataTransactionModelNestedStackTransactionModelNestedStackResource73D15AD4OutputsamplifylevymateappUSERsandboxa49917ca2adataamplifyDataTransactionModelTransactionModelDataSource63EAE93BName"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "TaxProfileTransactionsDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/8218f12cba2449d79253f36161b2d581348caa8be6e398a7016ad0123cf6fe3f.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/49e7a1f2fb4c809b82bed6b0242a2a3bcfa2c5276ebd2539ff330fee36f8fe18.vtl"
+    }
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/ConnectionStack/TaxProfileTransactionsDataResolverFn/TaxProfileTransactionsDataResolverFn.AppSyncFunction"
+   }
+  },
+  "TaxProfiletransactionsResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPIE6D92EEEApiId"
+    },
+    "FieldName": "transactions",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "TaxProfiletransactionsauth0FunctionTaxProfiletransactionsauth0FunctionAppSyncFunctionBE6FFE95",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "TaxProfileTransactionsDataResolverFnTaxProfileTransactionsDataResolverFnAppSyncFunctionB1036E00",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"TaxProfile\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"transactions\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"AMAZON_DYNAMODB\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPIE6D92EEEApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n$util.qr($ctx.stash.put(\"tableName\", \"",
+       {
+        "Fn::Select": [
+         1,
+         {
+          "Fn::Split": [
+           "/",
+           {
+            "Fn::Select": [
+             5,
+             {
+              "Fn::Split": [
+               ":",
+               {
+                "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataTransactionModelNestedStackTransactionModelNestedStackResource73D15AD4OutputsamplifylevymateappUSERsandboxa49917ca2adataamplifyDataTransactionModelTransactionModelTableFEFA973BTableArn"
+               }
+              ]
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"authRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2aauthNestedStackauthNestedStackResource03F9E02FOutputsamplifylevymateappUSERsandboxa49917ca2aauthamplifyAuthauthenticatedUserRole367B16F5Ref"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2aauthNestedStackauthNestedStackResource03F9E02FOutputsamplifylevymateappUSERsandboxa49917ca2aauthamplifyAuthunauthenticatedUserRole43CEF93ARef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"",
+       {
+        "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2aauthNestedStackauthNestedStackResource03F9E02FOutputsamplifylevymateappUSERsandboxa49917ca2aauthamplifyAuthIdentityPoolBA2D88B6Ref"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "TaxProfile"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/ConnectionStack/taxProfileTransactionsResolver"
+   }
+  },
+  "TransactionModelprofileauth0FunctionTransactionModelprofileauth0FunctionAppSyncFunctionBCC42520": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPIE6D92EEEApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPINONEDS4BD729D2Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "TransactionModelprofileauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/d93611dca70c178d77b1a4c37d837804654d130af6ed41494edf2a38dd838ce6.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/ConnectionStack/TransactionModelprofileauth0Function/TransactionModelprofileauth0Function.AppSyncFunction"
+   }
+  },
+  "TransactionModelProfileDataResolverFnTransactionModelProfileDataResolverFnAppSyncFunction0F5470FD": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPIE6D92EEEApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataTaxProfileNestedStackTaxProfileNestedStackResourceD30CFB5EOutputsamplifylevymateappUSERsandboxa49917ca2adataamplifyDataTaxProfileTaxProfileDataSource5F6EC2C2Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "TransactionModelProfileDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/d605d3a66cc0e10ccf7383f0b0651fde6b0904ac58cde10888f115accbf6b67e.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/dcb70e4856bc9a423e02b8b9e9c2ab3f71479784572d4c04a02d1f5b61a9f9ac.vtl"
+    }
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/ConnectionStack/TransactionModelProfileDataResolverFn/TransactionModelProfileDataResolverFn.AppSyncFunction"
+   }
+  },
+  "TransactionModelprofileResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPIE6D92EEEApiId"
+    },
+    "FieldName": "profile",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "TransactionModelprofileauth0FunctionTransactionModelprofileauth0FunctionAppSyncFunctionBCC42520",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "TransactionModelProfileDataResolverFnTransactionModelProfileDataResolverFnAppSyncFunction0F5470FD",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"TransactionModel\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"profile\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"AMAZON_DYNAMODB\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPIE6D92EEEApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n$util.qr($ctx.stash.put(\"tableName\", \"",
+       {
+        "Fn::Select": [
+         1,
+         {
+          "Fn::Split": [
+           "/",
+           {
+            "Fn::Select": [
+             5,
+             {
+              "Fn::Split": [
+               ":",
+               {
+                "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataTaxProfileNestedStackTaxProfileNestedStackResourceD30CFB5EOutputsamplifylevymateappUSERsandboxa49917ca2adataamplifyDataTaxProfileTaxProfileTableF447C3E9TableArn"
+               }
+              ]
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"authRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2aauthNestedStackauthNestedStackResource03F9E02FOutputsamplifylevymateappUSERsandboxa49917ca2aauthamplifyAuthauthenticatedUserRole367B16F5Ref"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2aauthNestedStackauthNestedStackResource03F9E02FOutputsamplifylevymateappUSERsandboxa49917ca2aauthamplifyAuthunauthenticatedUserRole43CEF93ARef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"",
+       {
+        "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2aauthNestedStackauthNestedStackResource03F9E02FOutputsamplifylevymateappUSERsandboxa49917ca2aauthamplifyAuthIdentityPoolBA2D88B6Ref"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "TransactionModel"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/ConnectionStack/transactionModelProfileResolver"
+   }
+  },
+  "CDKMetadata": {
+   "Type": "AWS::CDK::Metadata",
+   "Properties": {
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/yXMQQ6CMBBA0bOwLyOWeAAhcekCDkDGMpABnBKmhRjC3Q26evmbb8HaG2QJbpq6dkwnfsH+JA3U1gHdaHDTZte8QVUKCvcTozkU0Y0UClQyOM/6EQd72ckjigvspfTScR8XPMOUnVSkflppOQ7ze9QBe5b+MOJbgkEvq7VwtZAlgzKnS5TAb4Lq7xeCj0IZpwAAAA=="
+   },
+   "Metadata": {
+    "aws:cdk:path": "amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/ConnectionStack/CDKMetadata/Default"
+   },
+   "Condition": "CDKMetadataAvailable"
+  }
+ },
+ "Conditions": {
+  "CDKMetadataAvailable": {
+   "Fn::Or": [
+    {
+     "Fn::Or": [
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "af-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-east-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-northeast-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-northeast-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-northeast-3"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-south-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-southeast-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-southeast-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-southeast-3"
+       ]
+      }
+     ]
+    },
+    {
+     "Fn::Or": [
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-southeast-4"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ca-central-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ca-west-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "cn-north-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "cn-northwest-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-central-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-central-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-north-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-south-2"
+       ]
+      }
+     ]
+    },
+    {
+     "Fn::Or": [
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-west-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-west-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-west-3"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "il-central-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "me-central-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "me-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "sa-east-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-east-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-east-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-west-1"
+       ]
+      }
+     ]
+    },
+    {
+     "Fn::Equals": [
+      {
+       "Ref": "AWS::Region"
+      },
+      "us-west-2"
+     ]
+    }
+   ]
+  }
+ },
+ "Parameters": {
+  "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPIE6D92EEEApiId": {
+   "Type": "String"
+  },
+  "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPINONEDS4BD729D2Name": {
+   "Type": "String"
+  },
+  "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataTransactionModelNestedStackTransactionModelNestedStackResource73D15AD4OutputsamplifylevymateappUSERsandboxa49917ca2adataamplifyDataTransactionModelTransactionModelDataSource63EAE93BName": {
+   "Type": "String"
+  },
+  "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataTransactionModelNestedStackTransactionModelNestedStackResource73D15AD4OutputsamplifylevymateappUSERsandboxa49917ca2adataamplifyDataTransactionModelTransactionModelTableFEFA973BTableArn": {
+   "Type": "String"
+  },
+  "referencetoamplifylevymateappUSERsandboxa49917ca2aauthNestedStackauthNestedStackResource03F9E02FOutputsamplifylevymateappUSERsandboxa49917ca2aauthamplifyAuthauthenticatedUserRole367B16F5Ref": {
+   "Type": "String"
+  },
+  "referencetoamplifylevymateappUSERsandboxa49917ca2aauthNestedStackauthNestedStackResource03F9E02FOutputsamplifylevymateappUSERsandboxa49917ca2aauthamplifyAuthunauthenticatedUserRole43CEF93ARef": {
+   "Type": "String"
+  },
+  "referencetoamplifylevymateappUSERsandboxa49917ca2aauthNestedStackauthNestedStackResource03F9E02FOutputsamplifylevymateappUSERsandboxa49917ca2aauthamplifyAuthIdentityPoolBA2D88B6Ref": {
+   "Type": "String"
+  },
+  "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataTaxProfileNestedStackTaxProfileNestedStackResourceD30CFB5EOutputsamplifylevymateappUSERsandboxa49917ca2adataamplifyDataTaxProfileTaxProfileDataSource5F6EC2C2Name": {
+   "Type": "String"
+  },
+  "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataTaxProfileNestedStackTaxProfileNestedStackResourceD30CFB5EOutputsamplifylevymateappUSERsandboxa49917ca2adataamplifyDataTaxProfileTaxProfileTableF447C3E9TableArn": {
+   "Type": "String"
+  }
+ }
+}

@@ -9,11 +9,11 @@ declare global {
 }
 
 export enum PersonaType {
-  SALARY = 'Salary Earner',
-  BUSINESS = 'Sole Proprietor / Enterprise',
+  SALARY = 'SalaryEarner',
+  BUSINESS = 'SoleProprietor',
   FREELANCER = 'Freelancer',
-  COMPANY = 'Limited Liability Co (Ltd)',
-  CRYPTO = 'Crypto Trader'
+  COMPANY = 'LimitedLiability',
+  CRYPTO = 'CryptoTrader'
 }
 
 export enum EntityType {
@@ -21,10 +21,10 @@ export enum EntityType {
   COMPANY = 'Company'
 }
 
-export type TransactionSource = 'manual' | 'ocr' | 'whatsapp';
+export type TransactionSource = 'manual' | 'ocr';
 export type TransactionType = 'income' | 'expense';
 export type UserTier = 'Free' | 'Pro';
-export type TaxPolicyYear = '2024_ACT' | '2026_PROPOSED';
+export type TaxPolicyYear = 'ACT_2024' | 'ACT_2026_PROPOSED';
 export type TimeFrame = 'monthly' | 'quarterly' | 'yearly';
 
 export interface Transaction {

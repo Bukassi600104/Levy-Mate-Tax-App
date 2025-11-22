@@ -1,4 +1,4 @@
-import { signUp, signIn, signOut, getCurrentUser, confirmSignUp } from 'aws-amplify/auth';
+import { signUp, signIn, signOut, getCurrentUser, confirmSignUp, fetchUserAttributes, resendSignUpCode, resetPassword, confirmResetPassword } from 'aws-amplify/auth';
 import { Amplify } from 'aws-amplify';
 
 /**
@@ -15,6 +15,12 @@ export interface SignUpInput {
 export interface SignInInput {
   email: string;
   password: string;
+}
+
+export interface ResetPasswordInput {
+  email: string;
+  code: string;
+  newPassword: string;
 }
 
 export interface CurrentUser {
@@ -44,6 +50,49 @@ export const authSignUp = async (input: SignUpInput): Promise<{ userId: string; 
     };
   } catch (error) {
     console.error('Sign up error:', error);
+    throw error;
+  }
+};
+
+/**
+ * Resend sign-up confirmation code
+ */
+export const authResendSignUpCode = async (email: string): Promise<void> => {
+  try {
+    await resendSignUpCode({
+      username: email
+    });
+  } catch (error) {
+    console.error('Resend code error:', error);
+    throw error;
+  }
+};
+
+/**
+ * Initiate password reset (Forgot Password)
+ */
+export const authForgotPassword = async (email: string): Promise<{ nextStep: any }> => {
+  try {
+    const output = await resetPassword({ username: email });
+    return { nextStep: output.nextStep };
+  } catch (error) {
+    console.error('Forgot password error:', error);
+    throw error;
+  }
+};
+
+/**
+ * Confirm password reset with code and new password
+ */
+export const authConfirmResetPassword = async (input: ResetPasswordInput): Promise<void> => {
+  try {
+    await confirmResetPassword({
+      username: input.email,
+      confirmationCode: input.code,
+      newPassword: input.newPassword
+    });
+  } catch (error) {
+    console.error('Confirm reset password error:', error);
     throw error;
   }
 };
@@ -87,9 +136,11 @@ export const authSignIn = async (input: SignInInput): Promise<{ isSignedIn: bool
 export const authGetCurrentUser = async (): Promise<CurrentUser | null> => {
   try {
     const user = await getCurrentUser();
+    // Optimization: Don't fetch attributes here to speed up auth checks.
+    // If email is needed, use authGetUserAttributes() or check user.signInDetails
     return {
       userId: user.userId,
-      email: user.userAttributes?.email,
+      email: user.signInDetails?.loginId,
       username: user.username,
     };
   } catch (error) {

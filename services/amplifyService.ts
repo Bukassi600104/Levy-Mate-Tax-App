@@ -36,7 +36,8 @@ export const createProfile = async (profile: Omit<TaxProfile, 'id'>): Promise<an
       lastLoginDate: profile.lastLoginDate,
       preferredPolicy: profile.preferredPolicy,
     });
-    return result.data;
+    // Return with empty transactions array to satisfy TaxProfile interface
+    return { ...result.data, transactions: [] };
   } catch (error) {
     console.error('Error creating profile:', error);
     throw error;
@@ -50,8 +51,15 @@ export const createProfile = async (profile: Omit<TaxProfile, 'id'>): Promise<an
 export const getProfile = async (): Promise<any> => {
   try {
     const result = await client.models.TaxProfile.list();
-    // Should only return the authenticated user's profiles (typically one)
-    return result.data?.[0] || null;
+    const profile = result.data?.[0] || null;
+    
+    if (profile) {
+      // Fetch transactions for this profile
+      const transactions = await getTransactionsByProfile(profile.id);
+      return { ...profile, transactions };
+    }
+    
+    return null;
   } catch (error) {
     console.error('Error fetching profile:', error);
     throw error;
@@ -76,9 +84,13 @@ export const getProfileById = async (id: string): Promise<any> => {
  */
 export const updateProfile = async (id: string, updates: Partial<TaxProfile>): Promise<any> => {
   try {
+    // Remove transactions from updates as it's a relation and handled separately
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { transactions, ...safeUpdates } = updates;
+
     const result = await client.models.TaxProfile.update({
       id,
-      ...updates,
+      ...safeUpdates,
     });
     return result.data;
   } catch (error) {
