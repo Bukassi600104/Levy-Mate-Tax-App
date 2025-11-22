@@ -42,6 +42,7 @@ export interface Transaction {
 export interface TaxProfile {
   id?: string; // Database ID (optional until saved to cloud)
   name: string;
+  email?: string; // Added for Paystack and notifications
   entityType: EntityType;
   persona: PersonaType;
   

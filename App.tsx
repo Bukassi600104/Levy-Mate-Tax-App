@@ -248,6 +248,7 @@ const App: React.FC = () => {
     
     const newProfile: TaxProfile = {
       name: formData.name,
+      email: formData.email,
       entityType: formData.entityType,
       persona: formData.persona,
       stateOfResidence: formData.state,
@@ -424,6 +425,7 @@ const App: React.FC = () => {
                 handleStart(plan); // Proceed with profile creation
             }}
             planName="Business Pro"
+            email={formData.email}
         />
         
         <div className="flex-1 flex flex-col lg:flex-row">

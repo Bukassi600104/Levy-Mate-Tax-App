@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { X, Lock, ShieldCheck, CreditCard as CardIcon, Check } from 'lucide-react';
+import { X, ShieldCheck, CreditCard as CardIcon } from 'lucide-react';
+import { usePaystackPayment } from 'react-paystack';
 import CreditCard from './CreditCard';
 import Logo from './Logo';
 import { PRO_PRICE_MONTHLY, PRO_PRICE_YEARLY } from '../constants';
@@ -9,59 +10,43 @@ interface CheckoutModalProps {
   onClose: () => void;
   onSuccess: (plan: 'Monthly' | 'Yearly') => void;
   planName: string;
+  email: string;
 }
 
-const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose, onSuccess, planName }) => {
-  const [isProcessing, setIsProcessing] = useState(false);
+const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose, onSuccess, planName, email }) => {
   const [billingCycle, setBillingCycle] = useState<'Monthly' | 'Yearly'>('Monthly');
-  const [cardDetails, setCardDetails] = useState({
-    number: '',
-    expiry: '',
-    cvc: '',
-    name: ''
-  });
-
+  
   const planPrice = billingCycle === 'Monthly' ? PRO_PRICE_MONTHLY : PRO_PRICE_YEARLY;
   const yearlyDiscount = Math.round(((PRO_PRICE_MONTHLY * 12) - PRO_PRICE_YEARLY) / (PRO_PRICE_MONTHLY * 12) * 100);
+
+  // Paystack Configuration
+  const config = {
+    reference: (new Date()).getTime().toString(),
+    email: email,
+    amount: planPrice * 100, // Amount is in kobo
+    publicKey: 'pk_live_7dd455a1cdfca998d8708e1ed0c1ce8b32409680',
+    plan: billingCycle === 'Monthly' ? 'PLN_6yev8be7l6wtw4u' : undefined, // Only use plan code for monthly if yearly code isn't provided
+  };
+
+  const initializePayment = usePaystackPayment(config);
+
+  const onSuccessPayment = () => {
+    onSuccess(billingCycle);
+  };
+
+  const onClosePayment = () => {
+    // User closed the popup
+    console.log('Payment closed');
+  };
 
   // Reset state when modal opens
   useEffect(() => {
     if (isOpen) {
-      setIsProcessing(false);
       setBillingCycle('Monthly');
-      setCardDetails({ number: '', expiry: '', cvc: '', name: '' });
     }
   }, [isOpen]);
 
   if (!isOpen) return null;
-
-  const handlePayment = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsProcessing(true);
-
-    // Simulate payment gateway delay
-    setTimeout(() => {
-      setIsProcessing(false);
-      onSuccess(billingCycle);
-    }, 2000);
-  };
-
-  // Format card number with spaces
-  const handleCardNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value.replace(/\D/g, '').substring(0, 16);
-    const formatted = value.replace(/(\d{4})/g, '$1 ').trim();
-    setCardDetails({ ...cardDetails, number: formatted });
-  };
-
-  // Format expiry date
-  const handleExpiryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value.replace(/\D/g, '').substring(0, 4);
-    let formatted = value;
-    if (value.length >= 2) {
-      formatted = `${value.substring(0, 2)}/${value.substring(2)}`;
-    }
-    setCardDetails({ ...cardDetails, expiry: formatted });
-  };
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-200">
@@ -81,7 +66,7 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose, onSucces
 
             <div className="mb-8 transform scale-90 origin-left">
               <CreditCard 
-                name={cardDetails.name || "YOUR NAME"} 
+                name={email.split('@')[0].toUpperCase() || "YOUR NAME"} 
                 amount={`₦${planPrice.toLocaleString()}`} 
                 label={planName} 
                 variant="dark" 
@@ -128,8 +113,8 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose, onSucces
           </div>
         </div>
 
-        {/* RIGHT SIDE: Payment Form */}
-        <div className="w-full md:w-7/12 p-8 relative">
+        {/* RIGHT SIDE: Payment Action */}
+        <div className="w-full md:w-7/12 p-8 relative flex flex-col justify-center">
           <button 
             onClick={onClose}
             className="absolute top-6 right-6 text-gray-400 hover:text-gray-600 p-2 hover:bg-gray-100 rounded-full transition-colors"
@@ -137,96 +122,38 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose, onSucces
             <X size={20} />
           </button>
 
-          <div className="mb-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">Payment Details</h2>
-            <p className="text-gray-500 text-sm">Complete your purchase to unlock Pro features.</p>
+          <div className="mb-8 text-center">
+            <h2 className="text-2xl font-bold text-gray-900 mb-2">Complete Your Purchase</h2>
+            <p className="text-gray-500 text-sm">You will be redirected to Paystack to complete your payment securely.</p>
           </div>
 
-          <form onSubmit={handlePayment} className="space-y-6">
-            <div className="space-y-4">
-              <div>
-                <label className="block text-xs font-bold text-gray-500 uppercase mb-1.5">Cardholder Name</label>
-                <input 
-                  type="text" 
-                  required
-                  placeholder="John Doe"
-                  value={cardDetails.name}
-                  onChange={(e) => setCardDetails({...cardDetails, name: e.target.value.toUpperCase()})}
-                  className="w-full p-3.5 bg-gray-50 border border-gray-200 rounded-xl outline-none focus:ring-2 focus:ring-levy-blue/20 focus:border-levy-blue transition-all font-medium text-gray-900 placeholder:text-gray-400"
-                />
-              </div>
-
-              <div>
-                <label className="block text-xs font-bold text-gray-500 uppercase mb-1.5">Card Number</label>
-                <div className="relative">
-                  <CardIcon className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
-                  <input 
-                    type="text" 
-                    required
-                    placeholder="0000 0000 0000 0000"
-                    value={cardDetails.number}
-                    onChange={handleCardNumberChange}
-                    maxLength={19}
-                    className="w-full pl-12 pr-4 p-3.5 bg-gray-50 border border-gray-200 rounded-xl outline-none focus:ring-2 focus:ring-levy-blue/20 focus:border-levy-blue transition-all font-mono text-gray-900 placeholder:text-gray-400"
-                  />
+          <div className="space-y-6 max-w-sm mx-auto w-full">
+            <div className="bg-gray-50 p-4 rounded-xl border border-gray-100">
+                <div className="flex justify-between text-sm mb-2">
+                    <span className="text-gray-500">Email</span>
+                    <span className="font-medium text-gray-900">{email}</span>
                 </div>
-              </div>
-
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-xs font-bold text-gray-500 uppercase mb-1.5">Expiry Date</label>
-                  <input 
-                    type="text" 
-                    required
-                    placeholder="MM/YY"
-                    value={cardDetails.expiry}
-                    onChange={handleExpiryChange}
-                    maxLength={5}
-                    className="w-full p-3.5 bg-gray-50 border border-gray-200 rounded-xl outline-none focus:ring-2 focus:ring-levy-blue/20 focus:border-levy-blue transition-all font-mono text-center text-gray-900 placeholder:text-gray-400"
-                  />
+                <div className="flex justify-between text-sm">
+                    <span className="text-gray-500">Amount</span>
+                    <span className="font-bold text-levy-blue">₦{planPrice.toLocaleString()}</span>
                 </div>
-                <div>
-                  <label className="block text-xs font-bold text-gray-500 uppercase mb-1.5">CVC / CVV</label>
-                  <div className="relative">
-                    <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={16} />
-                    <input 
-                      type="password" 
-                      required
-                      placeholder="123"
-                      value={cardDetails.cvc}
-                      onChange={(e) => setCardDetails({...cardDetails, cvc: e.target.value.replace(/\D/g, '').substring(0, 4)})}
-                      maxLength={4}
-                      className="w-full pl-10 pr-4 p-3.5 bg-gray-50 border border-gray-200 rounded-xl outline-none focus:ring-2 focus:ring-levy-blue/20 focus:border-levy-blue transition-all font-mono text-center text-gray-900 placeholder:text-gray-400"
-                    />
-                  </div>
-                </div>
-              </div>
             </div>
 
             <button 
-              type="submit" 
-              disabled={isProcessing || !cardDetails.number || !cardDetails.cvc || !cardDetails.expiry || !cardDetails.name}
-              className="w-full bg-levy-blue text-white py-4 rounded-xl font-bold shadow-lg shadow-blue-900/20 hover:bg-blue-800 hover:shadow-blue-900/30 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              onClick={() => {
+                  initializePayment({onSuccess: onSuccessPayment, onClose: onClosePayment});
+              }}
+              className="w-full bg-levy-blue text-white py-4 rounded-xl font-bold shadow-lg shadow-blue-900/20 hover:bg-blue-800 hover:shadow-blue-900/30 transition-all flex items-center justify-center gap-2"
             >
-              {isProcessing ? (
-                <>
-                  <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-                  Processing...
-                </>
-              ) : (
-                <>
-                  Pay ₦{planPrice.toLocaleString()}
-                </>
-              )}
+              <CardIcon size={20} />
+              Pay with Paystack
             </button>
             
-            <div className="flex justify-center gap-4 opacity-50 grayscale hover:grayscale-0 transition-all duration-500">
-                {/* Mock Payment Logos */}
-                <div className="h-6 w-10 bg-gray-200 rounded"></div>
-                <div className="h-6 w-10 bg-gray-200 rounded"></div>
-                <div className="h-6 w-10 bg-gray-200 rounded"></div>
+            <div className="flex justify-center items-center gap-2 opacity-60">
+                <span className="text-xs text-gray-400">Secured by</span>
+                <img src="https://upload.wikimedia.org/wikipedia/commons/0/0b/Paystack_Logo.png" alt="Paystack" className="h-4 grayscale hover:grayscale-0 transition-all" />
             </div>
-          </form>
+          </div>
         </div>
       </div>
     </div>

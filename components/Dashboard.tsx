@@ -247,6 +247,7 @@ const Dashboard: React.FC<DashboardProps> = ({ profile, onLogout, onProfileUpdat
         onClose={() => setCheckoutModalOpen(false)} 
         onSuccess={handleCheckoutSuccess}
         planName="Business Pro"
+        email={currentProfile.email || ''}
       />
       <DeleteAccountModal 
         isOpen={deleteModalOpen} 
