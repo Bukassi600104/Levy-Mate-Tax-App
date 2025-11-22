@@ -286,7 +286,7 @@ const Dashboard: React.FC<DashboardProps> = ({ profile, onLogout, onProfileUpdat
             <button onClick={onLogout} className="text-gray-400 hover:text-white text-sm flex items-center gap-2 w-full pl-2 mb-4">
                 <Settings size={16} /> Log Out
             </button>
-            <button onClick={() => setDeleteModalOpen(true)} className="text-red-900/50 hover:text-red-500 text-xs flex items-center gap-2 w-full pl-2 transition-colors">
+            <button onClick={() => setDeleteModalOpen(true)} className="text-red-400/60 hover:text-red-400 text-xs flex items-center gap-2 w-full pl-2 transition-colors">
                 <AlertTriangle size={12} /> Delete Account
             </button>
         </div>
