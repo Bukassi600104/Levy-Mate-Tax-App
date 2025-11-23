@@ -20,8 +20,16 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose, onSucces
   const yearlyDiscount = Math.round(((PRO_PRICE_MONTHLY * 12) - PRO_PRICE_YEARLY) / (PRO_PRICE_MONTHLY * 12) * 100);
 
   // Paystack Configuration
+  const [reference, setReference] = useState("");
+
+  useEffect(() => {
+      if (isOpen) {
+          setReference((new Date()).getTime().toString());
+      }
+  }, [isOpen]);
+
   const config = {
-    reference: (new Date()).getTime().toString(),
+    reference: reference,
     email: email,
     amount: planPrice * 100, // Amount is in kobo
     publicKey: 'pk_live_7dd455a1cdfca998d8708e1ed0c1ce8b32409680',
@@ -141,6 +149,11 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose, onSucces
 
             <button 
               onClick={() => {
+                  if (!email) {
+                      console.error("Email is missing for payment");
+                      return;
+                  }
+                  console.log("Initializing Paystack payment...", config);
                   initializePayment({onSuccess: onSuccessPayment, onClose: onClosePayment});
               }}
               className="w-full bg-levy-blue text-white py-4 rounded-xl font-bold shadow-lg shadow-blue-900/20 hover:bg-blue-800 hover:shadow-blue-900/30 transition-all flex items-center justify-center gap-2"
