@@ -7,6 +7,7 @@ import TransactionManager from './TransactionManager';
 import Analytics from './Analytics';
 import { TaxEngine } from '../services/taxEngine';
 import { updateProfile } from '../services/amplifyService';
+import { authGetCurrentUser } from '../services/authService';
 import { COMPLIANCE_DATES, PRICING_PLANS } from '../constants';
 import Logo from './Logo';
 import CreditCard from './CreditCard';
@@ -38,6 +39,24 @@ const Dashboard: React.FC<DashboardProps> = ({ profile, onLogout, onProfileUpdat
     const result = TaxEngine.calculate(currentProfile, currentProfile.preferredPolicy);
     setTaxResult(result);
   }, [currentProfile]);
+
+  // Ensure profile has email (backfill for old profiles)
+  useEffect(() => {
+      const checkEmail = async () => {
+          if (!currentProfile.email) {
+              try {
+                  const user = await authGetCurrentUser();
+                  if (user?.email) {
+                      console.log("Backfilling missing email for profile:", user.email);
+                      setCurrentProfile(prev => ({ ...prev, email: user.email }));
+                  }
+              } catch (e) {
+                  console.error("Failed to fetch auth email", e);
+              }
+          }
+      };
+      checkEmail();
+  }, []);
 
   // Sync profile changes to database (debounced)
   useEffect(() => {
