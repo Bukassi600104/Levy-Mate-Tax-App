@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet-async';
 import { CreditCard as CCIcon, FileText, Calculator, ChevronRight, User, PieChart, ArrowRight, Smartphone, X, Download, Share, LogOut, LayoutDashboard, ChevronDown } from 'lucide-react';
 import Logo from './Logo';
 import CreditCard from './CreditCard';
+import FloatingChatBubble from './FloatingChatBubble';
 
 interface LandingPageProps {
   onGetStarted: () => void;
@@ -390,6 +391,9 @@ const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted, onLogin, openPo
 
       {/* PWA Install Banner (Mobile Only) */}
       {showPWABanner && <PWAInstallBanner onDismiss={handleDismissPWA} />}
+
+      {/* Floating AI Chat Bubble - Available for all visitors */}
+      <FloatingChatBubble onSignUp={onGetStarted} />
     </div>
   );
 };

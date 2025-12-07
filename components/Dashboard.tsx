@@ -815,14 +815,26 @@ const Dashboard: React.FC<DashboardProps> = ({ profile, onLogout, onProfileUpdat
       </main>
 
       {/* Mobile Nav */}
-      <nav className="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-4 pb-safe pt-3 z-50 flex justify-between items-center">
-          <button onClick={() => setActiveTab('home')} className={activeTab === 'home' ? 'text-levy-blue' : 'text-gray-400'}><Home size={22} /></button>
-          <button onClick={() => setActiveTab('transactions')} className={activeTab === 'transactions' ? 'text-levy-blue' : 'text-gray-400'}><List size={22} /></button>
+      <nav className="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-2 pb-safe pt-3 z-50 flex justify-between items-center">
+          <button onClick={() => setActiveTab('home')} className={`flex flex-col items-center gap-0.5 ${activeTab === 'home' ? 'text-levy-blue' : 'text-gray-400'}`}>
+            <Home size={20} />
+            <span className="text-[9px]">Home</span>
+          </button>
+          <button onClick={() => setActiveTab('transactions')} className={`flex flex-col items-center gap-0.5 ${activeTab === 'transactions' ? 'text-levy-blue' : 'text-gray-400'}`}>
+            <List size={20} />
+            <span className="text-[9px]">Records</span>
+          </button>
           <div className="relative -top-6">
-            <button onClick={() => setActiveTab('reports')} className="bg-levy-blue text-white w-14 h-14 rounded-full shadow-xl flex items-center justify-center"><PieChart size={28} /></button>
+            <button onClick={() => setActiveTab('reports')} className="bg-levy-blue text-white w-14 h-14 rounded-full shadow-xl flex items-center justify-center"><PieChart size={26} /></button>
           </div>
-          <button onClick={() => setActiveTab('tax')} className={activeTab === 'tax' ? 'text-levy-blue' : 'text-gray-400'}><Wallet size={22} /></button>
-          <button onClick={() => setActiveTab('settings')} className={activeTab === 'settings' ? 'text-levy-blue' : 'text-gray-400'}><Settings size={22} /></button>
+          <button onClick={() => setActiveTab('learn')} className={`flex flex-col items-center gap-0.5 ${activeTab === 'learn' ? 'text-levy-blue' : 'text-gray-400'}`}>
+            <BookOpen size={20} />
+            <span className="text-[9px]">AI Chat</span>
+          </button>
+          <button onClick={() => setActiveTab('settings')} className={`flex flex-col items-center gap-0.5 ${activeTab === 'settings' ? 'text-levy-blue' : 'text-gray-400'}`}>
+            <Settings size={20} />
+            <span className="text-[9px]">Settings</span>
+          </button>
       </nav>
     </div>
   );

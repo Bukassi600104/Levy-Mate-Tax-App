@@ -77,7 +77,7 @@ const App: React.FC = () => {
   const [policyType, setPolicyType] = useState<'privacy' | 'usage'>('usage');
   const [checkoutModalOpen, setCheckoutModalOpen] = useState(false);
   const [lastActivityTime, setLastActivityTime] = useState<number>(Date.now());
-  const IDLE_TIMEOUT = 5 * 60 * 1000; // 5 minutes in milliseconds
+  const IDLE_TIMEOUT = 30 * 60 * 1000; // 30 minutes in milliseconds (increased from 5 min for better UX)
 
   const openPolicy = (type: 'privacy' | 'usage') => {
       setPolicyType(type);
