@@ -14,3 +14,38 @@ frontend:
   cache:
     paths:
       - node_modules/**/*
+  customHeaders:
+    - pattern: '*.xml'
+      headers:
+        - key: Content-Type
+          value: application/xml
+    - pattern: '*.txt'
+      headers:
+        - key: Content-Type
+          value: text/plain
+    - pattern: '**/*'
+      headers:
+        - key: X-Frame-Options
+          value: SAMEORIGIN
+        - key: X-Content-Type-Options
+          value: nosniff
+        - key: X-XSS-Protection
+          value: '1; mode=block'
+customRules:
+  # Serve static files directly (sitemap, robots, etc)
+  - source: /sitemap.xml
+    target: /sitemap.xml
+    status: '200'
+  - source: /robots.txt
+    target: /robots.txt
+    status: '200'
+  - source: /favicon.svg
+    target: /favicon.svg
+    status: '200'
+  - source: /manifest.json
+    target: /manifest.json
+    status: '200'
+  # SPA fallback - must be last
+  - source: '</^[^.]+$|\\.(?!(css|gif|ico|jpg|jpeg|js|png|txt|svg|woff|woff2|ttf|map|json|xml)$)([^.]+$)/>'
+    target: /index.html
+    status: '200'
