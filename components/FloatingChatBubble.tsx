@@ -1,13 +1,14 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { MessageCircle, X, Send, Sparkles, UserPlus, LogIn, ChevronDown } from 'lucide-react';
+import { MessageCircle, X, Send, Sparkles, UserPlus, LogIn, ChevronDown, Check, Zap } from 'lucide-react';
 import { getTaxAdvice } from '../services/geminiService';
-import { DISCLAIMER_TEXT } from '../constants';
+import { DISCLAIMER_TEXT, PRO_PRICE_MONTHLY, PLAN_FEATURES } from '../constants';
 
 interface ChatMessage {
   role: 'user' | 'assistant';
   text: string;
   showSignUpPrompt?: boolean;
   showSignInPrompt?: boolean;
+  showProPlanCard?: boolean;
 }
 
 interface FloatingChatBubbleProps {
@@ -126,7 +127,13 @@ const FloatingChatBubble: React.FC<FloatingChatBubbleProps> = ({ onSignUp, onLog
 
     try {
       // Call AI service without profile (guest mode)
-      const response = await getTaxAdvice(null, userMessage);
+      let response = await getTaxAdvice(null, userMessage);
+      
+      // Check if response contains Pro plan card trigger
+      const showProCard = response.includes('[SHOW_PRO_CARD]');
+      if (showProCard) {
+        response = response.replace('[SHOW_PRO_CARD]', '').trim();
+      }
       
       // Increment query count
       const newCount = incrementGuestQueryCount();
@@ -134,7 +141,7 @@ const FloatingChatBubble: React.FC<FloatingChatBubbleProps> = ({ onSignUp, onLog
 
       // After 5 questions, ask about account (only once)
       if (newCount >= GUEST_QUERY_LIMIT && !hasAskedAboutAccount) {
-        setChatHistory(prev => [...prev, { role: 'assistant', text: response }]);
+        setChatHistory(prev => [...prev, { role: 'assistant', text: response, showProPlanCard: showProCard }]);
         
         // Add a follow-up message asking about account
         setTimeout(() => {
@@ -146,7 +153,7 @@ const FloatingChatBubble: React.FC<FloatingChatBubbleProps> = ({ onSignUp, onLog
           setWaitingForAccountResponse(true);
         }, 1000);
       } else {
-        setChatHistory(prev => [...prev, { role: 'assistant', text: response }]);
+        setChatHistory(prev => [...prev, { role: 'assistant', text: response, showProPlanCard: showProCard }]);
       }
     } catch (error) {
       setChatHistory(prev => [...prev, { 
@@ -168,7 +175,7 @@ const FloatingChatBubble: React.FC<FloatingChatBubbleProps> = ({ onSignUp, onLog
   // Render message with potential action buttons
   const renderMessage = (msg: ChatMessage, idx: number) => (
     <div key={idx} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-      <div className={`max-w-[85%] ${msg.role === 'user' ? '' : ''}`}>
+      <div className={`max-w-[90%] ${msg.role === 'user' ? '' : ''}`}>
         <div className={`p-3 rounded-2xl text-sm leading-relaxed ${
           msg.role === 'user'
             ? 'bg-levy-blue text-white rounded-tr-none'
@@ -176,6 +183,36 @@ const FloatingChatBubble: React.FC<FloatingChatBubbleProps> = ({ onSignUp, onLog
         }`}>
           <div className="whitespace-pre-wrap">{msg.text}</div>
         </div>
+        
+        {/* Pro Plan Card */}
+        {msg.showProPlanCard && (
+          <div className="mt-3 bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-200 rounded-xl p-4 shadow-sm">
+            <div className="flex items-center gap-2 mb-3">
+              <div className="w-8 h-8 bg-gradient-to-br from-levy-blue to-indigo-600 rounded-lg flex items-center justify-center">
+                <Zap size={16} className="text-white" />
+              </div>
+              <div>
+                <h4 className="font-bold text-gray-900 text-sm">LevyMate Pro</h4>
+                <p className="text-xs text-gray-500">₦{PRO_PRICE_MONTHLY.toLocaleString()}/month</p>
+              </div>
+            </div>
+            <ul className="space-y-1.5 mb-3">
+              {PLAN_FEATURES.Pro.slice(0, 5).map((feature, i) => (
+                <li key={i} className="flex items-start gap-2 text-xs text-gray-600">
+                  <Check size={14} className="text-green-500 mt-0.5 flex-shrink-0" />
+                  <span>{feature}</span>
+                </li>
+              ))}
+            </ul>
+            <button
+              onClick={onSignUp}
+              className="w-full bg-gradient-to-r from-levy-blue to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white py-2.5 px-4 rounded-lg text-sm font-semibold flex items-center justify-center gap-2 transition-all shadow-sm"
+            >
+              <UserPlus size={16} />
+              Get Pro Now
+            </button>
+          </div>
+        )}
         
         {/* Sign Up Button */}
         {msg.showSignUpPrompt && (
