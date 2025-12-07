@@ -130,17 +130,9 @@ const TutorialTooltip: React.FC<TutorialTooltipProps> = ({ step, stepIndex, tota
   };
 
   return (
-    <>
-      {/* Semi-transparent overlay that allows clicks through on navigation */}
+      /* Tooltip card - no full-screen overlay to allow navigation clicks */
       <div 
-        className="fixed inset-0 bg-black/30 z-[65]" 
-        onClick={onSkip}
-        style={{ pointerEvents: 'auto' }}
-      />
-      
-      {/* Tooltip card */}
-      <div 
-        className="fixed z-[80] bg-white rounded-2xl p-5 shadow-2xl max-w-xs animate-in fade-in slide-in-from-left-4 duration-300"
+        className="fixed z-[80] bg-white rounded-2xl p-5 shadow-2xl max-w-xs animate-in fade-in slide-in-from-left-4 duration-300 border border-gray-100"
         style={{ 
           top: position.top,
           left: position.arrowDirection === 'left' ? position.left : 'auto',
@@ -177,12 +169,14 @@ const TutorialTooltip: React.FC<TutorialTooltipProps> = ({ step, stepIndex, tota
         
         <div className="flex gap-2">
           <button
+            type="button"
             onClick={onSkip}
             className="flex-1 px-3 py-2 text-gray-500 text-xs font-medium hover:text-gray-700 transition-colors"
           >
             Skip
           </button>
           <button
+            type="button"
             onClick={onNext}
             className="flex-1 px-3 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-lg text-xs font-medium hover:from-blue-700 hover:to-indigo-700 transition-all shadow-sm"
           >
@@ -190,7 +184,6 @@ const TutorialTooltip: React.FC<TutorialTooltipProps> = ({ step, stepIndex, tota
           </button>
         </div>
       </div>
-    </>
   );
 };
 
