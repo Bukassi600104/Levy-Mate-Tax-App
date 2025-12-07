@@ -6,6 +6,7 @@ frontend:
         - npm install --legacy-peer-deps
     build:
       commands:
+        - echo "GEMINI_API_KEY=$GEMINI_API_KEY" >> .env
         - npm run build
   artifacts:
     baseDirectory: dist
