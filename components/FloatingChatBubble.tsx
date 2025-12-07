@@ -1,15 +1,18 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { MessageCircle, X, Send, Sparkles, UserPlus, Lock, ChevronDown } from 'lucide-react';
+import { MessageCircle, X, Send, Sparkles, UserPlus, LogIn, ChevronDown } from 'lucide-react';
 import { getTaxAdvice } from '../services/geminiService';
 import { DISCLAIMER_TEXT } from '../constants';
 
 interface ChatMessage {
   role: 'user' | 'assistant';
   text: string;
+  showSignUpPrompt?: boolean;
+  showSignInPrompt?: boolean;
 }
 
 interface FloatingChatBubbleProps {
   onSignUp: () => void;
+  onLogin: () => void;
 }
 
 const GUEST_QUERY_LIMIT = 5;
@@ -45,24 +48,23 @@ const incrementGuestQueryCount = (): number => {
   return newCount;
 };
 
-const FloatingChatBubble: React.FC<FloatingChatBubbleProps> = ({ onSignUp }) => {
+const FloatingChatBubble: React.FC<FloatingChatBubbleProps> = ({ onSignUp, onLogin }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [query, setQuery] = useState('');
   const [chatHistory, setChatHistory] = useState<ChatMessage[]>([]);
   const [loading, setLoading] = useState(false);
   const [queryCount, setQueryCount] = useState(getGuestQueryCount());
   const [showPulse, setShowPulse] = useState(true);
+  const [hasAskedAboutAccount, setHasAskedAboutAccount] = useState(false);
+  const [waitingForAccountResponse, setWaitingForAccountResponse] = useState(false);
   const endRef = useRef<HTMLDivElement>(null);
 
-  const queriesLeft = Math.max(0, GUEST_QUERY_LIMIT - queryCount);
-  const isLimitReached = queryCount >= GUEST_QUERY_LIMIT;
-
-  // Initial welcome message
+  // Initial welcome message - simple and conversational
   useEffect(() => {
     if (isOpen && chatHistory.length === 0) {
       setChatHistory([{
         role: 'assistant',
-        text: "Hi! 👋 I'm Levy, your Nigerian tax assistant. Ask me anything about Nigerian tax laws, PAYE, CIT, VAT, or how to use LevyMate!\n\nAs a guest, you have 5 free questions. Sign up for unlimited access!"
+        text: "Hi there! 👋 My name is Levy, how may I help you?"
       }]);
     }
   }, [isOpen]);
@@ -77,26 +79,79 @@ const FloatingChatBubble: React.FC<FloatingChatBubbleProps> = ({ onSignUp }) => 
     if (isOpen) setShowPulse(false);
   }, [isOpen]);
 
+  // Check if user response indicates sign up or sign in intent
+  const checkAccountIntent = (message: string): 'signup' | 'signin' | null => {
+    const lowerMsg = message.toLowerCase();
+    if (lowerMsg.includes('sign up') || lowerMsg.includes('signup') || lowerMsg.includes('register') || lowerMsg.includes('create account') || lowerMsg.includes('new account')) {
+      return 'signup';
+    }
+    if (lowerMsg.includes('sign in') || lowerMsg.includes('signin') || lowerMsg.includes('login') || lowerMsg.includes('log in') || lowerMsg.includes('already have')) {
+      return 'signin';
+    }
+    return null;
+  };
+
   const handleSend = async () => {
-    if (!query.trim() || loading || isLimitReached) return;
+    if (!query.trim() || loading) return;
 
     const userMessage = query.trim();
     setQuery('');
     setChatHistory(prev => [...prev, { role: 'user', text: userMessage }]);
     setLoading(true);
 
+    // Check if we're waiting for account response
+    if (waitingForAccountResponse) {
+      const intent = checkAccountIntent(userMessage);
+      setWaitingForAccountResponse(false);
+      
+      if (intent === 'signup') {
+        setChatHistory(prev => [...prev, { 
+          role: 'assistant', 
+          text: "Great choice! Click the button below to create your free account and get unlimited access to all my features! 🚀",
+          showSignUpPrompt: true
+        }]);
+        setLoading(false);
+        return;
+      } else if (intent === 'signin') {
+        setChatHistory(prev => [...prev, { 
+          role: 'assistant', 
+          text: "Welcome back! Click below to sign in to your account. 😊",
+          showSignInPrompt: true
+        }]);
+        setLoading(false);
+        return;
+      }
+      // If neither, continue with normal response
+    }
+
     try {
       // Call AI service without profile (guest mode)
       const response = await getTaxAdvice(null, userMessage);
-      setChatHistory(prev => [...prev, { role: 'assistant', text: response }]);
       
       // Increment query count
       const newCount = incrementGuestQueryCount();
       setQueryCount(newCount);
+
+      // After 5 questions, ask about account (only once)
+      if (newCount >= GUEST_QUERY_LIMIT && !hasAskedAboutAccount) {
+        setChatHistory(prev => [...prev, { role: 'assistant', text: response }]);
+        
+        // Add a follow-up message asking about account
+        setTimeout(() => {
+          setChatHistory(prev => [...prev, { 
+            role: 'assistant', 
+            text: "By the way, you've been asking great questions! 💡 Do you have a LevyMate account? Would you like to sign up for unlimited access, or do you already have an account and want to sign in?"
+          }]);
+          setHasAskedAboutAccount(true);
+          setWaitingForAccountResponse(true);
+        }, 1000);
+      } else {
+        setChatHistory(prev => [...prev, { role: 'assistant', text: response }]);
+      }
     } catch (error) {
       setChatHistory(prev => [...prev, { 
         role: 'assistant', 
-        text: "Sorry, I'm having trouble connecting right now. Please try again later." 
+        text: "Oops! I'm having a bit of trouble connecting right now. Mind trying again in a moment?" 
       }]);
     } finally {
       setLoading(false);
@@ -109,6 +164,43 @@ const FloatingChatBubble: React.FC<FloatingChatBubbleProps> = ({ onSignUp }) => 
       handleSend();
     }
   };
+
+  // Render message with potential action buttons
+  const renderMessage = (msg: ChatMessage, idx: number) => (
+    <div key={idx} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+      <div className={`max-w-[85%] ${msg.role === 'user' ? '' : ''}`}>
+        <div className={`p-3 rounded-2xl text-sm leading-relaxed ${
+          msg.role === 'user'
+            ? 'bg-levy-blue text-white rounded-tr-none'
+            : 'bg-white text-gray-800 rounded-tl-none shadow-sm border border-gray-100'
+        }`}>
+          <div className="whitespace-pre-wrap">{msg.text}</div>
+        </div>
+        
+        {/* Sign Up Button */}
+        {msg.showSignUpPrompt && (
+          <button
+            onClick={onSignUp}
+            className="mt-2 w-full bg-levy-blue hover:bg-blue-700 text-white py-2.5 px-4 rounded-xl text-sm font-semibold flex items-center justify-center gap-2 transition-colors shadow-sm"
+          >
+            <UserPlus size={16} />
+            Create Free Account
+          </button>
+        )}
+        
+        {/* Sign In Button */}
+        {msg.showSignInPrompt && (
+          <button
+            onClick={onLogin}
+            className="mt-2 w-full bg-gray-800 hover:bg-gray-900 text-white py-2.5 px-4 rounded-xl text-sm font-semibold flex items-center justify-center gap-2 transition-colors shadow-sm"
+          >
+            <LogIn size={16} />
+            Sign In
+          </button>
+        )}
+      </div>
+    </div>
+  );
 
   return (
     <>
@@ -123,8 +215,8 @@ const FloatingChatBubble: React.FC<FloatingChatBubbleProps> = ({ onSignUp }) => 
                 <Sparkles size={20} />
               </div>
               <div>
-                <h3 className="font-bold text-sm">Levy - Tax Assistant</h3>
-                <p className="text-xs text-white/80">Ask me about Nigerian taxes</p>
+                <h3 className="font-bold text-sm">Levy</h3>
+                <p className="text-xs text-white/80">Your Tax Assistant</p>
               </div>
             </div>
             <button 
@@ -137,21 +229,11 @@ const FloatingChatBubble: React.FC<FloatingChatBubbleProps> = ({ onSignUp }) => 
 
           {/* Chat Messages */}
           <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50 min-h-[200px] max-h-[40vh]">
-            {chatHistory.map((msg, idx) => (
-              <div key={idx} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                <div className={`max-w-[85%] p-3 rounded-2xl text-sm leading-relaxed ${
-                  msg.role === 'user'
-                    ? 'bg-levy-blue text-white rounded-tr-none'
-                    : 'bg-white text-gray-800 rounded-tl-none shadow-sm border border-gray-100'
-                }`}>
-                  <div className="whitespace-pre-wrap">{msg.text}</div>
-                </div>
-              </div>
-            ))}
+            {chatHistory.map((msg, idx) => renderMessage(msg, idx))}
             {loading && (
               <div className="flex justify-start">
                 <div className="bg-white text-gray-400 text-xs px-4 py-2 rounded-full animate-pulse shadow-sm border border-gray-100">
-                  Levy is thinking...
+                  Levy is typing...
                 </div>
               </div>
             )}
@@ -160,53 +242,31 @@ const FloatingChatBubble: React.FC<FloatingChatBubbleProps> = ({ onSignUp }) => 
 
           {/* Input Area */}
           <div className="p-4 bg-white border-t border-gray-100 flex-shrink-0">
-            {isLimitReached ? (
-              <div className="bg-gradient-to-r from-levy-blue/5 to-blue-50 border border-levy-blue/20 rounded-xl p-4 text-center">
-                <div className="inline-flex p-2 bg-levy-blue/10 rounded-full text-levy-blue mb-2">
-                  <Lock size={20} />
-                </div>
-                <h4 className="font-bold text-gray-900 text-sm">Guest Limit Reached</h4>
-                <p className="text-xs text-gray-500 mb-3">
-                  You've used all {GUEST_QUERY_LIMIT} free guest queries. Sign up for unlimited access!
-                </p>
-                <button
-                  onClick={onSignUp}
-                  className="w-full bg-levy-blue hover:bg-blue-700 text-white py-2.5 rounded-xl text-sm font-semibold flex items-center justify-center gap-2 transition-colors"
-                >
-                  <UserPlus size={16} />
-                  Sign Up Free
-                </button>
-              </div>
-            ) : (
-              <>
-                <div className="flex gap-2">
-                  <input
-                    type="text"
-                    value={query}
-                    onChange={(e) => setQuery(e.target.value)}
-                    onKeyDown={handleKeyDown}
-                    placeholder="Ask about PAYE, CIT, VAT..."
-                    className="flex-1 px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-levy-blue/20 focus:border-levy-blue text-sm text-gray-900"
-                    disabled={loading}
-                  />
-                  <button
-                    onClick={handleSend}
-                    disabled={loading || !query.trim()}
-                    className="bg-levy-blue hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed text-white px-4 rounded-xl transition-colors"
-                  >
-                    <Send size={18} />
-                  </button>
-                </div>
-                <p className="text-[10px] text-gray-400 mt-2 text-center">
-                  {queriesLeft} of {GUEST_QUERY_LIMIT} free questions remaining • <button onClick={onSignUp} className="text-levy-blue font-semibold hover:underline">Sign up</button> for unlimited
-                </p>
-              </>
-            )}
+            <div className="flex gap-2">
+              <input
+                type="text"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                onKeyDown={handleKeyDown}
+                placeholder="Ask me anything about Nigerian taxes..."
+                className="flex-1 px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-levy-blue/20 focus:border-levy-blue text-sm text-gray-900"
+                disabled={loading}
+              />
+              <button
+                onClick={handleSend}
+                disabled={loading || !query.trim()}
+                className="bg-levy-blue hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed text-white px-4 rounded-xl transition-colors"
+              >
+                <Send size={18} />
+              </button>
+            </div>
           </div>
 
-          {/* Disclaimer */}
-          <div className="px-4 pb-3 pt-0 bg-white">
-            <p className="text-[9px] text-gray-400 text-center leading-tight">{DISCLAIMER_TEXT}</p>
+          {/* Permanent Disclaimer at Bottom */}
+          <div className="px-4 pb-3 pt-1 bg-white border-t border-gray-50">
+            <p className="text-[9px] text-gray-400 text-center italic leading-tight">
+              {DISCLAIMER_TEXT}
+            </p>
           </div>
         </div>
       )}
@@ -235,7 +295,7 @@ const FloatingChatBubble: React.FC<FloatingChatBubbleProps> = ({ onSignUp }) => 
       {/* Tooltip for closed state */}
       {!isOpen && showPulse && (
         <div className="fixed bottom-20 right-4 md:right-8 bg-gray-900 text-white text-xs px-3 py-2 rounded-lg shadow-lg z-[99] animate-bounce">
-          Ask me about Nigerian taxes! 💬
+          Need help with taxes? 💬
           <div className="absolute -bottom-1 right-6 w-2 h-2 bg-gray-900 rotate-45"></div>
         </div>
       )}

@@ -393,7 +393,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted, onLogin, openPo
       {showPWABanner && <PWAInstallBanner onDismiss={handleDismissPWA} />}
 
       {/* Floating AI Chat Bubble - Available for all visitors */}
-      <FloatingChatBubble onSignUp={onGetStarted} />
+      <FloatingChatBubble onSignUp={onGetStarted} onLogin={onLogin} />
     </div>
   );
 };
