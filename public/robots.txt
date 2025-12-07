@@ -1,0 +1,18 @@
+User-agent: *
+Allow: /
+Disallow: /dashboard
+Disallow: /api/
+
+# Allow crawling of key pages
+Allow: /features
+Allow: /how-it-works
+Allow: /faq
+Allow: /feedback
+Allow: /login
+Allow: /register
+
+# Sitemap location
+Sitemap: https://www.levymatesystems.com/sitemap.xml
+
+# Crawl-delay for politeness
+Crawl-delay: 1

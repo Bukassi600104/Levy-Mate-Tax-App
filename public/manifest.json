@@ -1,0 +1,33 @@
+{
+  "name": "LevyMate - Nigerian Tax Estimator",
+  "short_name": "LevyMate",
+  "description": "Simplify your Nigerian taxes with AI-powered estimation, expense tracking, and compliance under the Nigeria Tax Act 2025.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#1e40af",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-192.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["finance", "business", "utilities"],
+  "lang": "en-NG",
+  "dir": "ltr"
+}

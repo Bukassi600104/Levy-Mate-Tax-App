@@ -1,0 +1,519 @@
+type TaxProfile @aws_iam @aws_cognito_user_pools {
+  name: String!
+  email: String
+  entityType: TaxProfileEntityType
+  persona: TaxProfilePersona
+  stateOfResidence: String!
+  phoneNumber: String
+  annualGrossIncome: Float
+  annualTurnover: Float
+  totalFixedAssets: Float
+  pensionContribution: Float
+  nhfContribution: Float
+  rentPaid: Float
+  lifeInsurance: Float
+  tier: TaxProfileTier
+  aiQueriesToday: Int
+  lastLoginDate: String
+  preferredPolicy: TaxProfilePreferredPolicy
+  transactions(filter: ModelTransactionModelFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelTransactionModelConnection
+  createdAt: String
+  updatedAt: String
+  id: ID!
+  owner: String
+}
+
+type TransactionModel @aws_iam @aws_cognito_user_pools {
+  profileId: ID!
+  profile: TaxProfile
+  type: TransactionModelType
+  date: String!
+  amount: Float!
+  category: String!
+  description: String
+  source: TransactionModelSource
+  isVerified: Boolean
+  isTaxDeductible: Boolean
+  hasInputVat: Boolean
+  createdAt: String
+  updatedAt: String
+  id: ID!
+  owner: String
+}
+
+enum TaxProfileEntityType {
+  Individual
+  Company
+}
+
+enum TaxProfilePersona {
+  SalaryEarner
+  SoleProprietor
+  Freelancer
+  LimitedLiability
+  CryptoTrader
+}
+
+enum TaxProfileTier {
+  Free
+  Pro
+}
+
+enum TaxProfilePreferredPolicy {
+  ACT_2024
+  ACT_2026_PROPOSED
+}
+
+enum TransactionModelType {
+  income
+  expense
+}
+
+enum TransactionModelSource {
+  manual
+  ocr
+  whatsapp
+}
+
+input AmplifyAIConversationTurnErrorInput {
+  errorType: String!
+  message: String!
+}
+
+input ModelStringInput {
+  ne: String
+  eq: String
+  le: String
+  lt: String
+  ge: String
+  gt: String
+  contains: String
+  notContains: String
+  between: [String]
+  beginsWith: String
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  size: ModelSizeInput
+}
+
+input ModelIntInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelFloatInput {
+  ne: Float
+  eq: Float
+  le: Float
+  lt: Float
+  ge: Float
+  gt: Float
+  between: [Float]
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelBooleanInput {
+  ne: Boolean
+  eq: Boolean
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelIDInput {
+  ne: ID
+  eq: ID
+  le: ID
+  lt: ID
+  ge: ID
+  gt: ID
+  contains: ID
+  notContains: ID
+  between: [ID]
+  beginsWith: ID
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  size: ModelSizeInput
+}
+
+input ModelSubscriptionStringInput {
+  ne: String
+  eq: String
+  le: String
+  lt: String
+  ge: String
+  gt: String
+  contains: String
+  notContains: String
+  between: [String]
+  beginsWith: String
+  in: [String]
+  notIn: [String]
+}
+
+input ModelSubscriptionIntInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+  in: [Int]
+  notIn: [Int]
+}
+
+input ModelSubscriptionFloatInput {
+  ne: Float
+  eq: Float
+  le: Float
+  lt: Float
+  ge: Float
+  gt: Float
+  between: [Float]
+  in: [Float]
+  notIn: [Float]
+}
+
+input ModelSubscriptionBooleanInput {
+  ne: Boolean
+  eq: Boolean
+}
+
+input ModelSubscriptionIDInput {
+  ne: ID
+  eq: ID
+  le: ID
+  lt: ID
+  ge: ID
+  gt: ID
+  contains: ID
+  notContains: ID
+  between: [ID]
+  beginsWith: ID
+  in: [ID]
+  notIn: [ID]
+}
+
+enum ModelAttributeTypes {
+  binary
+  binarySet
+  bool
+  list
+  map
+  number
+  numberSet
+  string
+  stringSet
+  _null
+}
+
+input ModelSizeInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+}
+
+enum ModelSortDirection {
+  ASC
+  DESC
+}
+
+type ModelTaxProfileConnection @aws_iam @aws_cognito_user_pools {
+  items: [TaxProfile]!
+  nextToken: String
+}
+
+input ModelTaxProfileEntityTypeInput {
+  eq: TaxProfileEntityType
+  ne: TaxProfileEntityType
+}
+
+input ModelTaxProfilePersonaInput {
+  eq: TaxProfilePersona
+  ne: TaxProfilePersona
+}
+
+input ModelTaxProfileTierInput {
+  eq: TaxProfileTier
+  ne: TaxProfileTier
+}
+
+input ModelTaxProfilePreferredPolicyInput {
+  eq: TaxProfilePreferredPolicy
+  ne: TaxProfilePreferredPolicy
+}
+
+input ModelTaxProfileFilterInput {
+  name: ModelStringInput
+  email: ModelStringInput
+  entityType: ModelTaxProfileEntityTypeInput
+  persona: ModelTaxProfilePersonaInput
+  stateOfResidence: ModelStringInput
+  phoneNumber: ModelStringInput
+  annualGrossIncome: ModelFloatInput
+  annualTurnover: ModelFloatInput
+  totalFixedAssets: ModelFloatInput
+  pensionContribution: ModelFloatInput
+  nhfContribution: ModelFloatInput
+  rentPaid: ModelFloatInput
+  lifeInsurance: ModelFloatInput
+  tier: ModelTaxProfileTierInput
+  aiQueriesToday: ModelIntInput
+  lastLoginDate: ModelStringInput
+  preferredPolicy: ModelTaxProfilePreferredPolicyInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+  id: ModelIDInput
+  and: [ModelTaxProfileFilterInput]
+  or: [ModelTaxProfileFilterInput]
+  not: ModelTaxProfileFilterInput
+  owner: ModelStringInput
+}
+
+type Query {
+  getTaxProfile(id: ID!): TaxProfile @aws_iam @aws_cognito_user_pools
+  listTaxProfiles(filter: ModelTaxProfileFilterInput, limit: Int, nextToken: String): ModelTaxProfileConnection @aws_iam @aws_cognito_user_pools
+  getTransactionModel(id: ID!): TransactionModel @aws_iam @aws_cognito_user_pools
+  listTransactionModels(filter: ModelTransactionModelFilterInput, limit: Int, nextToken: String): ModelTransactionModelConnection @aws_iam @aws_cognito_user_pools
+}
+
+input ModelTaxProfileConditionInput {
+  name: ModelStringInput
+  email: ModelStringInput
+  entityType: ModelTaxProfileEntityTypeInput
+  persona: ModelTaxProfilePersonaInput
+  stateOfResidence: ModelStringInput
+  phoneNumber: ModelStringInput
+  annualGrossIncome: ModelFloatInput
+  annualTurnover: ModelFloatInput
+  totalFixedAssets: ModelFloatInput
+  pensionContribution: ModelFloatInput
+  nhfContribution: ModelFloatInput
+  rentPaid: ModelFloatInput
+  lifeInsurance: ModelFloatInput
+  tier: ModelTaxProfileTierInput
+  aiQueriesToday: ModelIntInput
+  lastLoginDate: ModelStringInput
+  preferredPolicy: ModelTaxProfilePreferredPolicyInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+  and: [ModelTaxProfileConditionInput]
+  or: [ModelTaxProfileConditionInput]
+  not: ModelTaxProfileConditionInput
+  owner: ModelStringInput
+}
+
+input CreateTaxProfileInput {
+  name: String!
+  email: String
+  entityType: TaxProfileEntityType
+  persona: TaxProfilePersona
+  stateOfResidence: String!
+  phoneNumber: String
+  annualGrossIncome: Float
+  annualTurnover: Float
+  totalFixedAssets: Float
+  pensionContribution: Float
+  nhfContribution: Float
+  rentPaid: Float
+  lifeInsurance: Float
+  tier: TaxProfileTier
+  aiQueriesToday: Int
+  lastLoginDate: String
+  preferredPolicy: TaxProfilePreferredPolicy
+  createdAt: String
+  updatedAt: String
+  id: ID
+}
+
+input UpdateTaxProfileInput {
+  name: String
+  email: String
+  entityType: TaxProfileEntityType
+  persona: TaxProfilePersona
+  stateOfResidence: String
+  phoneNumber: String
+  annualGrossIncome: Float
+  annualTurnover: Float
+  totalFixedAssets: Float
+  pensionContribution: Float
+  nhfContribution: Float
+  rentPaid: Float
+  lifeInsurance: Float
+  tier: TaxProfileTier
+  aiQueriesToday: Int
+  lastLoginDate: String
+  preferredPolicy: TaxProfilePreferredPolicy
+  createdAt: String
+  updatedAt: String
+  id: ID!
+}
+
+input DeleteTaxProfileInput {
+  id: ID!
+}
+
+type Mutation {
+  createTaxProfile(input: CreateTaxProfileInput!, condition: ModelTaxProfileConditionInput): TaxProfile @aws_iam @aws_cognito_user_pools
+  updateTaxProfile(input: UpdateTaxProfileInput!, condition: ModelTaxProfileConditionInput): TaxProfile @aws_iam @aws_cognito_user_pools
+  deleteTaxProfile(input: DeleteTaxProfileInput!, condition: ModelTaxProfileConditionInput): TaxProfile @aws_iam @aws_cognito_user_pools
+  createTransactionModel(input: CreateTransactionModelInput!, condition: ModelTransactionModelConditionInput): TransactionModel @aws_iam @aws_cognito_user_pools
+  updateTransactionModel(input: UpdateTransactionModelInput!, condition: ModelTransactionModelConditionInput): TransactionModel @aws_iam @aws_cognito_user_pools
+  deleteTransactionModel(input: DeleteTransactionModelInput!, condition: ModelTransactionModelConditionInput): TransactionModel @aws_iam @aws_cognito_user_pools
+}
+
+input ModelSubscriptionTaxProfileFilterInput {
+  name: ModelSubscriptionStringInput
+  email: ModelSubscriptionStringInput
+  entityType: ModelSubscriptionStringInput
+  persona: ModelSubscriptionStringInput
+  stateOfResidence: ModelSubscriptionStringInput
+  phoneNumber: ModelSubscriptionStringInput
+  annualGrossIncome: ModelSubscriptionFloatInput
+  annualTurnover: ModelSubscriptionFloatInput
+  totalFixedAssets: ModelSubscriptionFloatInput
+  pensionContribution: ModelSubscriptionFloatInput
+  nhfContribution: ModelSubscriptionFloatInput
+  rentPaid: ModelSubscriptionFloatInput
+  lifeInsurance: ModelSubscriptionFloatInput
+  tier: ModelSubscriptionStringInput
+  aiQueriesToday: ModelSubscriptionIntInput
+  lastLoginDate: ModelSubscriptionStringInput
+  preferredPolicy: ModelSubscriptionStringInput
+  createdAt: ModelSubscriptionStringInput
+  updatedAt: ModelSubscriptionStringInput
+  id: ModelSubscriptionIDInput
+  and: [ModelSubscriptionTaxProfileFilterInput]
+  or: [ModelSubscriptionTaxProfileFilterInput]
+  owner: ModelStringInput
+}
+
+type Subscription {
+  onCreateTaxProfile(filter: ModelSubscriptionTaxProfileFilterInput, owner: String): TaxProfile @aws_subscribe(mutations: ["createTaxProfile"]) @aws_iam @aws_cognito_user_pools
+  onUpdateTaxProfile(filter: ModelSubscriptionTaxProfileFilterInput, owner: String): TaxProfile @aws_subscribe(mutations: ["updateTaxProfile"]) @aws_iam @aws_cognito_user_pools
+  onDeleteTaxProfile(filter: ModelSubscriptionTaxProfileFilterInput, owner: String): TaxProfile @aws_subscribe(mutations: ["deleteTaxProfile"]) @aws_iam @aws_cognito_user_pools
+  onCreateTransactionModel(filter: ModelSubscriptionTransactionModelFilterInput, owner: String): TransactionModel @aws_subscribe(mutations: ["createTransactionModel"]) @aws_iam @aws_cognito_user_pools
+  onUpdateTransactionModel(filter: ModelSubscriptionTransactionModelFilterInput, owner: String): TransactionModel @aws_subscribe(mutations: ["updateTransactionModel"]) @aws_iam @aws_cognito_user_pools
+  onDeleteTransactionModel(filter: ModelSubscriptionTransactionModelFilterInput, owner: String): TransactionModel @aws_subscribe(mutations: ["deleteTransactionModel"]) @aws_iam @aws_cognito_user_pools
+}
+
+type ModelTransactionModelConnection @aws_iam @aws_cognito_user_pools {
+  items: [TransactionModel]!
+  nextToken: String
+}
+
+input ModelTransactionModelTypeInput {
+  eq: TransactionModelType
+  ne: TransactionModelType
+}
+
+input ModelTransactionModelSourceInput {
+  eq: TransactionModelSource
+  ne: TransactionModelSource
+}
+
+input ModelTransactionModelFilterInput {
+  profileId: ModelIDInput
+  type: ModelTransactionModelTypeInput
+  date: ModelStringInput
+  amount: ModelFloatInput
+  category: ModelStringInput
+  description: ModelStringInput
+  source: ModelTransactionModelSourceInput
+  isVerified: ModelBooleanInput
+  isTaxDeductible: ModelBooleanInput
+  hasInputVat: ModelBooleanInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+  id: ModelIDInput
+  and: [ModelTransactionModelFilterInput]
+  or: [ModelTransactionModelFilterInput]
+  not: ModelTransactionModelFilterInput
+  owner: ModelStringInput
+}
+
+input ModelTransactionModelConditionInput {
+  profileId: ModelIDInput
+  type: ModelTransactionModelTypeInput
+  date: ModelStringInput
+  amount: ModelFloatInput
+  category: ModelStringInput
+  description: ModelStringInput
+  source: ModelTransactionModelSourceInput
+  isVerified: ModelBooleanInput
+  isTaxDeductible: ModelBooleanInput
+  hasInputVat: ModelBooleanInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+  and: [ModelTransactionModelConditionInput]
+  or: [ModelTransactionModelConditionInput]
+  not: ModelTransactionModelConditionInput
+  owner: ModelStringInput
+}
+
+input CreateTransactionModelInput {
+  profileId: ID!
+  type: TransactionModelType
+  date: String!
+  amount: Float!
+  category: String!
+  description: String
+  source: TransactionModelSource
+  isVerified: Boolean
+  isTaxDeductible: Boolean
+  hasInputVat: Boolean
+  createdAt: String
+  updatedAt: String
+  id: ID
+}
+
+input UpdateTransactionModelInput {
+  profileId: ID
+  type: TransactionModelType
+  date: String
+  amount: Float
+  category: String
+  description: String
+  source: TransactionModelSource
+  isVerified: Boolean
+  isTaxDeductible: Boolean
+  hasInputVat: Boolean
+  createdAt: String
+  updatedAt: String
+  id: ID!
+}
+
+input DeleteTransactionModelInput {
+  id: ID!
+}
+
+input ModelSubscriptionTransactionModelFilterInput {
+  profileId: ModelSubscriptionIDInput
+  type: ModelSubscriptionStringInput
+  date: ModelSubscriptionStringInput
+  amount: ModelSubscriptionFloatInput
+  category: ModelSubscriptionStringInput
+  description: ModelSubscriptionStringInput
+  source: ModelSubscriptionStringInput
+  isVerified: ModelSubscriptionBooleanInput
+  isTaxDeductible: ModelSubscriptionBooleanInput
+  hasInputVat: ModelSubscriptionBooleanInput
+  createdAt: ModelSubscriptionStringInput
+  updatedAt: ModelSubscriptionStringInput
+  id: ModelSubscriptionIDInput
+  and: [ModelSubscriptionTransactionModelFilterInput]
+  or: [ModelSubscriptionTransactionModelFilterInput]
+  owner: ModelStringInput
+}

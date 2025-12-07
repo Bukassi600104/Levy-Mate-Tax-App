@@ -1,0 +1,402 @@
+{
+    "version": 1,
+    "models": {
+        "TaxProfile": {
+            "name": "TaxProfile",
+            "fields": {
+                "id": {
+                    "name": "id",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "name": {
+                    "name": "name",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "email": {
+                    "name": "email",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "entityType": {
+                    "name": "entityType",
+                    "isArray": false,
+                    "type": {
+                        "enum": "TaxProfileEntityType"
+                    },
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "persona": {
+                    "name": "persona",
+                    "isArray": false,
+                    "type": {
+                        "enum": "TaxProfilePersona"
+                    },
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "stateOfResidence": {
+                    "name": "stateOfResidence",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "phoneNumber": {
+                    "name": "phoneNumber",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "annualGrossIncome": {
+                    "name": "annualGrossIncome",
+                    "isArray": false,
+                    "type": "Float",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "annualTurnover": {
+                    "name": "annualTurnover",
+                    "isArray": false,
+                    "type": "Float",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "totalFixedAssets": {
+                    "name": "totalFixedAssets",
+                    "isArray": false,
+                    "type": "Float",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "pensionContribution": {
+                    "name": "pensionContribution",
+                    "isArray": false,
+                    "type": "Float",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "nhfContribution": {
+                    "name": "nhfContribution",
+                    "isArray": false,
+                    "type": "Float",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "rentPaid": {
+                    "name": "rentPaid",
+                    "isArray": false,
+                    "type": "Float",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "lifeInsurance": {
+                    "name": "lifeInsurance",
+                    "isArray": false,
+                    "type": "Float",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "tier": {
+                    "name": "tier",
+                    "isArray": false,
+                    "type": {
+                        "enum": "TaxProfileTier"
+                    },
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "aiQueriesToday": {
+                    "name": "aiQueriesToday",
+                    "isArray": false,
+                    "type": "Int",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "lastLoginDate": {
+                    "name": "lastLoginDate",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "preferredPolicy": {
+                    "name": "preferredPolicy",
+                    "isArray": false,
+                    "type": {
+                        "enum": "TaxProfilePreferredPolicy"
+                    },
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "transactions": {
+                    "name": "transactions",
+                    "isArray": true,
+                    "type": {
+                        "model": "TransactionModel"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": true,
+                    "association": {
+                        "connectionType": "HAS_MANY",
+                        "associatedWith": [
+                            "profileId"
+                        ]
+                    }
+                },
+                "createdAt": {
+                    "name": "createdAt",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "updatedAt": {
+                    "name": "updatedAt",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                }
+            },
+            "syncable": true,
+            "pluralName": "TaxProfiles",
+            "attributes": [
+                {
+                    "type": "model",
+                    "properties": {}
+                },
+                {
+                    "type": "auth",
+                    "properties": {
+                        "rules": [
+                            {
+                                "provider": "userPools",
+                                "ownerField": "owner",
+                                "allow": "owner",
+                                "identityClaim": "cognito:username",
+                                "operations": [
+                                    "create",
+                                    "update",
+                                    "delete",
+                                    "read"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            ],
+            "primaryKeyInfo": {
+                "isCustomPrimaryKey": false,
+                "primaryKeyFieldName": "id",
+                "sortKeyFieldNames": []
+            }
+        },
+        "TransactionModel": {
+            "name": "TransactionModel",
+            "fields": {
+                "id": {
+                    "name": "id",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "profileId": {
+                    "name": "profileId",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "profile": {
+                    "name": "profile",
+                    "isArray": false,
+                    "type": {
+                        "model": "TaxProfile"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "association": {
+                        "connectionType": "BELONGS_TO",
+                        "targetNames": [
+                            "profileId"
+                        ]
+                    }
+                },
+                "type": {
+                    "name": "type",
+                    "isArray": false,
+                    "type": {
+                        "enum": "TransactionModelType"
+                    },
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "date": {
+                    "name": "date",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "amount": {
+                    "name": "amount",
+                    "isArray": false,
+                    "type": "Float",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "category": {
+                    "name": "category",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "description": {
+                    "name": "description",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "source": {
+                    "name": "source",
+                    "isArray": false,
+                    "type": {
+                        "enum": "TransactionModelSource"
+                    },
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "isVerified": {
+                    "name": "isVerified",
+                    "isArray": false,
+                    "type": "Boolean",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "isTaxDeductible": {
+                    "name": "isTaxDeductible",
+                    "isArray": false,
+                    "type": "Boolean",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "hasInputVat": {
+                    "name": "hasInputVat",
+                    "isArray": false,
+                    "type": "Boolean",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "createdAt": {
+                    "name": "createdAt",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "updatedAt": {
+                    "name": "updatedAt",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                }
+            },
+            "syncable": true,
+            "pluralName": "TransactionModels",
+            "attributes": [
+                {
+                    "type": "model",
+                    "properties": {}
+                },
+                {
+                    "type": "auth",
+                    "properties": {
+                        "rules": [
+                            {
+                                "provider": "userPools",
+                                "ownerField": "owner",
+                                "allow": "owner",
+                                "identityClaim": "cognito:username",
+                                "operations": [
+                                    "create",
+                                    "update",
+                                    "delete",
+                                    "read"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            ],
+            "primaryKeyInfo": {
+                "isCustomPrimaryKey": false,
+                "primaryKeyFieldName": "id",
+                "sortKeyFieldNames": []
+            }
+        }
+    },
+    "enums": {
+        "TaxProfileEntityType": {
+            "name": "TaxProfileEntityType",
+            "values": [
+                "Individual",
+                "Company"
+            ]
+        },
+        "TaxProfilePersona": {
+            "name": "TaxProfilePersona",
+            "values": [
+                "SalaryEarner",
+                "SoleProprietor",
+                "Freelancer",
+                "LimitedLiability",
+                "CryptoTrader"
+            ]
+        },
+        "TaxProfileTier": {
+            "name": "TaxProfileTier",
+            "values": [
+                "Free",
+                "Pro"
+            ]
+        },
+        "TaxProfilePreferredPolicy": {
+            "name": "TaxProfilePreferredPolicy",
+            "values": [
+                "ACT_2024",
+                "ACT_2026_PROPOSED"
+            ]
+        },
+        "TransactionModelType": {
+            "name": "TransactionModelType",
+            "values": [
+                "income",
+                "expense"
+            ]
+        },
+        "TransactionModelSource": {
+            "name": "TransactionModelSource",
+            "values": [
+                "manual",
+                "ocr",
+                "whatsapp"
+            ]
+        }
+    },
+    "nonModels": {}
+}

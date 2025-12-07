@@ -1,0 +1,2221 @@
+{
+ "Parameters": {
+  "DynamoDBModelTableReadIOPS": {
+   "Type": "Number",
+   "Default": 5,
+   "Description": "The number of read IOPS the table should support."
+  },
+  "DynamoDBModelTableWriteIOPS": {
+   "Type": "Number",
+   "Default": 5,
+   "Description": "The number of write IOPS the table should support."
+  },
+  "DynamoDBBillingMode": {
+   "Type": "String",
+   "Default": "PAY_PER_REQUEST",
+   "AllowedValues": [
+    "PAY_PER_REQUEST",
+    "PROVISIONED"
+   ],
+   "Description": "Configure @model types to create DynamoDB tables with PAY_PER_REQUEST or PROVISIONED billing modes."
+  },
+  "DynamoDBEnablePointInTimeRecovery": {
+   "Type": "String",
+   "Default": "false",
+   "AllowedValues": [
+    "true",
+    "false"
+   ],
+   "Description": "Whether to enable Point in Time Recovery on the table."
+  },
+  "DynamoDBEnableServerSideEncryption": {
+   "Type": "String",
+   "Default": "true",
+   "AllowedValues": [
+    "true",
+    "false"
+   ],
+   "Description": "Enable server side encryption powered by KMS."
+  },
+  "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataAmplifyTableManagerNestedStackAmplifyTableManagerNestedStackResourceAA2D69BEOutputsamplifylevymateappUSERsandboxa49917ca2adataamplifyDataAmplifyTableManagerTableManagerCustomPF955149E": {
+   "Type": "String"
+  },
+  "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPIE6D92EEEApiId": {
+   "Type": "String"
+  },
+  "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPINONEDS4BD729D2Name": {
+   "Type": "String"
+  },
+  "referencetoamplifylevymateappUSERsandboxa49917ca2aauthNestedStackauthNestedStackResource03F9E02FOutputsamplifylevymateappUSERsandboxa49917ca2aauthamplifyAuthauthenticatedUserRole367B16F5Ref": {
+   "Type": "String"
+  },
+  "referencetoamplifylevymateappUSERsandboxa49917ca2aauthNestedStackauthNestedStackResource03F9E02FOutputsamplifylevymateappUSERsandboxa49917ca2aauthamplifyAuthunauthenticatedUserRole43CEF93ARef": {
+   "Type": "String"
+  },
+  "referencetoamplifylevymateappUSERsandboxa49917ca2aauthNestedStackauthNestedStackResource03F9E02FOutputsamplifylevymateappUSERsandboxa49917ca2aauthamplifyAuthIdentityPoolBA2D88B6Ref": {
+   "Type": "String"
+  }
+ },
+ "Conditions": {
+  "HasEnvironmentParameter": {
+   "Fn::Not": [
+    {
+     "Fn::Equals": [
+      "NONE",
+      "NONE"
+     ]
+    }
+   ]
+  },
+  "ShouldUsePayPerRequestBilling": {
+   "Fn::Equals": [
+    {
+     "Ref": "DynamoDBBillingMode"
+    },
+    "PAY_PER_REQUEST"
+   ]
+  },
+  "ShouldUsePointInTimeRecovery": {
+   "Fn::Equals": [
+    {
+     "Ref": "DynamoDBEnablePointInTimeRecovery"
+    },
+    "true"
+   ]
+  },
+  "CDKMetadataAvailable": {
+   "Fn::Or": [
+    {
+     "Fn::Or": [
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "af-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-east-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-northeast-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-northeast-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-northeast-3"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-south-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-southeast-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-southeast-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-southeast-3"
+       ]
+      }
+     ]
+    },
+    {
+     "Fn::Or": [
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-southeast-4"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ca-central-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ca-west-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "cn-north-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "cn-northwest-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-central-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-central-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-north-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-south-2"
+       ]
+      }
+     ]
+    },
+    {
+     "Fn::Or": [
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-west-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-west-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-west-3"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "il-central-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "me-central-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "me-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "sa-east-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-east-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-east-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-west-1"
+       ]
+      }
+     ]
+    },
+    {
+     "Fn::Equals": [
+      {
+       "Ref": "AWS::Region"
+      },
+      "us-west-2"
+     ]
+    }
+   ]
+  }
+ },
+ "Resources": {
+  "TransactionModelTable": {
+   "Type": "Custom::AmplifyDynamoDBTable",
+   "Properties": {
+    "ServiceToken": {
+     "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataAmplifyTableManagerNestedStackAmplifyTableManagerNestedStackResourceAA2D69BEOutputsamplifylevymateappUSERsandboxa49917ca2adataamplifyDataAmplifyTableManagerTableManagerCustomPF955149E"
+    },
+    "tableName": {
+     "Fn::Join": [
+      "",
+      [
+       "TransactionModel-",
+       {
+        "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPIE6D92EEEApiId"
+       },
+       "-NONE"
+      ]
+     ]
+    },
+    "attributeDefinitions": [
+     {
+      "attributeName": "id",
+      "attributeType": "S"
+     },
+     {
+      "attributeName": "profileId",
+      "attributeType": "S"
+     }
+    ],
+    "keySchema": [
+     {
+      "attributeName": "id",
+      "keyType": "HASH"
+     }
+    ],
+    "globalSecondaryIndexes": [
+     {
+      "indexName": "gsi-TaxProfile.transactions",
+      "keySchema": [
+       {
+        "attributeName": "profileId",
+        "keyType": "HASH"
+       }
+      ],
+      "projection": {
+       "projectionType": "ALL"
+      },
+      "provisionedThroughput": {
+       "Fn::If": [
+        "ShouldUsePayPerRequestBilling",
+        {
+         "Ref": "AWS::NoValue"
+        },
+        {
+         "ReadCapacityUnits": {
+          "Ref": "DynamoDBModelTableReadIOPS"
+         },
+         "WriteCapacityUnits": {
+          "Ref": "DynamoDBModelTableWriteIOPS"
+         }
+        }
+       ]
+      }
+     }
+    ],
+    "provisionedThroughput": {
+     "Fn::If": [
+      "ShouldUsePayPerRequestBilling",
+      {
+       "Ref": "AWS::NoValue"
+      },
+      {
+       "ReadCapacityUnits": {
+        "Ref": "DynamoDBModelTableReadIOPS"
+       },
+       "WriteCapacityUnits": {
+        "Ref": "DynamoDBModelTableWriteIOPS"
+       }
+      }
+     ]
+    },
+    "sseSpecification": {
+     "sseEnabled": false
+    },
+    "streamSpecification": {
+     "streamViewType": "NEW_AND_OLD_IMAGES"
+    },
+    "deletionProtectionEnabled": false,
+    "allowDestructiveGraphqlSchemaUpdates": true,
+    "replaceTableUponGsiUpdate": true,
+    "pointInTimeRecoverySpecification": {
+     "Fn::If": [
+      "ShouldUsePointInTimeRecovery",
+      {
+       "PointInTimeRecoveryEnabled": true
+      },
+      {
+       "Ref": "AWS::NoValue"
+      }
+     ]
+    },
+    "billingMode": {
+     "Fn::If": [
+      "ShouldUsePayPerRequestBilling",
+      "PAY_PER_REQUEST",
+      {
+       "Ref": "AWS::NoValue"
+      }
+     ]
+    }
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/TransactionModelTable/Default/Default"
+   }
+  },
+  "TransactionModelIAMRole5CEB5E25": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "appsync.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "Policies": [
+     {
+      "PolicyDocument": {
+       "Statement": [
+        {
+         "Action": [
+          "dynamodb:BatchGetItem",
+          "dynamodb:BatchWriteItem",
+          "dynamodb:PutItem",
+          "dynamodb:DeleteItem",
+          "dynamodb:GetItem",
+          "dynamodb:Scan",
+          "dynamodb:Query",
+          "dynamodb:UpdateItem",
+          "dynamodb:ConditionCheckItem",
+          "dynamodb:DescribeTable",
+          "dynamodb:GetRecords",
+          "dynamodb:GetShardIterator"
+         ],
+         "Effect": "Allow",
+         "Resource": [
+          {
+           "Fn::Sub": [
+            "arn:${AWS::Partition}:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${tablename}",
+            {
+             "tablename": {
+              "Fn::Join": [
+               "",
+               [
+                "TransactionModel-",
+                {
+                 "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPIE6D92EEEApiId"
+                },
+                "-NONE"
+               ]
+              ]
+             }
+            }
+           ]
+          },
+          {
+           "Fn::Sub": [
+            "arn:${AWS::Partition}:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${tablename}/*",
+            {
+             "tablename": {
+              "Fn::Join": [
+               "",
+               [
+                "TransactionModel-",
+                {
+                 "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPIE6D92EEEApiId"
+                },
+                "-NONE"
+               ]
+              ]
+             }
+            }
+           ]
+          }
+         ]
+        }
+       ],
+       "Version": "2012-10-17"
+      },
+      "PolicyName": "DynamoDBAccess"
+     }
+    ],
+    "RoleName": {
+     "Fn::Join": [
+      "",
+      [
+       "TransactionModelIAMRd3b690-",
+       {
+        "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPIE6D92EEEApiId"
+       },
+       "-NONE"
+      ]
+     ]
+    },
+    "Tags": [
+     {
+      "Key": "amplify:deployment-type",
+      "Value": "sandbox"
+     },
+     {
+      "Key": "amplify:friendly-name",
+      "Value": "amplifyData"
+     },
+     {
+      "Key": "created-by",
+      "Value": "amplify"
+     }
+    ]
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/TransactionModelIAMRole/Resource"
+   }
+  },
+  "TransactionModelDataSource": {
+   "Type": "AWS::AppSync::DataSource",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPIE6D92EEEApiId"
+    },
+    "DynamoDBConfig": {
+     "AwsRegion": {
+      "Ref": "AWS::Region"
+     },
+     "TableName": {
+      "Fn::Select": [
+       1,
+       {
+        "Fn::Split": [
+         "/",
+         {
+          "Fn::Select": [
+           5,
+           {
+            "Fn::Split": [
+             ":",
+             {
+              "Fn::GetAtt": [
+               "TransactionModelTable",
+               "TableArn"
+              ]
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       }
+      ]
+     }
+    },
+    "Name": "TransactionModelTable",
+    "ServiceRoleArn": {
+     "Fn::GetAtt": [
+      "TransactionModelIAMRole5CEB5E25",
+      "Arn"
+     ]
+    },
+    "Type": "AMAZON_DYNAMODB"
+   },
+   "DependsOn": [
+    "TransactionModelIAMRole5CEB5E25"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/TransactionModelDataSource/Resource"
+   }
+  },
+  "QuerygetTransactionModelauth0FunctionQuerygetTransactionModelauth0FunctionAppSyncFunctionCC4EF4B9": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPIE6D92EEEApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPINONEDS4BD729D2Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "QuerygetTransactionModelauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/6b25c9b572c67e0f7ad41cb8019a90825f3db4b02a0a15b837c7a82dcb302060.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/QuerygetTransactionModelauth0Function/QuerygetTransactionModelauth0Function.AppSyncFunction"
+   }
+  },
+  "QuerygetTransactionModelpostAuth0FunctionQuerygetTransactionModelpostAuth0FunctionAppSyncFunctionEB0341EA": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPIE6D92EEEApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPINONEDS4BD729D2Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "QuerygetTransactionModelpostAuth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/c1721bcd774e27c514d3454b5be4f9bdd094c0161b57ddf053d618e3b0086a77.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/QuerygetTransactionModelpostAuth0Function/QuerygetTransactionModelpostAuth0Function.AppSyncFunction"
+   }
+  },
+  "QueryGetTransactionModelDataResolverFnQueryGetTransactionModelDataResolverFnAppSyncFunction7B5B84AE": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPIE6D92EEEApiId"
+    },
+    "DataSourceName": {
+     "Fn::GetAtt": [
+      "TransactionModelDataSource",
+      "Name"
+     ]
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "QueryGetTransactionModelDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/08f4d557693d96c1a4efba0f9dc91330e4b19772fd5477c156468843e3d9cb5e.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/4c6a2d29f01c6091bd1d9afe16e5849d456c96f17c3b215938c8067399532719.vtl"
+    }
+   },
+   "DependsOn": [
+    "TransactionModelDataSource"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/QueryGetTransactionModelDataResolverFn/QueryGetTransactionModelDataResolverFn.AppSyncFunction"
+   }
+  },
+  "GetTransactionModelResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPIE6D92EEEApiId"
+    },
+    "FieldName": "getTransactionModel",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "QuerygetTransactionModelauth0FunctionQuerygetTransactionModelauth0FunctionAppSyncFunctionCC4EF4B9",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "QuerygetTransactionModelpostAuth0FunctionQuerygetTransactionModelpostAuth0FunctionAppSyncFunctionEB0341EA",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "QueryGetTransactionModelDataResolverFnQueryGetTransactionModelDataResolverFnAppSyncFunction7B5B84AE",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"Query\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"getTransactionModel\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"AMAZON_DYNAMODB\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPIE6D92EEEApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n$util.qr($ctx.stash.put(\"tableName\", \"",
+       {
+        "Fn::Select": [
+         1,
+         {
+          "Fn::Split": [
+           "/",
+           {
+            "Fn::Select": [
+             5,
+             {
+              "Fn::Split": [
+               ":",
+               {
+                "Fn::GetAtt": [
+                 "TransactionModelTable",
+                 "TableArn"
+                ]
+               }
+              ]
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"authRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2aauthNestedStackauthNestedStackResource03F9E02FOutputsamplifylevymateappUSERsandboxa49917ca2aauthamplifyAuthauthenticatedUserRole367B16F5Ref"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2aauthNestedStackauthNestedStackResource03F9E02FOutputsamplifylevymateappUSERsandboxa49917ca2aauthamplifyAuthunauthenticatedUserRole43CEF93ARef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"",
+       {
+        "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2aauthNestedStackauthNestedStackResource03F9E02FOutputsamplifylevymateappUSERsandboxa49917ca2aauthamplifyAuthIdentityPoolBA2D88B6Ref"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "Query"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/queryGetTransactionModelResolver"
+   }
+  },
+  "QuerylistTransactionModelsauth0FunctionQuerylistTransactionModelsauth0FunctionAppSyncFunctionC6A722F4": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPIE6D92EEEApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPINONEDS4BD729D2Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "QuerylistTransactionModelsauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/6b25c9b572c67e0f7ad41cb8019a90825f3db4b02a0a15b837c7a82dcb302060.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/QuerylistTransactionModelsauth0Function/QuerylistTransactionModelsauth0Function.AppSyncFunction"
+   }
+  },
+  "QuerylistTransactionModelspostAuth0FunctionQuerylistTransactionModelspostAuth0FunctionAppSyncFunction77219BCF": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPIE6D92EEEApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPINONEDS4BD729D2Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "QuerylistTransactionModelspostAuth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/c1721bcd774e27c514d3454b5be4f9bdd094c0161b57ddf053d618e3b0086a77.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/QuerylistTransactionModelspostAuth0Function/QuerylistTransactionModelspostAuth0Function.AppSyncFunction"
+   }
+  },
+  "QueryListTransactionModelsDataResolverFnQueryListTransactionModelsDataResolverFnAppSyncFunctionDBECDB73": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPIE6D92EEEApiId"
+    },
+    "DataSourceName": {
+     "Fn::GetAtt": [
+      "TransactionModelDataSource",
+      "Name"
+     ]
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "QueryListTransactionModelsDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/9fcbe070ecd3023c5bf5b966fa9584757db9762eef123bad0820bd87591b2174.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/cc01911d0269d4080ea57505dc445dfc315ef7ad85d3d9d4ea1357858bff451d.vtl"
+    }
+   },
+   "DependsOn": [
+    "TransactionModelDataSource"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/QueryListTransactionModelsDataResolverFn/QueryListTransactionModelsDataResolverFn.AppSyncFunction"
+   }
+  },
+  "ListTransactionModelResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPIE6D92EEEApiId"
+    },
+    "FieldName": "listTransactionModels",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "QuerylistTransactionModelsauth0FunctionQuerylistTransactionModelsauth0FunctionAppSyncFunctionC6A722F4",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "QuerylistTransactionModelspostAuth0FunctionQuerylistTransactionModelspostAuth0FunctionAppSyncFunction77219BCF",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "QueryListTransactionModelsDataResolverFnQueryListTransactionModelsDataResolverFnAppSyncFunctionDBECDB73",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"Query\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"listTransactionModels\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"AMAZON_DYNAMODB\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPIE6D92EEEApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n$util.qr($ctx.stash.put(\"tableName\", \"",
+       {
+        "Fn::Select": [
+         1,
+         {
+          "Fn::Split": [
+           "/",
+           {
+            "Fn::Select": [
+             5,
+             {
+              "Fn::Split": [
+               ":",
+               {
+                "Fn::GetAtt": [
+                 "TransactionModelTable",
+                 "TableArn"
+                ]
+               }
+              ]
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"authRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2aauthNestedStackauthNestedStackResource03F9E02FOutputsamplifylevymateappUSERsandboxa49917ca2aauthamplifyAuthauthenticatedUserRole367B16F5Ref"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2aauthNestedStackauthNestedStackResource03F9E02FOutputsamplifylevymateappUSERsandboxa49917ca2aauthamplifyAuthunauthenticatedUserRole43CEF93ARef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"",
+       {
+        "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2aauthNestedStackauthNestedStackResource03F9E02FOutputsamplifylevymateappUSERsandboxa49917ca2aauthamplifyAuthIdentityPoolBA2D88B6Ref"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "Query"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/queryListTransactionModelsResolver"
+   }
+  },
+  "MutationcreateTransactionModelinit0FunctionMutationcreateTransactionModelinit0FunctionAppSyncFunction9C29C302": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPIE6D92EEEApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPINONEDS4BD729D2Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationcreateTransactionModelinit0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/a183ddccbd956316c38ef97177b8f088ef0826f62023323f5ae6053d348ccffc.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/MutationcreateTransactionModelinit0Function/MutationcreateTransactionModelinit0Function.AppSyncFunction"
+   }
+  },
+  "MutationcreateTransactionModelauth0FunctionMutationcreateTransactionModelauth0FunctionAppSyncFunctionE1ACE756": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPIE6D92EEEApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPINONEDS4BD729D2Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationcreateTransactionModelauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/bb549efdba043b51e33b2939b45c8596f9bb79eaf9429cc0dba9fa5785d363a9.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/MutationcreateTransactionModelauth0Function/MutationcreateTransactionModelauth0Function.AppSyncFunction"
+   }
+  },
+  "MutationcreateTransactionModelpostAuth0FunctionMutationcreateTransactionModelpostAuth0FunctionAppSyncFunction0BC66C85": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPIE6D92EEEApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPINONEDS4BD729D2Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationcreateTransactionModelpostAuth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/c1721bcd774e27c514d3454b5be4f9bdd094c0161b57ddf053d618e3b0086a77.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/MutationcreateTransactionModelpostAuth0Function/MutationcreateTransactionModelpostAuth0Function.AppSyncFunction"
+   }
+  },
+  "MutationCreateTransactionModelDataResolverFnMutationCreateTransactionModelDataResolverFnAppSyncFunctionDE8F3FB4": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPIE6D92EEEApiId"
+    },
+    "DataSourceName": {
+     "Fn::GetAtt": [
+      "TransactionModelDataSource",
+      "Name"
+     ]
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationCreateTransactionModelDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/bc5363b68917f93ec7727f40c2b7702bb1d7d6ae2067f1c9964d44ed94baa2bb.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/f4a52b72209a9dfa197b5e7367a5c378c5bb86de6e29ddd9e48b49a3fe54b249.vtl"
+    }
+   },
+   "DependsOn": [
+    "TransactionModelDataSource"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/MutationCreateTransactionModelDataResolverFn/MutationCreateTransactionModelDataResolverFn.AppSyncFunction"
+   }
+  },
+  "CreateTransactionModelResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPIE6D92EEEApiId"
+    },
+    "FieldName": "createTransactionModel",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "MutationcreateTransactionModelinit0FunctionMutationcreateTransactionModelinit0FunctionAppSyncFunction9C29C302",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "MutationcreateTransactionModelauth0FunctionMutationcreateTransactionModelauth0FunctionAppSyncFunctionE1ACE756",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "MutationcreateTransactionModelpostAuth0FunctionMutationcreateTransactionModelpostAuth0FunctionAppSyncFunction0BC66C85",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "MutationCreateTransactionModelDataResolverFnMutationCreateTransactionModelDataResolverFnAppSyncFunctionDE8F3FB4",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"Mutation\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"createTransactionModel\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"AMAZON_DYNAMODB\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPIE6D92EEEApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n$util.qr($ctx.stash.put(\"tableName\", \"",
+       {
+        "Fn::Select": [
+         1,
+         {
+          "Fn::Split": [
+           "/",
+           {
+            "Fn::Select": [
+             5,
+             {
+              "Fn::Split": [
+               ":",
+               {
+                "Fn::GetAtt": [
+                 "TransactionModelTable",
+                 "TableArn"
+                ]
+               }
+              ]
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"authRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2aauthNestedStackauthNestedStackResource03F9E02FOutputsamplifylevymateappUSERsandboxa49917ca2aauthamplifyAuthauthenticatedUserRole367B16F5Ref"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2aauthNestedStackauthNestedStackResource03F9E02FOutputsamplifylevymateappUSERsandboxa49917ca2aauthamplifyAuthunauthenticatedUserRole43CEF93ARef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"",
+       {
+        "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2aauthNestedStackauthNestedStackResource03F9E02FOutputsamplifylevymateappUSERsandboxa49917ca2aauthamplifyAuthIdentityPoolBA2D88B6Ref"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "Mutation"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/mutationCreateTransactionModelResolver"
+   }
+  },
+  "MutationupdateTransactionModelinit0FunctionMutationupdateTransactionModelinit0FunctionAppSyncFunctionC7FE4890": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPIE6D92EEEApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPINONEDS4BD729D2Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationupdateTransactionModelinit0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/06db846fd14e6fc371f22b12b5545ba8e2dbfeda85d8c8d586c71c282166657b.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/MutationupdateTransactionModelinit0Function/MutationupdateTransactionModelinit0Function.AppSyncFunction"
+   }
+  },
+  "MutationupdateTransactionModelauth0FunctionMutationupdateTransactionModelauth0FunctionAppSyncFunction17332ACA": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPIE6D92EEEApiId"
+    },
+    "DataSourceName": {
+     "Fn::GetAtt": [
+      "TransactionModelDataSource",
+      "Name"
+     ]
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationupdateTransactionModelauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/1f5fed297da9c32ae3af922bf3a38ccf23b956078887d16891ec06c20c64722c.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/791f67640486f414978920dc0941793057bb2aba0ddcd0136b59a9cf73fa8988.vtl"
+    }
+   },
+   "DependsOn": [
+    "TransactionModelDataSource"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/MutationupdateTransactionModelauth0Function/MutationupdateTransactionModelauth0Function.AppSyncFunction"
+   }
+  },
+  "MutationupdateTransactionModelpostAuth0FunctionMutationupdateTransactionModelpostAuth0FunctionAppSyncFunctionEE2CB72B": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPIE6D92EEEApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPINONEDS4BD729D2Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationupdateTransactionModelpostAuth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/c1721bcd774e27c514d3454b5be4f9bdd094c0161b57ddf053d618e3b0086a77.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/MutationupdateTransactionModelpostAuth0Function/MutationupdateTransactionModelpostAuth0Function.AppSyncFunction"
+   }
+  },
+  "MutationUpdateTransactionModelDataResolverFnMutationUpdateTransactionModelDataResolverFnAppSyncFunctionC8441CC8": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPIE6D92EEEApiId"
+    },
+    "DataSourceName": {
+     "Fn::GetAtt": [
+      "TransactionModelDataSource",
+      "Name"
+     ]
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationUpdateTransactionModelDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/474bf0776ec2164a13191d1a0a9e057154931e4918fea5086f49850d02a5371b.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/f4a52b72209a9dfa197b5e7367a5c378c5bb86de6e29ddd9e48b49a3fe54b249.vtl"
+    }
+   },
+   "DependsOn": [
+    "TransactionModelDataSource"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/MutationUpdateTransactionModelDataResolverFn/MutationUpdateTransactionModelDataResolverFn.AppSyncFunction"
+   }
+  },
+  "UpdateTransactionModelResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPIE6D92EEEApiId"
+    },
+    "FieldName": "updateTransactionModel",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "MutationupdateTransactionModelinit0FunctionMutationupdateTransactionModelinit0FunctionAppSyncFunctionC7FE4890",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "MutationupdateTransactionModelauth0FunctionMutationupdateTransactionModelauth0FunctionAppSyncFunction17332ACA",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "MutationupdateTransactionModelpostAuth0FunctionMutationupdateTransactionModelpostAuth0FunctionAppSyncFunctionEE2CB72B",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "MutationUpdateTransactionModelDataResolverFnMutationUpdateTransactionModelDataResolverFnAppSyncFunctionC8441CC8",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"Mutation\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"updateTransactionModel\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"AMAZON_DYNAMODB\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPIE6D92EEEApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n$util.qr($ctx.stash.put(\"tableName\", \"",
+       {
+        "Fn::Select": [
+         1,
+         {
+          "Fn::Split": [
+           "/",
+           {
+            "Fn::Select": [
+             5,
+             {
+              "Fn::Split": [
+               ":",
+               {
+                "Fn::GetAtt": [
+                 "TransactionModelTable",
+                 "TableArn"
+                ]
+               }
+              ]
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"authRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2aauthNestedStackauthNestedStackResource03F9E02FOutputsamplifylevymateappUSERsandboxa49917ca2aauthamplifyAuthauthenticatedUserRole367B16F5Ref"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2aauthNestedStackauthNestedStackResource03F9E02FOutputsamplifylevymateappUSERsandboxa49917ca2aauthamplifyAuthunauthenticatedUserRole43CEF93ARef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"",
+       {
+        "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2aauthNestedStackauthNestedStackResource03F9E02FOutputsamplifylevymateappUSERsandboxa49917ca2aauthamplifyAuthIdentityPoolBA2D88B6Ref"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "Mutation"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/mutationUpdateTransactionModelResolver"
+   }
+  },
+  "MutationdeleteTransactionModelauth0FunctionMutationdeleteTransactionModelauth0FunctionAppSyncFunctionFCE26E1B": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPIE6D92EEEApiId"
+    },
+    "DataSourceName": {
+     "Fn::GetAtt": [
+      "TransactionModelDataSource",
+      "Name"
+     ]
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationdeleteTransactionModelauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/1f5fed297da9c32ae3af922bf3a38ccf23b956078887d16891ec06c20c64722c.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/867fb7d7eb8e4127b6d0136b82c5c3f74a52eb410297086859986f8e7e4b02aa.vtl"
+    }
+   },
+   "DependsOn": [
+    "TransactionModelDataSource"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/MutationdeleteTransactionModelauth0Function/MutationdeleteTransactionModelauth0Function.AppSyncFunction"
+   }
+  },
+  "MutationdeleteTransactionModelpostAuth0FunctionMutationdeleteTransactionModelpostAuth0FunctionAppSyncFunction2B5CC859": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPIE6D92EEEApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPINONEDS4BD729D2Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationdeleteTransactionModelpostAuth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/c1721bcd774e27c514d3454b5be4f9bdd094c0161b57ddf053d618e3b0086a77.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/MutationdeleteTransactionModelpostAuth0Function/MutationdeleteTransactionModelpostAuth0Function.AppSyncFunction"
+   }
+  },
+  "MutationDeleteTransactionModelDataResolverFnMutationDeleteTransactionModelDataResolverFnAppSyncFunctionB4F3404E": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPIE6D92EEEApiId"
+    },
+    "DataSourceName": {
+     "Fn::GetAtt": [
+      "TransactionModelDataSource",
+      "Name"
+     ]
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationDeleteTransactionModelDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/4f7907d1209a2c9953a0c053df402c634e359546d70c7cc5c2e8e21ea734880f.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/f4a52b72209a9dfa197b5e7367a5c378c5bb86de6e29ddd9e48b49a3fe54b249.vtl"
+    }
+   },
+   "DependsOn": [
+    "TransactionModelDataSource"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/MutationDeleteTransactionModelDataResolverFn/MutationDeleteTransactionModelDataResolverFn.AppSyncFunction"
+   }
+  },
+  "DeleteTransactionModelResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPIE6D92EEEApiId"
+    },
+    "FieldName": "deleteTransactionModel",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "MutationdeleteTransactionModelauth0FunctionMutationdeleteTransactionModelauth0FunctionAppSyncFunctionFCE26E1B",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "MutationdeleteTransactionModelpostAuth0FunctionMutationdeleteTransactionModelpostAuth0FunctionAppSyncFunction2B5CC859",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "MutationDeleteTransactionModelDataResolverFnMutationDeleteTransactionModelDataResolverFnAppSyncFunctionB4F3404E",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"Mutation\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"deleteTransactionModel\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"AMAZON_DYNAMODB\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPIE6D92EEEApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n$util.qr($ctx.stash.put(\"tableName\", \"",
+       {
+        "Fn::Select": [
+         1,
+         {
+          "Fn::Split": [
+           "/",
+           {
+            "Fn::Select": [
+             5,
+             {
+              "Fn::Split": [
+               ":",
+               {
+                "Fn::GetAtt": [
+                 "TransactionModelTable",
+                 "TableArn"
+                ]
+               }
+              ]
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"authRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2aauthNestedStackauthNestedStackResource03F9E02FOutputsamplifylevymateappUSERsandboxa49917ca2aauthamplifyAuthauthenticatedUserRole367B16F5Ref"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2aauthNestedStackauthNestedStackResource03F9E02FOutputsamplifylevymateappUSERsandboxa49917ca2aauthamplifyAuthunauthenticatedUserRole43CEF93ARef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"",
+       {
+        "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2aauthNestedStackauthNestedStackResource03F9E02FOutputsamplifylevymateappUSERsandboxa49917ca2aauthamplifyAuthIdentityPoolBA2D88B6Ref"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "Mutation"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/mutationDeleteTransactionModelResolver"
+   }
+  },
+  "SubscriptiononCreateTransactionModelauth0FunctionSubscriptiononCreateTransactionModelauth0FunctionAppSyncFunctionABEC641C": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPIE6D92EEEApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPINONEDS4BD729D2Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "SubscriptiononCreateTransactionModelauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/3b6d810ef43cdbd93ef462c40b0df0328b89e04f1473a4f82f1178da1f1d5aa0.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/SubscriptiononCreateTransactionModelauth0Function/SubscriptiononCreateTransactionModelauth0Function.AppSyncFunction"
+   }
+  },
+  "SubscriptiononCreateTransactionModelpostAuth0FunctionSubscriptiononCreateTransactionModelpostAuth0FunctionAppSyncFunction12DB9998": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPIE6D92EEEApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPINONEDS4BD729D2Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "SubscriptiononCreateTransactionModelpostAuth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/c1721bcd774e27c514d3454b5be4f9bdd094c0161b57ddf053d618e3b0086a77.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/SubscriptiononCreateTransactionModelpostAuth0Function/SubscriptiononCreateTransactionModelpostAuth0Function.AppSyncFunction"
+   }
+  },
+  "SubscriptionOnCreateTransactionModelDataResolverFnSubscriptionOnCreateTransactionModelDataResolverFnAppSyncFunction06A4DE6A": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPIE6D92EEEApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPINONEDS4BD729D2Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "SubscriptionOnCreateTransactionModelDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/fe3c43ada4b9d681a5e2312663ef7a73386424d73b73e51f8e2e9d4b50f7c502.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/e0cff47fb007f0bbf2a4e43ca256d6aa7ec109821769fd79fa7c5e83f0e7f9fc.vtl"
+    }
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/SubscriptionOnCreateTransactionModelDataResolverFn/SubscriptionOnCreateTransactionModelDataResolverFn.AppSyncFunction"
+   }
+  },
+  "SubscriptiononCreateTransactionModelResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPIE6D92EEEApiId"
+    },
+    "FieldName": "onCreateTransactionModel",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "SubscriptiononCreateTransactionModelauth0FunctionSubscriptiononCreateTransactionModelauth0FunctionAppSyncFunctionABEC641C",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "SubscriptiononCreateTransactionModelpostAuth0FunctionSubscriptiononCreateTransactionModelpostAuth0FunctionAppSyncFunction12DB9998",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "SubscriptionOnCreateTransactionModelDataResolverFnSubscriptionOnCreateTransactionModelDataResolverFnAppSyncFunction06A4DE6A",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"Subscription\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"onCreateTransactionModel\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"NONE\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPIE6D92EEEApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n\n$util.qr($ctx.stash.put(\"authRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2aauthNestedStackauthNestedStackResource03F9E02FOutputsamplifylevymateappUSERsandboxa49917ca2aauthamplifyAuthauthenticatedUserRole367B16F5Ref"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2aauthNestedStackauthNestedStackResource03F9E02FOutputsamplifylevymateappUSERsandboxa49917ca2aauthamplifyAuthunauthenticatedUserRole43CEF93ARef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"",
+       {
+        "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2aauthNestedStackauthNestedStackResource03F9E02FOutputsamplifylevymateappUSERsandboxa49917ca2aauthamplifyAuthIdentityPoolBA2D88B6Ref"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "Subscription"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/subscriptionOnCreateTransactionModelResolver"
+   }
+  },
+  "SubscriptiononUpdateTransactionModelauth0FunctionSubscriptiononUpdateTransactionModelauth0FunctionAppSyncFunctionE00F946B": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPIE6D92EEEApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPINONEDS4BD729D2Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "SubscriptiononUpdateTransactionModelauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/3b6d810ef43cdbd93ef462c40b0df0328b89e04f1473a4f82f1178da1f1d5aa0.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/SubscriptiononUpdateTransactionModelauth0Function/SubscriptiononUpdateTransactionModelauth0Function.AppSyncFunction"
+   }
+  },
+  "SubscriptiononUpdateTransactionModelpostAuth0FunctionSubscriptiononUpdateTransactionModelpostAuth0FunctionAppSyncFunction889E02B8": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPIE6D92EEEApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPINONEDS4BD729D2Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "SubscriptiononUpdateTransactionModelpostAuth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/c1721bcd774e27c514d3454b5be4f9bdd094c0161b57ddf053d618e3b0086a77.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/SubscriptiononUpdateTransactionModelpostAuth0Function/SubscriptiononUpdateTransactionModelpostAuth0Function.AppSyncFunction"
+   }
+  },
+  "SubscriptionOnUpdateTransactionModelDataResolverFnSubscriptionOnUpdateTransactionModelDataResolverFnAppSyncFunction128786AA": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPIE6D92EEEApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPINONEDS4BD729D2Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "SubscriptionOnUpdateTransactionModelDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/fe3c43ada4b9d681a5e2312663ef7a73386424d73b73e51f8e2e9d4b50f7c502.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/e0cff47fb007f0bbf2a4e43ca256d6aa7ec109821769fd79fa7c5e83f0e7f9fc.vtl"
+    }
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/SubscriptionOnUpdateTransactionModelDataResolverFn/SubscriptionOnUpdateTransactionModelDataResolverFn.AppSyncFunction"
+   }
+  },
+  "SubscriptiononUpdateTransactionModelResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPIE6D92EEEApiId"
+    },
+    "FieldName": "onUpdateTransactionModel",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "SubscriptiononUpdateTransactionModelauth0FunctionSubscriptiononUpdateTransactionModelauth0FunctionAppSyncFunctionE00F946B",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "SubscriptiononUpdateTransactionModelpostAuth0FunctionSubscriptiononUpdateTransactionModelpostAuth0FunctionAppSyncFunction889E02B8",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "SubscriptionOnUpdateTransactionModelDataResolverFnSubscriptionOnUpdateTransactionModelDataResolverFnAppSyncFunction128786AA",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"Subscription\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"onUpdateTransactionModel\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"NONE\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPIE6D92EEEApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n\n$util.qr($ctx.stash.put(\"authRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2aauthNestedStackauthNestedStackResource03F9E02FOutputsamplifylevymateappUSERsandboxa49917ca2aauthamplifyAuthauthenticatedUserRole367B16F5Ref"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2aauthNestedStackauthNestedStackResource03F9E02FOutputsamplifylevymateappUSERsandboxa49917ca2aauthamplifyAuthunauthenticatedUserRole43CEF93ARef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"",
+       {
+        "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2aauthNestedStackauthNestedStackResource03F9E02FOutputsamplifylevymateappUSERsandboxa49917ca2aauthamplifyAuthIdentityPoolBA2D88B6Ref"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "Subscription"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/subscriptionOnUpdateTransactionModelResolver"
+   }
+  },
+  "SubscriptiononDeleteTransactionModelauth0FunctionSubscriptiononDeleteTransactionModelauth0FunctionAppSyncFunction39031177": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPIE6D92EEEApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPINONEDS4BD729D2Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "SubscriptiononDeleteTransactionModelauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/3b6d810ef43cdbd93ef462c40b0df0328b89e04f1473a4f82f1178da1f1d5aa0.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/SubscriptiononDeleteTransactionModelauth0Function/SubscriptiononDeleteTransactionModelauth0Function.AppSyncFunction"
+   }
+  },
+  "SubscriptiononDeleteTransactionModelpostAuth0FunctionSubscriptiononDeleteTransactionModelpostAuth0FunctionAppSyncFunctionF7B4C042": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPIE6D92EEEApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPINONEDS4BD729D2Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "SubscriptiononDeleteTransactionModelpostAuth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/c1721bcd774e27c514d3454b5be4f9bdd094c0161b57ddf053d618e3b0086a77.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/SubscriptiononDeleteTransactionModelpostAuth0Function/SubscriptiononDeleteTransactionModelpostAuth0Function.AppSyncFunction"
+   }
+  },
+  "SubscriptionOnDeleteTransactionModelDataResolverFnSubscriptionOnDeleteTransactionModelDataResolverFnAppSyncFunction3684422B": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPIE6D92EEEApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPINONEDS4BD729D2Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "SubscriptionOnDeleteTransactionModelDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/fe3c43ada4b9d681a5e2312663ef7a73386424d73b73e51f8e2e9d4b50f7c502.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/e0cff47fb007f0bbf2a4e43ca256d6aa7ec109821769fd79fa7c5e83f0e7f9fc.vtl"
+    }
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/SubscriptionOnDeleteTransactionModelDataResolverFn/SubscriptionOnDeleteTransactionModelDataResolverFn.AppSyncFunction"
+   }
+  },
+  "SubscriptiononDeleteTransactionModelResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPIE6D92EEEApiId"
+    },
+    "FieldName": "onDeleteTransactionModel",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "SubscriptiononDeleteTransactionModelauth0FunctionSubscriptiononDeleteTransactionModelauth0FunctionAppSyncFunction39031177",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "SubscriptiononDeleteTransactionModelpostAuth0FunctionSubscriptiononDeleteTransactionModelpostAuth0FunctionAppSyncFunctionF7B4C042",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "SubscriptionOnDeleteTransactionModelDataResolverFnSubscriptionOnDeleteTransactionModelDataResolverFnAppSyncFunction3684422B",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"Subscription\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"onDeleteTransactionModel\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"NONE\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPIE6D92EEEApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n\n$util.qr($ctx.stash.put(\"authRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2aauthNestedStackauthNestedStackResource03F9E02FOutputsamplifylevymateappUSERsandboxa49917ca2aauthamplifyAuthauthenticatedUserRole367B16F5Ref"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2aauthNestedStackauthNestedStackResource03F9E02FOutputsamplifylevymateappUSERsandboxa49917ca2aauthamplifyAuthunauthenticatedUserRole43CEF93ARef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"",
+       {
+        "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2aauthNestedStackauthNestedStackResource03F9E02FOutputsamplifylevymateappUSERsandboxa49917ca2aauthamplifyAuthIdentityPoolBA2D88B6Ref"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "Subscription"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/subscriptionOnDeleteTransactionModelResolver"
+   }
+  },
+  "TransactionModelOwnerDataResolverFnTransactionModelOwnerDataResolverFnAppSyncFunctionA453CC3D": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPIE6D92EEEApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPINONEDS4BD729D2Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "TransactionModelOwnerDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/041534e5fd916595f752318f161512d7c7f83b9f2cf32d0f0be381c12253ff68.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/064303962e481067b44300212516363b99aaee539b6bafaf756fdd83ff0b60f0.vtl"
+    }
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/TransactionModelOwnerDataResolverFn/TransactionModelOwnerDataResolverFn.AppSyncFunction"
+   }
+  },
+  "TransactionModelownerResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPIE6D92EEEApiId"
+    },
+    "FieldName": "owner",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "TransactionModelOwnerDataResolverFnTransactionModelOwnerDataResolverFnAppSyncFunctionA453CC3D",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"TransactionModel\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"owner\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"NONE\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPIE6D92EEEApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n\n$util.qr($ctx.stash.put(\"authRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2aauthNestedStackauthNestedStackResource03F9E02FOutputsamplifylevymateappUSERsandboxa49917ca2aauthamplifyAuthauthenticatedUserRole367B16F5Ref"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2aauthNestedStackauthNestedStackResource03F9E02FOutputsamplifylevymateappUSERsandboxa49917ca2aauthamplifyAuthunauthenticatedUserRole43CEF93ARef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"",
+       {
+        "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2aauthNestedStackauthNestedStackResource03F9E02FOutputsamplifylevymateappUSERsandboxa49917ca2aauthamplifyAuthIdentityPoolBA2D88B6Ref"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "TransactionModel"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/transactionModelOwnerResolver"
+   }
+  },
+  "CDKMetadata": {
+   "Type": "AWS::CDK::Metadata",
+   "Properties": {
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/1WO0W6DMAxFv6XvwetS7QNW0B67CfZemcSglJCg2GlVIf59gk6d9nR95CP7atD6DfY7vHFh7FB418J8IhayjaAZVNmFL0w4klBaoYzBOnExqJo45mRIlZkljn/YheeMNz7P9h5wjLaFb2w9HZFJORxhrqN/2NHTonCa+B4MzNWmV22Fgs3z5H/6yMGsJcoYOtfnhFuj38/+SmlRfDgjMwnD+xqKD3DMZiBZCyyr+5llyqK2dSPYu9AvKkRLcOGXq9bwqmG/u7BzRcpB3EhQP/IH7zwYyzYBAAA="
+   },
+   "Metadata": {
+    "aws:cdk:path": "amplify-levymateapp-USER-sandbox-a49917ca2a/data/amplifyData/TransactionModel/CDKMetadata/Default"
+   },
+   "Condition": "CDKMetadataAvailable"
+  }
+ },
+ "Outputs": {
+  "GetAttTransactionModelTableStreamArn": {
+   "Description": "Your DynamoDB table StreamArn.",
+   "Value": {
+    "Fn::GetAtt": [
+     "TransactionModelTable",
+     "TableStreamArn"
+    ]
+   },
+   "Export": {
+    "Name": {
+     "Fn::Join": [
+      ":",
+      [
+       {
+        "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPIE6D92EEEApiId"
+       },
+       "GetAtt:TransactionModelTable:StreamArn"
+      ]
+     ]
+    }
+   }
+  },
+  "GetAttTransactionModelTableName": {
+   "Description": "Your DynamoDB table name.",
+   "Value": {
+    "Fn::Join": [
+     "",
+     [
+      "TransactionModel-",
+      {
+       "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPIE6D92EEEApiId"
+      },
+      "-NONE"
+     ]
+    ]
+   },
+   "Export": {
+    "Name": {
+     "Fn::Join": [
+      ":",
+      [
+       {
+        "Ref": "referencetoamplifylevymateappUSERsandboxa49917ca2adataamplifyDataGraphQLAPIE6D92EEEApiId"
+       },
+       "GetAtt:TransactionModelTable:Name"
+      ]
+     ]
+    }
+   }
+  },
+  "amplifylevymateappUSERsandboxa49917ca2adataamplifyDataTransactionModelTransactionModelDataSource63EAE93BName": {
+   "Value": {
+    "Fn::GetAtt": [
+     "TransactionModelDataSource",
+     "Name"
+    ]
+   }
+  },
+  "amplifylevymateappUSERsandboxa49917ca2adataamplifyDataTransactionModelTransactionModelTableFEFA973BTableArn": {
+   "Value": {
+    "Fn::GetAtt": [
+     "TransactionModelTable",
+     "TableArn"
+    ]
+   }
+  }
+ }
+}

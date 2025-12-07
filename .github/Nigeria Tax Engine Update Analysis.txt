@@ -1,0 +1,386 @@
+﻿Technical Specification and Algorithmic Framework for the LevyMate Tax Engine Update: A Deep Analysis of the Nigeria Tax Act 2025
+1. Executive Summary: The Fiscal Paradigm Shift
+The enactment of the Nigeria Tax Act (NTA) 2025 represents the most profound restructuring of the Nigerian fiscal landscape in over two decades. For a SaaS platform like LevyMate, this is not merely a routine update of tax tables or rate adjustments; it constitutes a fundamental architectural paradigm shift. The NTA 2025 consolidates multiple fragmented laws—including the Personal Income Tax Act (PITA), Companies Income Tax Act (CITA), and Capital Gains Tax Act (CGTA)—into a unified legislative framework aimed at simplifying compliance while broadening the tax base.1
+For the engineering and product teams at LevyMate, the critical directive is the transition from static, formulaic reliefs (such as the Consolidated Relief Allowance) to dynamic, evidence-based deductions (specifically the new Rent Relief). This shift necessitates a complete overhaul of the data ingestion layer, requiring the capture of verified expenditure data (rent receipts) alongside income data. Furthermore, the harmonization of Capital Gains Tax (CGT) with personal income tax bands, the reclassification of the National Housing Fund (NHF) as voluntary for the private sector, and the introduction of a unified Development Levy for corporations require intricate logic updates to the core calculation engine.
+This comprehensive report serves as the definitive technical requirement document for upgrading the LevyMate system. It dissects the legislative text into programmable logic, mathematical formulas, and rigorous test cases, ensuring that LevyMate not only achieves compliance by the effective date of January 1, 2026, but also positions itself as the market leader in navigating these complex new fiscal realities.3
+________________
+2. Part I: Personal Income Tax (PIT) – Architectural Deconstruction
+The Personal Income Tax regime is the core module of the LevyMate payroll engine. The NTA 2025 introduces changes that alter the very definition of "Chargeable Income." The analysis below details the transition from the legacy PITA 2011/2020 framework to the NTA 2025 standard.
+2.1 The Ontology of "Gross Income" and Jurisdictional Friction
+A persistent challenge in Nigerian tax administration has been the divergence in defining "Gross Income" between Federal statutes and State Internal Revenue Services, most notably the Lagos State Internal Revenue Service (LIRS). The LIRS has historically defined Gross Income expansively to minimize the impact of non-taxable allowances, thereby maximizing the tax base for the Consolidated Relief Allowance (CRA) calculation.4
+Under the NTA 2025, the definition is codified to ensure uniformity. "Gross Income" ($G_{total}$) is defined as the aggregate of all emoluments, including:
+* Basic Salary ($B$)
+* Housing Allowance ($H$)
+* Transport Allowance ($T$)
+* Utility, Meal, Furniture, and other recurrent allowances.
+* Bonuses, 13th-month payments, and overtime.
+* Global Income: For residents, worldwide income is now explicitly taxable, necessitating input fields for foreign-sourced income streams, converted to Naira at the prevailing official exchange rate.5
+Implication for LevyMate:
+The database schema must now explicitly flag the source jurisdiction of income components. While the NTA aims for harmonization, State authorities may still issue public notices interpreting "Gross Income" aggressively. The engine must possess a Jurisdictional Overlay feature.
+* Default Logic: Follow NTA 2025 definitions.
+* Override Logic: If Tax_Authority == LIRS, apply specific LIRS "Gross Income" interpretations if they diverge via future circulars, particularly concerning the inclusion of BIK (Benefits in Kind) valuations which are now capped at 5% of cost.2
+2.2 Statutory Deductions: The "Voluntary" Pivot
+The calculation of statutory deductions—which reduce the Gross Income to arrive at the base for tax reliefs—has undergone significant modification, particularly regarding the mandatory nature of contributions.
+2.2.1 Pension Contributions ($D_{pension}$)
+The Pension Reform Act provisions are retained within the NTA framework. The contribution remains mandatory for both public and private sectors.
+* Base: Basic Salary + Housing Allowance + Transport Allowance.
+* Rate: Minimum 8% (Employee) and 10% (Employer).
+* Engine Logic: The system must validate that the deduction does not exceed the statutory limits for tax deductibility purposes (voluntary contributions above the limit are valid but tax-treatment varies).
+* Formula:
+
+$$D_{pension} = R_{pen\_emp} \times (B + H + T)$$
+
+Where $R_{pen\_emp} \ge 0.08$.7
+2.2.2 National Housing Fund ($D_{NHF}$): A Critical Branching Logic
+Perhaps the most operationally significant change for payroll processors is the status of the NHF. Previously mandatory for all earners above minimum wage, the NTA 2025 and recent Finance Act amendments have reclassified this as voluntary for private sector employees.8
+   * The Conflict: Snippets suggest a base of "Gross Salary" 8 versus legacy "Basic Salary".7 The most recent interpretations and the trend of the NTA favor a Gross Income base for those who opt-in.
+   * Algorithmic Requirement: The LevyMate engine requires a Boolean flag is_nhf_contributor tied to the employee profile.
+   * Logic Flow:
+Python
+IF (Employer_Type == 'Public_Sector'):
+   NHF_Status = MANDATORY
+   NHF_Base = Gross_Income  # As per updated NTA definitions
+ELSE IF (Employer_Type == 'Private_Sector'):
+   IF (Employee_Opt_In == TRUE):
+       NHF_Status = VOLUNTARY_ACTIVE
+       NHF_Base = Gross_Income
+   ELSE:
+       NHF_Status = VOLUNTARY_INACTIVE
+       NHF_Base = 0
+
+D_NHF = 0.025 * NHF_Base
+
+   * Insight: This change places the burden of compliance on the employee's choice. LevyMate should include a UI feature for employees to "toggle" this deduction, generating an audit trail (timestamped consent) to protect the employer from non-remittance liabilities.
+2.2.3 National Health Insurance Scheme ($D_{NHIS}$)
+Contributions to the NHIS remain fully tax-deductible.
+      * Rate: Typically 5% of Basic Salary for the employee, though schemes vary.11
+      * Formula:
+
+$$D_{NHIS} = 0.05 \times B$$
+2.3 The Relief Architecture: From Static to Dynamic
+The abolition of the Consolidated Relief Allowance (CRA) is the headline change of the NTA 2025.12 The CRA formula ($₦200,000 + 20\% \text{ of Gross Income}$) provided a predictable, high-value shelter for all taxpayers. Its replacement, the Rent Relief, is narrower and conditional.
+2.3.1 The Rent Relief Mechanism
+The objective of this policy change is to decouple tax relief from income size and tie it to actual cost-of-living expenditure (housing), thereby encouraging the formalization of the rental market.13
+         * Eligibility: Any individual who pays rent for their primary accommodation. Owner-occupiers are effectively excluded from this specific relief line item.
+         * Calculation Logic:
+The relief is the lower of two values:
+            1. 20% of the Actual_Annual_Rent_Paid.
+            2. A flat cap of ₦500,000.
+            * Mathematical Formula:
+
+$$R_{rent} = \min(0.20 \times Rent_{actual}, \quad 500,000)$$
+            * Validation Constraint: The snippet 14 emphasizes that "Documentation is Essential." The LevyMate engine must introduce a validation layer. If Rent_Receipt_Verified == FALSE, then Rent_actual defaults to 0.
+            * Implication: For a high earner (e.g., earning ₦20m/year), the old CRA provided ₦4.2m in tax-exempt income. The new Rent Relief provides a maximum of ₦500,000. This massive reduction in relief exposes a significantly larger portion of income to taxation, which is partly offset by the zero-rated first tax band.
+2.3.2 Other Retained Reliefs
+               * Life Assurance ($R_{life}$): Premiums paid on life of self or spouse remain 100% tax-deductible.9
+               * Gratuities/Loss of Office: The exempt threshold is raised from ₦10 million to ₦50 million.15
+2.4 Chargeable Income Derivation
+The new formula for establishing the tax base is:
+
+
+$$I_{chargeable} = G_{total} - (D_{pension} + D_{NHF} + D_{NHIS} + R_{rent} + R_{life})$$
+________________
+3. The New Progressive Tax Bands: Mathematical Formulas
+The NTA 2025 abandons the old PITA tax bands (7% to 24%) in favor of a new structure that introduces a 0% band for the first ₦800,000 of income. This effectively acts as a universal personal allowance, ensuring that minimum wage earners (₦70,000/month $\times$ 12 = ₦840,000) pay negligible tax.12
+The new marginal tax rates are applied cumulatively. The LevyMate calculation engine must utilize the following graduated scale logic.
+3.1 The Band Table (Data Structure)
+Band ID
+	Income Segment Description
+	Range Start (₦)
+	Range End (₦)
+	Band Width (₦)
+	Rate (%)
+	Tax Payload (₦)
+	Cumulative Tax (₦)
+	B1
+	First ₦800k
+	0
+	800,000
+	800,000
+	0%
+	0.00
+	0.00
+	B2
+	Next ₦2.2m
+	800,001
+	3,000,000
+	2,200,000
+	15%
+	330,000.00
+	330,000.00
+	B3
+	Next ₦9m
+	3,000,001
+	12,000,000
+	9,000,000
+	18%
+	1,620,000.00
+	1,950,000.00
+	B4
+	Next ₦13m
+	12,000,001
+	25,000,000
+	13,000,000
+	21%
+	2,730,000.00
+	4,680,000.00
+	B5
+	Next ₦25m
+	25,000,001
+	50,000,000
+	25,000,000
+	23%
+	5,750,000.00
+	10,430,000.00
+	B6
+	Above ₦50m
+	50,000,001
+	$\infty$
+	$\infty$
+	25%
+	Variable
+	> 10,430,000.00
+	3.2 Calculation Algorithm
+The calculation logic for Tax_Payable ($T_{pay}$) based on Chargeable_Income ($I_c$) is defined by the following piecewise function:
+
+
+$$T_{pay}(I_c) = \begin{cases} 0 & \text{if } I_c \le 800,000 \\ 0.15(I_c - 800,000) & \text{if } 800,000 < I_c \le 3,000,000 \\ 330,000 + 0.18(I_c - 3,000,000) & \text{if } 3,000,000 < I_c \le 12,000,000 \\ 1,950,000 + 0.21(I_c - 12,000,000) & \text{if } 12,000,000 < I_c \le 25,000,000 \\ 4,680,000 + 0.23(I_c - 25,000,000) & \text{if } 25,000,000 < I_c \le 50,000,000 \\ 10,430,000 + 0.25(I_c - 50,000,000) & \text{if } I_c > 50,000,000 \end{cases}$$
+3.3 Capital Gains Tax Harmonization
+Under previous legislation, CGT for individuals was a flat 10%. The NTA 2025 aligns CGT with the PIT bands.15 This means that for high earners, capital gains (e.g., profit from the sale of property or shares) will now be taxed at up to 25%, effectively harmonizing the treatment of labor and capital income.
+               * LevyMate Update: The engine must support a Capital_Gains_Input field. This amount is added to the Chargeable_Income bucket after the determination of employment income tax bands, ensuring it is taxed at the individual's marginal rate.
+________________
+4. Part II: Corporate Income Tax (CIT) – Structural Simplification
+For the LevyMate "Corporate" module, the NTA 2025 simplifies the classification of companies and introduces a binary tax rate system, while simultaneously creating a unified levy for social contributions.
+4.1 The Threshold War: ₦50 Million vs. ₦100 Million
+There is a notable discrepancy in the research materials regarding the turnover threshold that defines a "Small Company" (exempt from CIT).
+               * Scenario A: Some sources cite a threshold of ₦50 million.18
+               * Scenario B: Others, particularly updated summaries of the signed Act, cite ₦100 million.1
+Analytical Reconciliation: The discrepancy likely arises from the difference between the initial draft bills (which proposed ₦50m) and the final harmonized version or the Oyedele Committee's final recommendations (which pushed for ₦100m to account for inflation). Given the "inflation-adjusted" philosophy of the reform, the ₦100 million threshold is the more probable implementation standard. However, prudence dictates flexibility.
+               * LevyMate Configuration: The system must not hard-code this value. It should be stored as a global variable CIT_SMALL_CO_THRESHOLD initialized to 100,000,000, allowing for immediate backend adjustment via a super-admin panel without code deployment if the gazetted regulation clarifies otherwise.
+4.2 Corporate Tax Rates
+The NTA 2025 eliminates the "Medium Company" (20%) tax band entirely, resulting in a binary system:
+               1. Small Company (Turnover $\le$ Threshold): 0% CIT Rate.
+               2. Large Company (Turnover $>$ Threshold): 30% CIT Rate.
+This binary structure dramatically simplifies the conditional logic in the tax engine, removing the complex graduated computations previously required for medium-sized enterprises.22
+4.3 The Unified Development Levy
+The NTA 2025 introduces a Development Levy to replace a basket of "nuisance taxes" and sectoral levies, including the Tertiary Education Tax (TET), NASENI Levy, NITDA Levy, and Police Trust Fund Levy.1
+               * Rate: 4%.
+               * Base: Assessable Profits (Profits before tax).
+               * Exemptions: Small companies are exempt.
+               * Implication: Companies previously paying 3% TET + 1% NITDA + 0.25% NASENI may see a slight consolidation benefit or increase depending on their specific sector, but the administrative burden is massively reduced to a single computation.
+               * Formula:
+
+$$L_{dev} = \begin{cases} 0 & \text{if Turnover} \le \text{Threshold} \\ 0.04 \times \text{Assessable\_Profit} & \text{if Turnover} > \text{Threshold} \end{cases}$$
+4.4 Abolition of Minimum Tax
+The controversial Minimum Tax—which taxed companies on turnover even when they made losses—has been abolished.23 This is a massive liquidity boost for loss-making entities and startups in their growth phase.
+                  * Engine Update: The logic check IF (Tax_Payable < Minimum_Tax_Calc) THEN Pay Minimum_Tax must be removed. The new logic is simply: IF (Assessable_Profit <= 0) THEN Tax_Payable = 0.
+________________
+5. Part III: Algorithmic Implementation & System Architecture
+To implement these changes in the LevyMate web app, the backend architecture must evolve. The following section outlines the necessary data structures and logic flows using pseudocode and schema definitions.
+5.1 Database Schema Enhancements (SQL)
+The employees and tax_configurations tables require expansion.
+
+
+SQL
+
+
+
+
+-- Updating the Employee Table to handle NTA 2025 requirements
+ALTER TABLE employees
+ADD COLUMN rent_paid_annual DECIMAL(15, 2) DEFAULT 0.00, -- Captured from user declaration
+ADD COLUMN rent_evidence_verified BOOLEAN DEFAULT FALSE, -- Admin check for receipt
+ADD COLUMN nhf_opt_in BOOLEAN DEFAULT FALSE, -- Private sector voluntary check
+ADD COLUMN rent_subsidy_amount DECIMAL(15, 2) DEFAULT 0.00; -- If employer pays rent directly
+
+-- Creating a new table for Progressive Tax Bands (Versioned)
+CREATE TABLE tax_bands_2025 (
+   id SERIAL PRIMARY KEY,
+   band_order INT,
+   min_income DECIMAL(15, 2),
+   max_income DECIMAL(15, 2), -- Null for infinity
+   rate DECIMAL(5, 4), -- e.g., 0.15 for 15%
+   cumulative_tax_prev DECIMAL(15, 2) -- Optimization for fast lookup
+);
+
+-- Insert 2025 Bands
+INSERT INTO tax_bands_2025 (band_order, min_income, max_income, rate, cumulative_tax_prev) VALUES
+(1, 0, 800000, 0.00, 0),
+(2, 800001, 3000000, 0.15, 0),
+(3, 3000001, 12000000, 0.18, 330000),
+(4, 12000001, 25000000, 0.21, 1950000),
+(5, 25000001, 50000000, 0.23, 4680000),
+(6, 50000001, NULL, 0.25, 10430000);
+
+5.2 Core Calculation Logic (Python/Django Context)
+The following pseudocode demonstrates the unified calculation function for the LevyMate engine.
+
+
+Python
+
+
+
+
+def calculate_monthly_tax_2025(employee, gross_monthly_income):
+   # Annualize Income for Calculation
+   annual_gross = gross_monthly_income * 12
+   
+   # 1. Statutory Deductions
+   # Pension (Mandatory)
+   pension_base = employee.basic + employee.housing + employee.transport
+   pension_deduction = pension_base * 0.08 
+   
+   # NHF (Conditional)
+   nhf_deduction = 0
+   if employee.employer.sector == 'PUBLIC' or employee.nhf_opt_in:
+       # Using Gross Income as base per NTA trend
+       nhf_deduction = annual_gross * 0.025
+       
+   # NHIS (Voluntary/Standard)
+   nhis_deduction = employee.basic * 0.05 if employee.has_nhis else 0
+   
+   total_statutory_deductions = pension_deduction + nhf_deduction + nhis_deduction
+   
+   # 2. Reliefs (The Major Change)
+   # Rent Relief Logic
+   rent_relief = 0
+   if employee.rent_evidence_verified:
+       rent_calc = employee.rent_paid_annual * 0.20
+       rent_relief = min(rent_calc, 500000) # Capped at 500k
+   
+   # Life Assurance
+   life_relief = employee.life_assurance_premium
+   
+   total_reliefs = rent_relief + life_relief
+   
+   # 3. Chargeable Income
+   chargeable_income = annual_gross - (total_statutory_deductions + total_reliefs)
+   
+   if chargeable_income <= 0:
+       return 0
+       
+   # 4. Tax Band Application (Iterative)
+   tax_liability = 0
+   remaining_income = chargeable_income
+   
+   # Band 1: First 800k @ 0%
+   if remaining_income > 800000:
+       remaining_income -= 800000
+   else:
+       return 0 # Income falls entirely in 0% band
+       
+   # Band 2: Next 2.2m @ 15%
+   taxable_chunk = min(remaining_income, 2200000)
+   tax_liability += taxable_chunk * 0.15
+   remaining_income -= taxable_chunk
+   if remaining_income <= 0: return tax_liability / 12
+   
+   # Band 3: Next 9m @ 18%
+   taxable_chunk = min(remaining_income, 9000000)
+   tax_liability += taxable_chunk * 0.18
+   remaining_income -= taxable_chunk
+   if remaining_income <= 0: return tax_liability / 12
+   
+   #... (Repeat logic for Band 4, 5)...
+   
+   # Band 6: Above 50m @ 25%
+   if remaining_income > 0:
+       tax_liability += remaining_income * 0.25
+       
+   return tax_liability / 12 # Return monthly PAYE
+
+________________
+6. Part IV: Exhaustive Test Cases (The Validation Suite)
+To validate the engine, we must simulate scenarios across the socio-economic spectrum. These test cases highlight the impact of the Rent Relief Cap versus the Zero-Rated Band.
+6.1 Scenario A: The Entry-Level Graduate (The Beneficiary)
+                  * Profile: Junior Analyst.
+                  * Annual Gross: ₦1,200,000 (₦100k/month).
+                  * Rent: Pays ₦250,000/year (Verified).
+                  * Pension: ₦72,000/year.
+                  * NHF: Opts out.
+Analysis:
+                  1. Deductions: ₦72,000 (Pension).
+                  2. Rent Relief: $20\% \text{ of } 250,000 = 50,000$. (Lower than 500k cap).
+                  3. Chargeable Income: $1,200,000 - (72,000 + 50,000) = 1,078,000$.
+                  4. Tax Calc:
+                  * First ₦800,000 @ 0% = ₦0.
+                  * Balance ₦278,000 @ 15% = ₦41,700.
+                  5. Annual Tax Liability: ₦41,700.
+                  6. Effective Tax Rate: 3.4%.
+                  * Observation: Under the old system (CRA), tax would have been higher. The ₦800k zero-band significantly shields this earner.
+6.2 Scenario B: The Senior Manager (The Middle-Class Squeeze)
+                  * Profile: Operations Manager.
+                  * Annual Gross: ₦15,000,000.
+                  * Rent: Pays ₦3,500,000/year (Verified).
+                  * Pension: ₦1,200,000.
+                  * NHF: Opts in (₦375,000 - 2.5% of Gross).
+Analysis:
+                  1. Deductions: $1,200,000 + 375,000 = 1,575,000$.
+                  2. Rent Relief:
+                  * Calc: $20\% \text{ of } 3,500,000 = 700,000$.
+                  * Cap: ₦500,000.
+                  * Applied Relief: ₦500,000. (Note: Significant loss of relief value compared to calculated 20%).
+                  3. Chargeable Income: $15,000,000 - (1,575,000 + 500,000) = 12,925,000$.
+                  4. Tax Calc:
+                  * Band 1 (0-800k): ₦0.
+                  * Band 2 (800k-3m): ₦330,000.
+                  * Band 3 (3m-12m): ₦1,620,000.
+                  * Band 4 (12m-12.925m):
+                  * Balance: ₦925,000.
+                  * Tax: $925,000 \times 21\% = 194,250$.
+                  5. Total Tax: $330,000 + 1,620,000 + 194,250 = \mathbf{2,144,250}$.
+                  6. Effective Tax Rate: 14.29%.
+                  * Observation: Under the old CRA ($200k + 20\%$), relief would have been $3,200,000$. Here, relief is only $500,000$. Even with the 0% band, this earner pays more tax under NTA 2025, validating the "base broadening" objective for the middle class.
+6.3 Scenario C: The C-Suite Executive (The HNWI)
+                  * Profile: CEO.
+                  * Annual Gross: ₦80,000,000.
+                  * Rent: Owner-Occupier (Pays ₦0 Rent).
+                  * Pension: ₦6,400,000.
+Analysis:
+                  1. Deductions: ₦6,400,000.
+                  2. Rent Relief: ₦0 (No receipts).
+                  3. Chargeable Income: $80,000,000 - 6,400,000 = 73,600,000$.
+                  4. Tax Calc:
+                  * Cumulative tax for first ₦50m (from Table): ₦10,430,000.
+                  * Balance above ₦50m: $23,600,000 \times 25\% = 5,900,000$.
+                  5. Total Tax: $10,430,000 + 5,900,000 = \mathbf{16,330,000}$.
+                  6. Effective Tax Rate: 20.41%.
+________________
+7. Part V: Strategic Recommendations for LevyMate
+The technical analysis above illuminates specific opportunities for LevyMate to differentiate itself in the market.
+7.1 The "Rent Verification" Module
+The single biggest friction point for HR departments will be processing Rent Relief. LevyMate should build a dedicated "Document Vault" feature.
+                  * Feature: Employees upload rent receipts directly via the LevyMate mobile app.
+                  * Validation: Implementation of an OCR (Optical Character Recognition) layer to extract dates and amounts, flagging them for HR approval.
+                  * Marketing Angle: "LevyMate automates the NTA 2025 verification burden—don't let Rent Relief drown your HR team in paperwork."
+7.2 The "Scenario Planner" Tool
+Given the complexity of the "Voluntary NHF" and the "Rent vs. No Rent" variables, LevyMate should deploy a public-facing "Net Pay Simulator" widget.
+                  * Function: Allow users to toggle "Pay NHF" on/off and input "Rent Amount" to see immediate changes in their take-home pay. This drives traffic and establishes thought leadership.
+7.3 Jurisdictional Intelligence
+By implementing the specific "State vs. Federal" gross income toggles, LevyMate can pitch itself as the only platform that is "Audit-Ready" for both FIRS and aggressive state boards like LIRS.
+8. Conclusion
+The Nigeria Tax Act 2025 is a sophisticated piece of legislation that trades the blunt simplicity of the old CRA for a more nuanced, progressive, and data-dependent system. For LevyMate, the challenge is ensuring the engine can handle the granularity of Rent Relief caps, voluntary deductions, and progressive bands without friction. By implementing the algorithms detailed in this report, LevyMate will not only ensure compliance but will also provide a strategic advantage to its users, transforming a regulatory burden into a value-added service. The future of Nigerian payroll is evidence-based, and LevyMate will be the engine that powers it.
+Works cited
+                  1. The Nigeria Tax Act1 (NTA), 2025 - KPMG agentic corporate services, accessed December 2, 2025, https://assets.kpmg.com/content/dam/kpmg/ng/pdf/2025/06/The%20Nigeria%20Tax%20Act%20(NTA),%202025.pdf
+                  2. Nigeria Tax Act 2025 Goes into Effect on January 1, 2026 - Safeguard Global, accessed December 2, 2025, https://www.safeguardglobal.com/resources/blog/nigeria-tax-act-2025/
+                  3. Nigerian Tax Reforms, 2025 - PwC, accessed December 2, 2025, https://www.pwc.com/ng/en/assets/pdf/nigeria-tax-reform-insight-series-sectoral-analysis.pdf
+                  4. lirs-public-notice-on-definition-of-gross-income-and-exemption-of-minimum-wage-from-pit.pdf, accessed December 2, 2025, https://assets.kpmg.com/content/dam/kpmg/ng/pdf/tax/lirs-public-notice-on-definition-of-gross-income-and-exemption-of-minimum-wage-from-pit.pdf
+                  5. Nigeria - Individual - Significant developments - Worldwide Tax Summaries Online, accessed December 2, 2025, https://taxsummaries.pwc.com/nigeria/individual/significant-developments
+                  6. Nigeria - Individual - Taxes on personal income - Worldwide Tax Summaries Online, accessed December 2, 2025, https://taxsummaries.pwc.com/nigeria/individual/taxes-on-personal-income
+                  7. A Detailed Guide to Statutory Deductions in Nigeria - Workpay, accessed December 2, 2025, https://www.myworkpay.com/blogs/statutory-deductions-in-nigeria-a-comprehensive-overview-and-detailed-guide
+                  8. Tax Calculator Nigeria | PAYE Calculator 2025 - SME Payroll, accessed December 2, 2025, https://www.smepayroll.com.ng/nigeria/paye/
+                  9. Nigeria - Individual - Other taxes, accessed December 2, 2025, https://taxsummaries.pwc.com/nigeria/individual/other-taxes
+                  10. Employment Income Tax Calculator | Nigeria PAYE Calculator 2025 - SME Payroll, accessed December 2, 2025, https://www.smepayroll.com.ng/calculator/tax/
+                  11. Nigeria New Tax Law 2026 Calculator - SME Payroll, accessed December 2, 2025, https://www.smepayroll.com.ng/nigeria/paye/taxreform/
+                  12. Nigeria – Changes to Personal Income Tax – September 2025 - Mercans, accessed December 2, 2025, https://mercans.com/resources/statutory-alerts/nigeria-changes-to-personal-income-tax-september-2025/
+                  13. Understanding Nigeria's New Tax Laws for the Housing Market (With Examples), accessed December 2, 2025, https://www.nigeriahousingmarket.com/real-estate-guide-nigeria/understanding-nigerias-new-tax-laws-for-the-housing-market-with-examples
+                  14. The Nigerian Tax Act 2025: Implications For The Real Estate Sector, accessed December 2, 2025, https://estateintel.com/insights/the-nigerian-tax-act-2025-implications-for-the-real-estate-sector
+                  15. Nigeria Tax Act, 2025 has been signed – highlights | EY - Global, accessed December 2, 2025, https://www.ey.com/en_gl/technical/tax-alerts/nigeria-tax-act-2025-has-been-signed-highlights
+                  16. Nigeria – Reforms of the Personal Income Tax Regime Bring Important Changes, accessed December 2, 2025, https://kpmg.com/xx/en/our-insights/gms-flash-alert/flash-alert-2025-168.html
+                  17. How the New Tax Reform Laws Will Transform Your Personal Finances: A Complete Guide for Nigerian Taxpayers - nairaCompare, accessed December 2, 2025, https://nairacompare.ng/blogs/nigeria-tax-reform-personal-finances-complete-guide
+                  18. A New Fiscal Framework: Key Provisions of Nigeria's 2025 Tax Reform Laws, accessed December 2, 2025, https://www.nesgroup.org/blog/A-New-Fiscal-Framework:-Key-Provisions-of-Nigeria%E2%80%99s-2025-Tax-Reform-Laws
+                  19. Nigeria Tax Act 2025 - Potential Impact on the Manufacturing Sector, accessed December 2, 2025, https://ng.andersen.com/nigeria-tax-act-2025-potential-impact-on-the-manufacturing-sector/
+                  20. Potential Impact of the New Tax Bill on Small and Medium Enterprises - Andersen in Nigeria, accessed December 2, 2025, https://ng.andersen.com/potential-impact-of-the-new-tax-bill-on-small-and-medium-enterprises/
+                  21. The Nigerian Tax Reform Acts - PwC, accessed December 2, 2025, https://www.pwc.com/ng/en/publications/the-nigerian-tax-reform-acts.html
+                  22. Nigeria - Corporate - Taxes on corporate income - Worldwide Tax Summaries Online, accessed December 2, 2025, https://taxsummaries.pwc.com/nigeria/corporate/taxes-on-corporate-income
+                  23. The Impact of the Nigeria Tax Act 2025 on Corporate Planning, accessed December 2, 2025, https://ng.andersen.com/the-impact-of-the-nigeria-tax-act-2025-on-corporate-planning/
