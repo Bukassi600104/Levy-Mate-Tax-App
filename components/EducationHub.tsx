@@ -20,17 +20,27 @@ const EducationHub: React.FC<EducationHubProps> = ({ profile, onUsageUpdate, onN
   const [loading, setLoading] = useState(false);
   const [readingArticleId, setReadingArticleId] = useState<number | null>(null);
   const endRef = useRef<HTMLDivElement>(null);
+  const chatContainerRef = useRef<HTMLDivElement>(null);
+  const isInitialMount = useRef(true);
 
   const isAdmin = profile.email && ADMIN_EMAILS.includes(profile.email.toLowerCase());
   const isPro = profile.tier === 'Pro' || isAdmin;
   const isLimitReached = !isPro && profile.aiQueriesToday >= AI_QUERY_LIMIT_FREE;
   const queriesLeft = Math.max(0, AI_QUERY_LIMIT_FREE - profile.aiQueriesToday);
 
+  // Scroll only the chat container, not the entire page
   const scrollToBottom = () => {
-    endRef.current?.scrollIntoView({ behavior: "smooth" });
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+    }
   };
 
+  // Only scroll on new messages, not on initial mount
   useEffect(() => {
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+      return;
+    }
     scrollToBottom();
   }, [history]);
 
@@ -195,7 +205,7 @@ const EducationHub: React.FC<EducationHubProps> = ({ profile, onUsageUpdate, onN
                 </div>
             </div>
 
-            <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-white relative">
+            <div ref={chatContainerRef} className="flex-1 overflow-y-auto p-4 space-y-4 bg-white relative">
                 {history.map((msg, idx) => (
                 <div key={idx} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                     <div className={`flex gap-3 max-w-[85%] ${msg.role === 'user' ? 'flex-row-reverse' : 'flex-row'}`}>

@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { TaxProfile, TaxResult, TaxPolicyYear, EntityType, TaxCalculationHistory } from '../types';
-import { Wallet, BookOpen, Home, Settings, Plus, Crown, BarChart, List, PieChart, TrendingUp, Calendar, AlertTriangle, FileText, MessageSquare, HelpCircle, History, X, Sparkles, ArrowRight, Calculator as CalculatorIcon } from 'lucide-react';
+import { Wallet, BookOpen, Home, Settings, Plus, Crown, BarChart, List, PieChart, TrendingUp, Calendar, AlertTriangle, FileText, MessageSquare, HelpCircle, History, X, Sparkles, ArrowRight, Calculator as CalculatorIcon, MessageCircle, GraduationCap } from 'lucide-react';
 import Calculator from './Calculator';
-import EducationHub from './EducationHub';
+import AIChat from './AIChat';
+import LearningHub from './LearningHub';
 import TransactionManager from './TransactionManager';
 import Analytics from './Analytics';
 import FAQPage from './FAQPage';
@@ -26,7 +27,7 @@ interface DashboardProps {
   onViewFeedback?: () => void;
 }
 
-type TabType = 'home' | 'transactions' | 'reports' | 'tax' | 'learn' | 'faq' | 'settings' | 'history';
+type TabType = 'home' | 'transactions' | 'reports' | 'tax' | 'learn' | 'articles' | 'faq' | 'settings' | 'history';
 
 // History storage key - will be made user-specific
 const getHistoryStorageKey = (userId: string) => `levymate_calculation_history_${userId}`;
@@ -719,7 +720,8 @@ const Dashboard: React.FC<DashboardProps> = ({ profile, onLogout, onProfileUpdat
             <NavItem tab="transactions" icon={List} label="Transactions" id="nav-transactions" />
             <NavItem tab="tax" icon={Wallet} label="Tax Engine" id="nav-tax" />
             <NavItem tab="history" icon={History} label="History" id="nav-history" />
-            <NavItem tab="learn" icon={BookOpen} label="Compliance Hub" id="nav-learn" />
+            <NavItem tab="learn" icon={MessageCircle} label="AI Tax Chat" id="nav-learn" />
+            <NavItem tab="articles" icon={GraduationCap} label="Learning Hub" id="nav-articles" />
             <NavItem tab="faq" icon={HelpCircle} label="FAQ" id="nav-faq" />
             <NavItem tab="settings" icon={Settings} label="Settings" id="nav-settings" />
         </nav>
@@ -774,9 +776,14 @@ const Dashboard: React.FC<DashboardProps> = ({ profile, onLogout, onProfileUpdat
             )}
 
             {activeTab === 'learn' && (
-                <EducationHub 
+                <AIChat 
                     profile={currentProfile} 
                     onUsageUpdate={handleUsageUpdate}
+                />
+            )}
+
+            {activeTab === 'articles' && (
+                <LearningHub 
                     onNavigateToFAQ={handleNavigateToFAQ}
                 />
             )}
@@ -819,11 +826,11 @@ const Dashboard: React.FC<DashboardProps> = ({ profile, onLogout, onProfileUpdat
             <span className="text-[9px]">Records</span>
           </button>
           <div className="relative -top-6">
-            <button onClick={() => setActiveTab('reports')} className="bg-levy-blue text-white w-14 h-14 rounded-full shadow-xl flex items-center justify-center"><PieChart size={26} /></button>
+            <button onClick={() => setActiveTab('learn')} className="bg-levy-blue text-white w-14 h-14 rounded-full shadow-xl flex items-center justify-center"><MessageCircle size={26} /></button>
           </div>
-          <button onClick={() => setActiveTab('learn')} className={`flex flex-col items-center gap-0.5 ${activeTab === 'learn' ? 'text-levy-blue' : 'text-gray-400'}`}>
-            <BookOpen size={20} />
-            <span className="text-[9px]">AI Chat</span>
+          <button onClick={() => setActiveTab('articles')} className={`flex flex-col items-center gap-0.5 ${activeTab === 'articles' ? 'text-levy-blue' : 'text-gray-400'}`}>
+            <GraduationCap size={20} />
+            <span className="text-[9px]">Learn</span>
           </button>
           <button onClick={() => setActiveTab('settings')} className={`flex flex-col items-center gap-0.5 ${activeTab === 'settings' ? 'text-levy-blue' : 'text-gray-400'}`}>
             <Settings size={20} />
