@@ -1,87 +1,77 @@
 # LevyMate Tax App - AI Coding Instructions
 
 ## Project Overview
-Nigerian tax calculator (React 19 + Vite + TypeScript) supporting 2024 Finance Act and proposed 2026 Nigeria Tax Act (NTA 2025). Backend uses AWS Amplify Gen 2 (Cognito + DynamoDB + AppSync GraphQL).
+Nigerian tax calculator (React 19 + Vite + TypeScript) supporting Finance Act 2020 and Nigeria Tax Act 2025 (effective January 2026). Backend: AWS Amplify Gen 2 (Cognito + DynamoDB + AppSync GraphQL).
 
-## Architecture
-
-### Critical Rule: Tax Engine is Source of Truth
-**Never implement tax math in UI components.** All calculations go through `services/taxEngine.ts`:
+## Critical Architecture Rule
+**Tax Engine is the single source of truth.** Never compute tax math in UI components:
 ```typescript
-// ✅ Correct
+// ✅ Always use TaxEngine
 const result = TaxEngine.calculate(profile, 'ACT_2026_PROPOSED');
 
-// ❌ Wrong - never calculate in components
+// ❌ Never inline tax calculations
 const tax = income * 0.25;
 ```
-- Tax bands/rates in `constants.ts` (`TAX_BANDS_2024`, `TAX_BANDS_2026`)
-- Policy year (`'ACT_2024' | 'ACT_2026_PROPOSED'`) switches calculation logic
-- TaxEngine returns `TaxResult` with `breakdown[]`, `insights[]`, `complianceFlags[]`
 
-### Service Layer (services/)
-| Service | Purpose |
-|---------|---------|
-| `taxEngine.ts` | PIT/CIT/VAT calculations, static class methods |
-| `geminiService.ts` | AI chat via Gemini 2.5 Flash, receipt OCR |
-| `authService.ts` | Cognito auth wrappers (signUp, signIn, resetPassword) |
-| `amplifyService.ts` | DynamoDB CRUD via Amplify Data Client |
+## Service Layer (`services/`)
+| Service | Responsibility |
+|---------|---------------|
+| `taxEngine.ts` | PIT/CIT/VAT calculations - static `TaxEngine` class |
+| `amplifyService.ts` | DynamoDB CRUD - wrap all client calls here |
+| `authService.ts` | Cognito wrappers (`authSignUp`, `authSignIn`, etc.) |
+| `geminiService.ts` | Gemini 2.5 Flash AI chat, uses `TAX_RESEARCH_DOCUMENT` from constants |
 
-### State Management
-- `App.tsx` holds global state (`profile`, `viewState`, `authView`) and prop-drills
-- Profile shape: `TaxProfile` interface in `types.ts`
-- Transactions nested: `profile.transactions[]`
-- Components are lazy-loaded: `React.lazy(() => import('./components/Dashboard'))`
+## State Management
+- **No Redux/Zustand** - `App.tsx` holds global state and prop-drills to components
+- Key state: `profile: TaxProfile`, `viewState`, `authView`
+- Transactions live in `profile.transactions[]`
+- Components lazy-loaded: `React.lazy(() => import('./components/Dashboard'))`
+
+## Tax Calculation Flow
+1. Tax bands/rates defined in `constants.ts` (`TAX_BANDS_2024`, `TAX_BANDS_2026`)
+2. `TaxEngine.calculate()` dispatches to `calculatePIT()` or `calculateCIT()` based on `entityType`
+3. Policy year (`'ACT_2024' | 'ACT_2026_PROPOSED'`) switches logic branches
+4. Returns `TaxResult` with `breakdown[]`, `insights[]`, `complianceFlags[]`
+
+### Adding New Tax Logic
+1. Add constants to `constants.ts` (e.g., `RENT_RELIEF_CAP = 500000`)
+2. Add field to `TaxProfile` interface in `types.ts`
+3. Add field to Amplify schema in `amplify/data/resource.ts`
+4. Implement in `TaxEngine.calculatePIT()` or `TaxEngine.calculateCIT()`
+5. Include in `TaxBreakdownItem[]` with `isRelief: true` for deductions
+
+## Database Patterns (Amplify Gen 2)
+- Schema: `amplify/data/resource.ts` → `TaxProfile` + `TransactionModel` (one-to-many)
+- **Owner-based auth**: users only access their own data (automatic Cognito sub linking)
+- **Fast load pattern**: `getProfileFast()` returns profile without transactions, then lazy-load via `getTransactionsByProfile(profileId)`
+- Never call `client.models.*` directly in components - always use `amplifyService.ts`
 
 ## Development Commands
 ```bash
-npm run dev          # Dev server at http://localhost:3000
-npm run build        # Production build
-npx tsc --noEmit     # Type check without build
-npx ampx sandbox     # Provision AWS backend (requires AWS credentials)
+npm run dev          # Dev server http://localhost:3000
+npm run build        # Production build (Vite)
+npx tsc --noEmit     # Type check only
+npx ampx sandbox     # Provision AWS backend (requires credentials)
 ```
 
-## Environment Setup
+## Environment Variables
 Create `.env.local`:
-```env
+```
 GEMINI_API_KEY=your_key
 ```
-> `vite.config.ts` maps `GEMINI_API_KEY` → `process.env.API_KEY`
-
-## Key Patterns
-
-### Adding Tax Logic
-1. Add constants to `constants.ts` (e.g., `RENT_RELIEF_CAP = 500000`)
-2. Implement in `TaxEngine.calculatePIT()` or `TaxEngine.calculateCIT()`
-3. Return via `TaxResult` interface with breakdown items
-
-### AI Features (geminiService.ts)
-- Model: `gemini-2.5-flash`
-- Structured output: use `@google/genai` Type schema
-- Always include tax disclaimer in responses
-- `TAX_RESEARCH_DOCUMENT` constant provides knowledge base
-
-### Database (Amplify Gen 2)
-- Schema: `amplify/data/resource.ts` defines `TaxProfile` and `TransactionModel`
-- Owner-based auth: users only access their own data
-- Use `amplifyService.ts` functions, never direct client calls in components
-- Fast load pattern: `getProfileFast()` (no transactions), then lazy-load transactions
-
-### Authentication Flow
-1. `authSignUp` → `confirm-email` view → `authConfirmSignUp` → auto sign-in
-2. Password reset: `authForgotPassword` → `authConfirmResetPassword`
-3. Auto-logout: 5min idle timeout + visibility change (tab/app background)
+Vite config maps `GEMINI_API_KEY` → `process.env.API_KEY` at build time.
 
 ## Code Conventions
-- **Currency**: `₦${amount.toLocaleString('en-NG')}`
-- **Types**: Import from `types.ts` (never inline interfaces)
-- **Icons**: `lucide-react` exclusively
-- **Styling**: Tailwind utilities only (no CSS files except `index.css`)
-- **Enums**: Use `EntityType`, `PersonaType`, `TaxPolicyYear` from `types.ts`
+- **Currency formatting**: `₦${amount.toLocaleString('en-NG')}`
+- **Types**: Always import from `types.ts` - no inline interfaces
+- **Icons**: `lucide-react` only (see existing imports for available icons)
+- **Styling**: Tailwind utilities exclusively (no CSS modules)
+- **Enums**: Use `EntityType`, `PersonaType`, `TaxPolicyYear`, `UserTier` from `types.ts`
 
-## File Reference
-| File | Contains |
-|------|----------|
-| `types.ts` | All interfaces (`TaxProfile`, `TaxResult`, `Transaction`) |
-| `constants.ts` | Tax bands, rates, Nigerian states, pricing, articles |
-| `amplify/data/resource.ts` | DynamoDB schema |
-| `App.tsx` | Auth flow, view routing, global state (~1300 lines) |
+## Key Files
+| File | Purpose |
+|------|---------|
+| `types.ts` | All TypeScript interfaces (`TaxProfile`, `TaxResult`, `Transaction`) |
+| `constants.ts` | Tax bands, rates, `NIGERIAN_STATES`, `ADMIN_EMAILS`, pricing |
+| `App.tsx` | Auth orchestration, view routing, global state (~1300 lines) |
+| `amplify/data/resource.ts` | DynamoDB schema definition |

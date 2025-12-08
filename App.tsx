@@ -496,6 +496,19 @@ const App: React.FC = () => {
     );
   }
 
+  // Feedback page - check before profile to allow authenticated users to access
+  if (viewState === 'feedback') {
+      return (
+        <Suspense fallback={
+            <div className="min-h-screen bg-white flex items-center justify-center">
+                <Loader className="animate-spin text-levy-blue" size={48} />
+            </div>
+        }>
+            <FeedbackPage onBack={() => setViewState(profile ? 'auth' : 'landing')} userProfile={profile} />
+        </Suspense>
+      );
+  }
+
   if (profile) {
     return (
         <Suspense fallback={
@@ -536,18 +549,6 @@ const App: React.FC = () => {
             </div>
         }>
             <HowItWorksPage onBack={() => setViewState('landing')} onGetStarted={handleEnterApp} />
-        </Suspense>
-      );
-  }
-
-  if (viewState === 'feedback') {
-      return (
-        <Suspense fallback={
-            <div className="min-h-screen bg-white flex items-center justify-center">
-                <Loader className="animate-spin text-levy-blue" size={48} />
-            </div>
-        }>
-            <FeedbackPage onBack={() => setViewState(profile ? 'auth' : 'landing')} userProfile={profile} />
         </Suspense>
       );
   }

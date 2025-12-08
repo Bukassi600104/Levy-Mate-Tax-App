@@ -612,26 +612,28 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ profile, onProfileUpdate, o
           {activeSection === 'account' && (
             <div className="space-y-6">
               {/* Feedback Section */}
-              {onViewFeedback && (
-                <div className="bg-blue-50 rounded-2xl p-6 border border-blue-100">
-                  <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center flex-shrink-0">
-                      <MessageSquare size={24} className="text-blue-600" />
-                    </div>
-                    <div className="flex-1">
-                      <h4 className="font-bold text-blue-900 mb-1">Send Feedback</h4>
-                      <p className="text-sm text-blue-700/70 mb-4">Help us improve LevyMate by sharing your thoughts, suggestions, or reporting issues.</p>
-                      <button
-                        type="button"
-                        onClick={(e) => { e.preventDefault(); e.stopPropagation(); onViewFeedback(); }}
-                        className="bg-blue-600 text-white px-5 py-2.5 rounded-xl text-sm font-bold flex items-center gap-2 hover:bg-blue-700 transition-all duration-300 cursor-pointer active:scale-95"
-                      >
-                        <MessageSquare size={18} /> Give Feedback
-                      </button>
-                    </div>
+              <div className="bg-blue-50 rounded-2xl p-6 border border-blue-100">
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <MessageSquare size={24} className="text-blue-600" />
+                  </div>
+                  <div className="flex-1">
+                    <h4 className="font-bold text-blue-900 mb-1">Send Feedback</h4>
+                    <p className="text-sm text-blue-700/70 mb-4">Help us improve LevyMate by sharing your thoughts, suggestions, or reporting issues.</p>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        if (onViewFeedback) {
+                          onViewFeedback();
+                        }
+                      }}
+                      className="bg-blue-600 text-white px-5 py-2.5 rounded-xl text-sm font-bold flex items-center gap-2 hover:bg-blue-700 transition-all duration-300 cursor-pointer active:scale-95"
+                    >
+                      <MessageSquare size={18} /> Give Feedback
+                    </button>
                   </div>
                 </div>
-              )}
+              </div>
 
               {/* Logout Section */}
               <div className="bg-gray-50 rounded-2xl p-6 border border-gray-100">
