@@ -77,7 +77,8 @@ const App: React.FC = () => {
   const [policyType, setPolicyType] = useState<'privacy' | 'usage'>('usage');
   const [checkoutModalOpen, setCheckoutModalOpen] = useState(false);
   const [lastActivityTime, setLastActivityTime] = useState<number>(Date.now());
-  const IDLE_TIMEOUT = 30 * 60 * 1000; // 30 minutes in milliseconds (increased from 5 min for better UX)
+  // DISABLED: Idle timeout removed per user request
+  // const IDLE_TIMEOUT = 30 * 60 * 1000; // 30 minutes in milliseconds
 
   const openPolicy = (type: 'privacy' | 'usage') => {
       setPolicyType(type);
@@ -123,61 +124,50 @@ const App: React.FC = () => {
     initializeAuth();
   }, []);
 
-  // Track user activity for idle timeout
-  useEffect(() => {
-    const updateActivity = () => {
-      setLastActivityTime(Date.now());
-    };
+  // DISABLED: Activity tracking for idle timeout removed per user request
+  // useEffect(() => {
+  //   const updateActivity = () => {
+  //     setLastActivityTime(Date.now());
+  //   };
+  //   const events = ['mousedown', 'mousemove', 'keydown', 'scroll', 'touchstart', 'click'];
+  //   events.forEach(event => {
+  //     document.addEventListener(event, updateActivity, { passive: true });
+  //   });
+  //   return () => {
+  //     events.forEach(event => {
+  //       document.removeEventListener(event, updateActivity);
+  //     });
+  //   };
+  // }, []);
 
-    // Listen for user activity
-    const events = ['mousedown', 'mousemove', 'keydown', 'scroll', 'touchstart', 'click'];
-    events.forEach(event => {
-      document.addEventListener(event, updateActivity, { passive: true });
-    });
+  // DISABLED: Idle timeout check removed per user request
+  // useEffect(() => {
+  //   if (!profile) return;
+  //   const checkIdleTimeout = () => {
+  //     const timeSinceActivity = Date.now() - lastActivityTime;
+  //     if (timeSinceActivity >= IDLE_TIMEOUT) {
+  //       console.log('User idle, logging out...');
+  //       handleLogout();
+  //     }
+  //   };
+  //   const intervalId = setInterval(checkIdleTimeout, 30000);
+  //   return () => clearInterval(intervalId);
+  // }, [profile, lastActivityTime]);
 
-    return () => {
-      events.forEach(event => {
-        document.removeEventListener(event, updateActivity);
-      });
-    };
-  }, []);
-
-  // Check for idle timeout every 30 seconds
-  useEffect(() => {
-    if (!profile) return; // Only track when logged in
-
-    const checkIdleTimeout = () => {
-      const timeSinceActivity = Date.now() - lastActivityTime;
-      if (timeSinceActivity >= IDLE_TIMEOUT) {
-        console.log('User idle for 5 minutes, logging out...');
-        handleLogout();
-      }
-    };
-
-    const intervalId = setInterval(checkIdleTimeout, 30000); // Check every 30 seconds
-
-    return () => clearInterval(intervalId);
-  }, [profile, lastActivityTime]);
-
-  // Auto-logout when app goes to background (mobile) or tab is closed
-  useEffect(() => {
-    if (!profile) return; // Only handle when logged in
-
-    const handleVisibilityChange = () => {
-      if (document.visibilityState === 'hidden') {
-        // App went to background - log out for security
-        console.log('App went to background, logging out...');
-        handleLogout();
-      }
-    };
-
-    // For mobile PWA - visibility change when app is minimized/closed
-    document.addEventListener('visibilitychange', handleVisibilityChange);
-
-    return () => {
-      document.removeEventListener('visibilitychange', handleVisibilityChange);
-    };
-  }, [profile]);
+  // DISABLED: Auto-logout on background removed per user request
+  // useEffect(() => {
+  //   if (!profile) return;
+  //   const handleVisibilityChange = () => {
+  //     if (document.visibilityState === 'hidden') {
+  //       console.log('App went to background, logging out...');
+  //       handleLogout();
+  //     }
+  //   };
+  //   document.addEventListener('visibilitychange', handleVisibilityChange);
+  //   return () => {
+  //     document.removeEventListener('visibilitychange', handleVisibilityChange);
+  //   };
+  // }, [profile]);
 
   // Check auth state when landing page is shown (for navigation back scenarios)
   useEffect(() => {

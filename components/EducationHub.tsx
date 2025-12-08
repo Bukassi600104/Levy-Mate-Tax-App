@@ -180,11 +180,16 @@ const EducationHub: React.FC<EducationHubProps> = ({ profile, onUsageUpdate, onN
                     </div>
                 </div>
                 <div className="flex items-center gap-2">
-                    {profile.tier === 'Free' && (
+                    {!isPro && (
                         <span className={`text-xs font-medium px-2 py-1 rounded flex items-center gap-1 ${
                             isLimitReached ? 'bg-red-100 text-red-600' : 'bg-blue-50 text-blue-600'
                         }`}>
-                             {profile.tier} Plan
+                             Free Plan
+                        </span>
+                    )}
+                    {isPro && (
+                        <span className="text-xs font-medium px-2 py-1 rounded flex items-center gap-1 bg-amber-100 text-amber-700">
+                             Pro Plan
                         </span>
                     )}
                 </div>

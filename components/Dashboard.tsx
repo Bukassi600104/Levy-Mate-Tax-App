@@ -457,8 +457,9 @@ const Dashboard: React.FC<DashboardProps> = ({ profile, onLogout, onProfileUpdat
 
   const NavItem = ({ tab, icon: Icon, label, id }: { tab: TabType, icon: any, label: string, id?: string }) => (
     <button 
+        type="button"
         id={id}
-        onClick={() => { setActiveTab(tab); }}
+        onClick={() => setActiveTab(tab)}
         className={`flex flex-col lg:flex-row items-center lg:gap-3 p-2 lg:px-4 lg:py-3 rounded-lg transition-all w-full text-left ${
             activeTab === tab 
             ? 'text-white bg-white/10 font-bold border-r-4 border-levy-mate' 
@@ -708,7 +709,7 @@ const Dashboard: React.FC<DashboardProps> = ({ profile, onLogout, onProfileUpdat
       />}
 
       {/* Desktop Sidebar */}
-      <aside className="hidden lg:flex w-64 bg-[#0f172a] flex-col fixed h-full z-10 border-r border-white/5 shadow-2xl">
+      <aside className="hidden lg:flex w-64 bg-[#0f172a] flex-col fixed h-full z-40 border-r border-white/5 shadow-2xl">
         <div className="h-24 flex items-center px-6 border-b border-white/10">
             <Logo variant="white" />
         </div>
