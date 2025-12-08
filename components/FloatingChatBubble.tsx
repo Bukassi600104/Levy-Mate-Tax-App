@@ -9,6 +9,7 @@ interface ChatMessage {
   showSignUpPrompt?: boolean;
   showSignInPrompt?: boolean;
   showProPlanCard?: boolean;
+  showFreePlanCard?: boolean;
 }
 
 interface FloatingChatBubbleProps {
@@ -126,13 +127,24 @@ const FloatingChatBubble: React.FC<FloatingChatBubbleProps> = ({ onSignUp, onLog
     }
 
     try {
-      // Call AI service without profile (guest mode)
-      let response = await getTaxAdvice(null, userMessage);
+      // Build conversation history for context (exclude the welcome message and special prompts)
+      const historyForAI = chatHistory
+        .filter(msg => !msg.showSignUpPrompt && !msg.showSignInPrompt && !msg.showProPlanCard && !msg.showFreePlanCard)
+        .map(msg => ({ role: msg.role, text: msg.text }));
+      
+      // Call AI service with conversation history
+      let response = await getTaxAdvice(null, userMessage, historyForAI);
       
       // Check if response contains Pro plan card trigger
       const showProCard = response.includes('[SHOW_PRO_CARD]');
       if (showProCard) {
         response = response.replace('[SHOW_PRO_CARD]', '').trim();
+      }
+      
+      // Check if response contains Free plan card trigger
+      const showFreeCard = response.includes('[SHOW_FREE_CARD]');
+      if (showFreeCard) {
+        response = response.replace('[SHOW_FREE_CARD]', '').trim();
       }
       
       // Increment query count
@@ -141,7 +153,7 @@ const FloatingChatBubble: React.FC<FloatingChatBubbleProps> = ({ onSignUp, onLog
 
       // After 5 questions, ask about account (only once)
       if (newCount >= GUEST_QUERY_LIMIT && !hasAskedAboutAccount) {
-        setChatHistory(prev => [...prev, { role: 'assistant', text: response, showProPlanCard: showProCard }]);
+        setChatHistory(prev => [...prev, { role: 'assistant', text: response, showProPlanCard: showProCard, showFreePlanCard: showFreeCard }]);
         
         // Add a follow-up message asking about account
         setTimeout(() => {
@@ -153,7 +165,7 @@ const FloatingChatBubble: React.FC<FloatingChatBubbleProps> = ({ onSignUp, onLog
           setWaitingForAccountResponse(true);
         }, 1000);
       } else {
-        setChatHistory(prev => [...prev, { role: 'assistant', text: response, showProPlanCard: showProCard }]);
+        setChatHistory(prev => [...prev, { role: 'assistant', text: response, showProPlanCard: showProCard, showFreePlanCard: showFreeCard }]);
       }
     } catch (error) {
       setChatHistory(prev => [...prev, { 
@@ -210,6 +222,36 @@ const FloatingChatBubble: React.FC<FloatingChatBubbleProps> = ({ onSignUp, onLog
             >
               <UserPlus size={16} />
               Get Pro Now
+            </button>
+          </div>
+        )}
+        
+        {/* Free Plan Card */}
+        {msg.showFreePlanCard && (
+          <div className="mt-3 bg-gradient-to-br from-gray-50 to-slate-50 border border-gray-200 rounded-xl p-4 shadow-sm">
+            <div className="flex items-center gap-2 mb-3">
+              <div className="w-8 h-8 bg-gradient-to-br from-gray-600 to-gray-800 rounded-lg flex items-center justify-center">
+                <Sparkles size={16} className="text-white" />
+              </div>
+              <div>
+                <h4 className="font-bold text-gray-900 text-sm">LevyMate Free</h4>
+                <p className="text-xs text-gray-500">₦0 forever</p>
+              </div>
+            </div>
+            <ul className="space-y-1.5 mb-3">
+              {PLAN_FEATURES.Free.slice(0, 5).map((feature, i) => (
+                <li key={i} className="flex items-start gap-2 text-xs text-gray-600">
+                  <Check size={14} className="text-green-500 mt-0.5 flex-shrink-0" />
+                  <span>{feature}</span>
+                </li>
+              ))}
+            </ul>
+            <button
+              onClick={onSignUp}
+              className="w-full bg-gray-800 hover:bg-gray-900 text-white py-2.5 px-4 rounded-lg text-sm font-semibold flex items-center justify-center gap-2 transition-all shadow-sm"
+            >
+              <UserPlus size={16} />
+              Sign Up Free
             </button>
           </div>
         )}

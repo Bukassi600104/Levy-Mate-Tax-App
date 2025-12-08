@@ -10,7 +10,16 @@ const ai = apiKey ? new GoogleGenAI({ apiKey }) : null;
 
 const MODEL_NAME = "gemini-2.5-flash";
 
-export const getTaxAdvice = async (profile: TaxProfile | null, question: string): Promise<string> => {
+interface ConversationMessage {
+  role: 'user' | 'assistant';
+  text: string;
+}
+
+export const getTaxAdvice = async (
+  profile: TaxProfile | null, 
+  question: string,
+  conversationHistory: ConversationMessage[] = []
+): Promise<string> => {
   if (!ai) return "AI Service Unavailable: API Key not configured.";
   
   try {
@@ -113,12 +122,22 @@ export const getTaxAdvice = async (profile: TaxProfile | null, question: string)
       7. Emphasize the difference between "Tax Optimization" (legal) and "Tax Evasion" (illegal) when relevant.
       8. If something is an ILLEGAL/NUISANCE TAX, tell them clearly and advise how to report it.
       9. When asked about LevyMate Pro plan or pricing, explain the features naturally and end your response with exactly: [SHOW_PRO_CARD]
-      10. For LevyMate app questions, explain the feature clearly and guide them on how to use it.
+      10. When asked about the Free plan, how to sign up, or creating a free account, explain the free features and end with exactly: [SHOW_FREE_CARD]
+      11. For LevyMate app questions, explain the feature clearly and guide them on how to use it.
     `;
+
+    // Build conversation contents with history for context
+    const contents = [
+      ...conversationHistory.map(msg => ({
+        role: msg.role === 'user' ? 'user' : 'model',
+        parts: [{ text: msg.text }]
+      })),
+      { role: 'user', parts: [{ text: question }] }
+    ];
 
     const response = await ai.models.generateContent({
       model: MODEL_NAME,
-      contents: question,
+      contents: contents,
       config: {
         systemInstruction: systemInstruction,
         thinkingConfig: { thinkingBudget: 0 }
