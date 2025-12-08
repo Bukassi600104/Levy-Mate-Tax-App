@@ -149,56 +149,126 @@ export const LEARNING_ARTICLES = [
     title: "NTA 2025: The New Tax Bands Explained",
     category: "Basics",
     duration: "4 min",
-    content: `The Nigeria Tax Act 2025 introduces a new 6-band progressive tax system effective January 1, 2026:\n\n**Band 1: ₦0 - ₦800,000 @ 0%**\nThe first ₦800,000 is completely TAX-FREE. This protects minimum wage earners (₦70,000/month × 12 = ₦840,000).\n\n**Band 2: ₦800,001 - ₦3,000,000 @ 15%**\nThe next ₦2.2 million is taxed at 15%.\n\n**Band 3: ₦3,000,001 - ₦12,000,000 @ 18%**\nThe next ₦9 million is taxed at 18%.\n\n**Band 4: ₦12,000,001 - ₦25,000,000 @ 21%**\nThe next ₦13 million is taxed at 21%.\n\n**Band 5: ₦25,000,001 - ₦50,000,000 @ 23%**\nThe next ₦25 million is taxed at 23%.\n\n**Band 6: Above ₦50,000,000 @ 25%**\nEverything above ₦50 million is taxed at 25% (new top rate).\n\nThis replaces the old 7%-24% bands from Finance Act 2020.`
+    content: `The Nigeria Tax Act 2025 introduces a new 6-band progressive tax system that takes effect on January 1, 2026. Here's how it works:
+
+The first ₦800,000 you earn is completely tax-free. This is great news for minimum wage earners, since someone earning ₦70,000 per month (about ₦840,000 annually) will pay virtually nothing.
+
+For income between ₦800,001 and ₦3,000,000, you'll pay 15% on that portion. So if you earn ₦3 million, only ₦2.2 million of it gets taxed at this rate.
+
+The next bracket covers ₦3,000,001 to ₦12,000,000 at 18%. Then ₦12,000,001 to ₦25,000,000 is taxed at 21%.
+
+Higher earners in the ₦25,000,001 to ₦50,000,000 range pay 23% on that portion. And finally, anything above ₦50 million is taxed at the new top rate of 25%.
+
+This system replaces the old 7% to 24% bands from the Finance Act 2020, and for most Nigerians, it means a lower tax burden.`
   },
   {
     id: 1,
     title: "Understanding Rent Relief (NTA 2025)",
     category: "Exemptions",
     duration: "3 min",
-    content: `The Nigeria Tax Act 2025 introduces a significant relief for tenants. \n\nIf you pay rent for your principal place of residence, you can now claim a tax deduction. The rule is specific: You can deduct **20% of your annual rent paid**, but this deduction is capped at a maximum of **₦500,000 per year**.\n\n**Example 1:** Annual rent = ₦2,000,000\n20% = ₦400,000 (below cap) → You claim the full ₦400,000\n\n**Example 2:** Annual rent = ₦5,000,000\n20% = ₦1,000,000 (above cap) → You can only claim ₦500,000\n\n**Important:** Documentation is ESSENTIAL. Keep your rent receipts and tenancy agreements. LevyMate's receipt scanning feature can help you store this evidence.\n\nThis relief replaces parts of the old Consolidated Relief Allowance (CRA), which was abolished under NTA 2025.`
+    content: `If you're a tenant in Nigeria, the new tax law has some good news for you. The Nigeria Tax Act 2025 lets you claim a tax deduction for the rent you pay on your home.
+
+Here's how it works: you can deduct 20% of your annual rent, but there's a cap of ₦500,000 per year.
+
+Let's say you pay ₦2,000,000 in rent annually. Twenty percent of that is ₦400,000, which is below the cap, so you get to claim the full amount. But if your rent is ₦5,000,000 per year, twenty percent would be ₦1,000,000. Since that exceeds the cap, you can only claim ₦500,000.
+
+One thing to keep in mind: you'll need to keep your receipts and tenancy agreements as proof. LevyMate's receipt scanning feature can help you store this evidence digitally.
+
+This rent relief is part of the new itemized deduction system that replaces the old Consolidated Relief Allowance, which has been abolished under the 2025 Act.`
   },
   {
     id: 2,
     title: "NHF: Now Voluntary for Private Sector",
     category: "Exemptions",
     duration: "2 min",
-    content: `Under the Nigeria Tax Act 2025, the National Housing Fund (NHF) contribution has undergone a significant change:\n\n**Public Sector:** NHF remains MANDATORY at 2.5% of gross income.\n\n**Private Sector:** NHF is now VOLUNTARY. You can opt-in or opt-out.\n\n**If you opt-in:**\n- You contribute 2.5% of your gross income\n- This amount is tax-deductible\n- You can apply for NHF housing loans\n\n**If you opt-out:**\n- No contribution required\n- You cannot access NHF loan facilities\n- Your taxable income will be slightly higher\n\n**Pro Tip:** If you earn ₦10,000,000 annually, NHF opt-in would be ₦250,000/year. Weigh the tax benefit against the locked-in nature of NHF contributions.`
+    content: `The National Housing Fund contribution has changed significantly under the Nigeria Tax Act 2025, especially for private sector workers.
+
+If you work in the public sector, nothing changes. NHF remains mandatory at 2.5% of your gross income.
+
+But if you work in the private sector, NHF is now completely voluntary. You get to decide whether to participate or not.
+
+Choosing to opt in means you contribute 2.5% of your gross income, which becomes tax-deductible. You also gain access to NHF housing loans. On the other hand, if you opt out, you keep that money but won't qualify for NHF loan facilities, and your taxable income will be slightly higher.
+
+Here's something to consider: if you earn ₦10,000,000 annually, opting into NHF would cost you ₦250,000 per year. Think about whether the tax savings and loan access are worth having that money locked away.`
   },
   {
     id: 3,
     title: "What is Consolidated Relief? (Old System)",
     category: "Basics",
     duration: "3 min",
-    content: `Under the old Finance Act 2020 (and PITA 2011), the Consolidated Relief Allowance (CRA) was the primary way individuals reduced their taxable income. It was calculated as ₦200,000 (or 1% of Gross Income, whichever is higher) PLUS 20% of Gross Income.\n\nWhile generous, it was a blanket relief. The new 2025 Act moves towards itemized deductions. This means instead of a general "lump sum" relief, you now get specific reliefs for things you actually spend money on, like Rent, Health Insurance, and Pension contributions.\n\nWhy the change? The government wants to encourage specific economic behaviors (like paying for health insurance) and make the tax system fairer for those with actual high living costs.\n\n**Note:** CRA is ABOLISHED under NTA 2025. Use our calculator to compare your tax under both systems.`
+    content: `Before we dive into the new system, it helps to understand what we're moving away from.
+
+Under the old Finance Act 2020 and PITA 2011, everyone got something called the Consolidated Relief Allowance, or CRA. It was calculated as ₦200,000 (or 1% of your gross income, whichever was higher) plus 20% of your gross income.
+
+While this was a generous blanket relief, it treated everyone the same regardless of their actual expenses. The 2025 Act changes this approach entirely by moving to itemized deductions.
+
+What does this mean for you? Instead of getting one lump sum relief, you now claim specific deductions for things you actually spend money on, like rent, health insurance, and pension contributions.
+
+Why did the government make this change? They want to encourage specific behaviors (like getting health insurance) and make the system fairer for people who genuinely have high living costs.
+
+The bottom line: CRA is gone under the new law. Use our calculator to see how your tax compares under both systems.`
   },
   {
     id: 4,
     title: "Business Expense vs. Personal (WREN Test)",
     category: "Business",
     duration: "4 min",
-    content: `For business owners and freelancers, the golden rule of tax deduction is the WREN test. \n\nAn expense is only deductible if it is:\n- **W**holly\n- **R**easonably\n- **E**xclusively\n- **N**ecessarily\n...incurred for the production of income.\n\nExamples:\n\n✅ **Deductible:**\n- Office Rent\n- Staff Salaries\n- Internet data used for work\n- Professional fees (Legal/Audit)\n\n❌ **Non-Deductible:**\n- Your personal lunch\n- Rent for your home (unless you claim the specific Rent Relief as an individual)\n- Clothes for work (unless it's a uniform)\n- School fees for your children\n\nMixing personal and business expenses is the #1 reason for tax audits. Keep them separate!`
+    content: `If you run a business or freelance, knowing what you can deduct from your taxes is crucial. There's a simple test called WREN that helps you figure this out.
+
+An expense is only deductible if it was Wholly, Reasonably, Exclusively, and Necessarily incurred to generate your income.
+
+So what passes the test? Things like office rent, staff salaries, internet data used for work, and professional fees for lawyers or accountants are all deductible.
+
+What doesn't qualify? Your personal lunch, rent for your home (though you might claim Rent Relief as an individual), regular work clothes (unless it's a specific uniform), and your children's school fees.
+
+Here's why this matters: mixing personal and business expenses is the number one reason people get audited by tax authorities. Keep them separate, and you'll save yourself a lot of headaches.`
   },
   {
     id: 5,
     title: "Pension Act Compliance",
     category: "Salary",
     duration: "2 min",
-    content: `Pension contributions are one of the most effective tax shelters in Nigeria. \n\nUnder the Pension Reform Act, you contribute a minimum of 8% of your emoluments, and your employer contributes 10%. The amount you contribute is **Tax Exempt**. \n\nThis means if you earn ₦200,000 and contribute ₦16,000 to pension, you are only taxed on ₦184,000. \n\nAdditionally, Voluntary Contributions (VC) allow you to save more tax-free, subject to withdrawal rules. Ensuring your employer remits these funds to your PFA (Pension Fund Administrator) is crucial for both your future and your current tax compliance.`
+    content: `Pension contributions are one of the smartest ways to reduce your tax bill in Nigeria.
+
+Under the Pension Reform Act, you contribute at least 8% of your earnings, while your employer adds 10%. The key benefit? Your contribution is completely tax-exempt.
+
+Here's a practical example: if you earn ₦200,000 and contribute ₦16,000 to your pension, you're only taxed on ₦184,000. That's immediate tax savings in your pocket.
+
+You can also make Voluntary Contributions to save even more on taxes, though there are rules about when you can withdraw this money.
+
+One important thing: make sure your employer is actually sending your pension contributions to your PFA (Pension Fund Administrator). This isn't just about your retirement savings; it's also a legal compliance requirement.`
   },
   {
     id: 6,
     title: "Capital Gains Tax (NTA 2025)",
     category: "Business",
     duration: "3 min",
-    content: `Under the Nigeria Tax Act 2025, Capital Gains Tax (CGT) has been harmonized with Personal Income Tax (PIT) bands.\n\n**Old System:** Flat 10% on all capital gains.\n\n**NTA 2025:** Capital gains are now added to your regular income and taxed at your marginal rate (0% to 25%).\n\n**What this means:**\n- If your total income + gains < ₦800k: 0% CGT\n- If your marginal rate is 15%: Your gains are taxed at 15%\n- If you're in the top bracket: Your gains are taxed at 25%\n\n**Example:** You earn ₦60,000,000 salary + ₦10,000,000 from selling property.\nYour marginal rate is 25%, so your CGT is ₦2,500,000 (instead of ₦1,000,000 under old system).\n\nThis harmonization affects high earners most. Plan your asset sales accordingly!`
+    content: `The Nigeria Tax Act 2025 has changed how Capital Gains Tax works, and it's something property owners and investors need to understand.
+
+Under the old system, everyone paid a flat 10% on capital gains, regardless of their income level.
+
+The new approach is different: your capital gains are now added to your regular income and taxed at whatever rate applies to your income bracket. This ranges from 0% to 25%.
+
+What does this mean in practice? If your total income including gains is under ₦800,000, you pay no CGT. If you're in the 15% bracket, your gains are taxed at 15%. But if you're a high earner in the top bracket, your gains face the full 25% rate.
+
+Consider this example: you earn ₦60,000,000 in salary and make another ₦10,000,000 selling property. Your marginal rate is 25%, so you'd owe ₦2,500,000 in CGT. Under the old flat rate, it would have been just ₦1,000,000.
+
+This change mainly affects high earners. If that's you, consider timing your asset sales carefully.`
   },
   {
     id: 7,
     title: "Small Company CIT Exemption (NTA 2025)",
     category: "Business",
     duration: "2 min",
-    content: `The Nigeria Tax Act 2025 significantly simplifies Company Income Tax with a binary system:\n\n**Small Company (Turnover ≤ ₦100 million):**\n- CIT Rate: 0%\n- Development Levy: 0%\n- No Minimum Tax\n\n**Large Company (Turnover > ₦100 million):**\n- CIT Rate: 30%\n- Development Levy: 4% (replaces TET, NITDA, NASENI, Police Trust Fund)\n\n**Key Changes:**\n1. Threshold raised from ₦25m to ₦100m (inflation adjustment)\n2. Medium company category (20%) abolished\n3. Minimum Tax abolished completely\n4. Development Levy consolidates multiple levies into one\n\n**Note:** Even exempt companies MUST file nil returns to maintain status.`
+    content: `The Nigeria Tax Act 2025 has simplified Company Income Tax dramatically, and small businesses are the big winners.
+
+The new system is straightforward. If your company's annual turnover is ₦100 million or less, you're classified as a Small Company. Your CIT rate is 0%, you pay no Development Levy, and there's no Minimum Tax.
+
+For larger companies with turnover above ₦100 million, the CIT rate is 30%, plus a 4% Development Levy. This levy replaces several old ones including TET, NITDA, NASENI, and the Police Trust Fund.
+
+What changed from before? The exemption threshold jumped from ₦25 million to ₦100 million, which is a huge relief given inflation. The old "medium company" category at 20% is gone, and so is the Minimum Tax that used to catch everyone.
+
+One crucial point: even if you qualify for the 0% rate, you still need to file your returns. Submit nil returns to stay compliant and maintain your Tax Clearance Certificate.`
   }
 ];
 
