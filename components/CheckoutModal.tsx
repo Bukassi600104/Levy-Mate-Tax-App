@@ -4,6 +4,7 @@ import { usePaystackPayment } from 'react-paystack';
 import CreditCard from './CreditCard';
 import Logo from './Logo';
 import { PRO_PRICE_MONTHLY, PRO_PRICE_YEARLY } from '../constants';
+import { useToastContext } from '../contexts/ToastContext';
 
 interface CheckoutModalProps {
   isOpen: boolean;
@@ -15,6 +16,7 @@ interface CheckoutModalProps {
 
 const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose, onSuccess, planName, email }) => {
   const [billingCycle, setBillingCycle] = useState<'Monthly' | 'Yearly'>('Monthly');
+  const { toast } = useToastContext();
   
   const planPrice = billingCycle === 'Monthly' ? PRO_PRICE_MONTHLY : PRO_PRICE_YEARLY;
   const yearlyDiscount = Math.round(((PRO_PRICE_MONTHLY * 12) - PRO_PRICE_YEARLY) / (PRO_PRICE_MONTHLY * 12) * 100);
@@ -28,22 +30,26 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose, onSucces
       }
   }, [isOpen]);
 
+  // Paystack public key from environment variable
+  const paystackPublicKey = import.meta.env.VITE_PAYSTACK_PUBLIC_KEY || '';
+
   const config = {
     reference: reference,
     email: email,
     amount: planPrice * 100, // Amount is in kobo
-    publicKey: 'pk_live_7dd455a1cdfca998d8708e1ed0c1ce8b32409680',
+    publicKey: paystackPublicKey,
     plan: billingCycle === 'Monthly' ? 'PLN_6yev8be7l6wtw4u' : 'PLN_co22o7xiaq48wmq',
   };
 
   const initializePayment = usePaystackPayment(config);
 
   const onSuccessPayment = () => {
+    toast.success('Payment Successful', 'Welcome to LevyMate Pro!');
     onSuccess(billingCycle);
   };
 
   const onClosePayment = () => {
-    // User closed the popup
+    toast.info('Payment Cancelled', 'You can upgrade anytime.');
     console.log('Payment closed');
   };
 
@@ -147,10 +153,11 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose, onSucces
                 </div>
             </div>
 
-            <button 
+            <button
               onClick={() => {
                   if (!email) {
                       console.error("Email is missing for payment");
+                      toast.error('Payment Error', 'Email is required for payment.');
                       return;
                   }
                   console.log("Initializing Paystack payment...", config);

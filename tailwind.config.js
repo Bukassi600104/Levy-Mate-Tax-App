@@ -16,7 +16,8 @@ export default {
       colors: {
         levy: {
           blue: '#1D4ED8',    // Primary Trust
-          mate: '#0EA5E9',    // Primary Fresh
+          mate: '#0EA5E9',    // Primary Fresh (teal)
+          teal: '#0EA5E9',    // Alias for levy-mate (backward compatibility)
           slate: '#334155',   // Secondary Text
           mint: '#A7F3D0',    // Soft Backgrounds
           green: '#10B981',   // Compliance/Success

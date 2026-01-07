@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import { TaxProfile, EntityType, PersonaType, TaxPolicyYear } from '../types';
 import { PERSONA_LABELS, PERSONA_DESCRIPTIONS, NIGERIAN_STATES, ADMIN_EMAILS } from '../constants';
 import { updateProfile } from '../services/amplifyService';
+import { useToastContext } from '../contexts/ToastContext';
 import { User, Building, Briefcase, MapPin, Phone, Save, Check, Crown, Shield, Wallet, Calendar, Settings, CreditCard, Sliders, AlertCircle, CheckCircle2, Loader2, LogOut, Trash2, MessageSquare } from 'lucide-react';
 import DeleteAccountModal from './DeleteAccountModal';
 
@@ -101,6 +102,7 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ profile, onProfileUpdate, o
   const [activeSection, setActiveSection] = useState<'profile' | 'financials' | 'preferences' | 'account'>('profile');
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
+  const { toast } = useToastContext();
 
   // Scroll to content on mobile when section changes
   const handleSectionChange = (section: 'profile' | 'financials' | 'preferences' | 'account') => {
@@ -134,10 +136,12 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ profile, onProfileUpdate, o
       // Update local state
       onProfileUpdate(editedProfile);
       setSaveSuccess(true);
+      toast.success('Profile Saved', 'Your changes have been saved successfully.');
       setTimeout(() => setSaveSuccess(false), 3000);
     } catch (error) {
       console.error('Error saving profile:', error);
       setSaveError('Failed to save changes. Please try again.');
+      toast.error('Save Failed', 'Failed to save changes. Please try again.');
       setTimeout(() => setSaveError(null), 5000);
     } finally {
       setIsSaving(false);

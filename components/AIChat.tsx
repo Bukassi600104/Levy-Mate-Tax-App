@@ -5,6 +5,7 @@ import { getTaxAdvice } from '../services/geminiService';
 import { DISCLAIMER_TEXT, AI_QUERY_LIMIT_FREE, ADMIN_EMAILS } from '../constants';
 import { Send, User, ShieldAlert, Lock, Sparkles, MessageCircle } from 'lucide-react';
 import { LogoIcon } from './Logo';
+import { useToastContext } from '../contexts/ToastContext';
 
 interface AIChatProps {
   profile: TaxProfile;
@@ -19,6 +20,7 @@ const AIChat: React.FC<AIChatProps> = ({ profile, onUsageUpdate }) => {
   const [loading, setLoading] = useState(false);
   const chatContainerRef = useRef<HTMLDivElement>(null);
   const isInitialMount = useRef(true);
+  const { toast } = useToastContext();
 
   const isAdmin = profile.email && ADMIN_EMAILS.includes(profile.email.toLowerCase());
   const isPro = profile.tier === 'Pro' || isAdmin;
@@ -52,10 +54,16 @@ const AIChat: React.FC<AIChatProps> = ({ profile, onUsageUpdate }) => {
     // Increment usage
     onUsageUpdate(1);
 
-    const responseText = await getTaxAdvice(profile, query);
-    
-    setHistory(prev => [...prev, { role: 'model', text: responseText }]);
-    setLoading(false);
+    try {
+      const responseText = await getTaxAdvice(profile, query);
+      setHistory(prev => [...prev, { role: 'model', text: responseText }]);
+    } catch (error) {
+      console.error('AI Chat Error:', error);
+      toast.error('AI Unavailable', 'Failed to get response. Please try again.');
+      setHistory(prev => [...prev, { role: 'model', text: "Sorry, I'm having trouble connecting right now. Please try again later." }]);
+    } finally {
+      setLoading(false);
+    }
   };
 
   // Quick question suggestions

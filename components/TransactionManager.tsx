@@ -1,11 +1,14 @@
 
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { TaxProfile, Transaction, TransactionType, EntityType } from '../types';
 import { INCOME_CATEGORIES, EXPENSE_CATEGORIES, ADMIN_EMAILS } from '../constants';
 import { Plus, Trash2, Camera, Filter, Search, X, Calendar, ArrowUpCircle, ArrowDownCircle, Zap, MoreHorizontal, Lock, Smartphone, Download } from 'lucide-react';
 import { parseReceiptImage } from '../services/geminiService';
 import { createTransaction, deleteTransaction as deleteTransactionDB, updateTransaction } from '../services/amplifyService';
 import { validateAndSecureFile } from '../services/security';
+import { useToastContext } from '../contexts/ToastContext';
+import ConfirmModal from './ConfirmModal';
+import { authIsAdmin } from '../services/authService';
 
 interface TransactionManagerProps {
   profile: TaxProfile;
@@ -17,9 +20,20 @@ const TransactionManager: React.FC<TransactionManagerProps> = ({ profile, setPro
   const [viewFilter, setViewFilter] = useState<'all' | 'income' | 'expense'>('all');
   const [searchTerm, setSearchTerm] = useState('');
   const [isScanning, setIsScanning] = useState(false);
+  const [deleteConfirmId, setDeleteConfirmId] = useState<string | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const isAdmin = profile.email && ADMIN_EMAILS.includes(profile.email.toLowerCase());
-  const isPro = profile.tier === 'Pro' || isAdmin;
+  const { toast } = useToastContext();
+
+  // Check admin status from Cognito groups (server-side auth)
+  useEffect(() => {
+    authIsAdmin().then(setIsAdmin);
+  }, []);
+
+  // Fallback: Also check client-side for transition period
+  const isAdminFallback = profile.email && ADMIN_EMAILS.includes(profile.email.toLowerCase());
+  const isPro = profile.tier === 'Pro' || isAdmin || isAdminFallback;
   
   // Form State
   const [form, setForm] = useState<Partial<Transaction>>({
@@ -54,7 +68,7 @@ const TransactionManager: React.FC<TransactionManagerProps> = ({ profile, setPro
             
             try {
                 const extractedData = await parseReceiptImage(base64Content);
-                
+
                 // 3. Populate Form
                 setForm(prev => ({
                     ...prev,
@@ -64,19 +78,20 @@ const TransactionManager: React.FC<TransactionManagerProps> = ({ profile, setPro
                     category: extractedData.category || prev.category,
                     type: 'expense' // Receipts are usually expenses
                 }));
-                
+
                 setIsAddModalOpen(true);
+                toast.success('Receipt Scanned', 'Data extracted successfully. Please verify and save.');
             } catch (err) {
                 console.error(err);
-                alert("Failed to extract data from receipt. Please try again.");
+                toast.error('Scan Failed', 'Failed to extract data from receipt. Please try again.');
             } finally {
                 setIsScanning(false);
             }
         };
         reader.readAsDataURL(secureFile);
-        
+
     } catch (error: any) {
-        alert(error.message);
+        toast.error('File Error', error.message || 'Invalid file format.');
         setIsScanning(false);
     }
     
@@ -85,9 +100,12 @@ const TransactionManager: React.FC<TransactionManagerProps> = ({ profile, setPro
   };
 
   const addTransaction = async () => {
-    if (!form.amount || !form.description) return;
+    if (!form.amount || !form.description) {
+      toast.warning('Missing Fields', 'Please enter both amount and description.');
+      return;
+    }
     if (!profile.id) {
-      console.error('Profile ID required to add transaction');
+      toast.error('Error', 'Profile not loaded. Please refresh and try again.');
       return;
     }
 
@@ -95,14 +113,14 @@ const TransactionManager: React.FC<TransactionManagerProps> = ({ profile, setPro
     if (!isPro) {
         const currentMonth = new Date().getMonth();
         const currentYear = new Date().getFullYear();
-        
+
         const monthlyTransactions = profile.transactions.filter(t => {
             const tDate = new Date(t.date);
             return tDate.getMonth() === currentMonth && tDate.getFullYear() === currentYear && t.type === form.type;
         });
 
         if (monthlyTransactions.length >= 50) {
-            alert(`You have reached your monthly limit of 50 ${form.type} entries. Upgrade to Pro for unlimited entries.`);
+            toast.warning('Monthly Limit Reached', `You've used all 50 ${form.type} entries this month. Upgrade to Pro for unlimited entries.`);
             return;
         }
     }
@@ -122,13 +140,13 @@ const TransactionManager: React.FC<TransactionManagerProps> = ({ profile, setPro
     try {
       // Save to database
       const createdTx = await createTransaction(profile.id, newTx);
-      
+
       // Update local state
       setProfile({
         ...profile,
         transactions: [...profile.transactions, { id: createdTx.id, ...newTx }]
       });
-      
+
       setIsAddModalOpen(false);
       setForm({
         type: 'income',
@@ -139,25 +157,39 @@ const TransactionManager: React.FC<TransactionManagerProps> = ({ profile, setPro
         isTaxDeductible: true,
         hasInputVat: false
       });
+
+      toast.success('Transaction Saved', `${newTx.type === 'income' ? 'Income' : 'Expense'} of ₦${newTx.amount.toLocaleString()} recorded.`);
     } catch (err) {
       console.error('Error creating transaction:', err);
-      alert('Failed to save transaction. Please try again.');
+      toast.error('Save Failed', 'Failed to save transaction. Please try again.');
     }
   };
 
-  const deleteTransaction = async (id: string) => {
+  const handleDeleteClick = (id: string) => {
+    setDeleteConfirmId(id);
+  };
+
+  const confirmDelete = async () => {
+    if (!deleteConfirmId) return;
+
+    setIsDeleting(true);
     try {
       // Delete from database
-      await deleteTransactionDB(id);
-      
+      await deleteTransactionDB(deleteConfirmId);
+
       // Update local state
       setProfile({
         ...profile,
-        transactions: profile.transactions.filter(t => t.id !== id)
+        transactions: profile.transactions.filter(t => t.id !== deleteConfirmId)
       });
+
+      toast.success('Deleted', 'Transaction has been removed.');
     } catch (err) {
       console.error('Error deleting transaction:', err);
-      alert('Failed to delete transaction. Please try again.');
+      toast.error('Delete Failed', 'Failed to delete transaction. Please try again.');
+    } finally {
+      setIsDeleting(false);
+      setDeleteConfirmId(null);
     }
   };
 
@@ -397,10 +429,11 @@ const TransactionManager: React.FC<TransactionManagerProps> = ({ profile, setPro
                                         {t.type === 'income' ? '+' : '-'} ₦{t.amount.toLocaleString()}
                                     </td>
                                     <td className="px-6 py-4 text-right">
-                                        <button 
-                                            onClick={() => deleteTransaction(t.id)}
+                                        <button
+                                            onClick={() => handleDeleteClick(t.id)}
                                             className="text-gray-300 hover:text-red-500 transition-all"
                                             title="Delete Transaction"
+                                            aria-label={`Delete transaction: ${t.description}`}
                                         >
                                             <Trash2 size={16} />
                                         </button>
@@ -502,6 +535,19 @@ const TransactionManager: React.FC<TransactionManagerProps> = ({ profile, setPro
                 </div>
             </div>
         )}
+
+        {/* Delete Confirmation Modal */}
+        <ConfirmModal
+          isOpen={!!deleteConfirmId}
+          title="Delete Transaction?"
+          message="This action cannot be undone. The transaction will be permanently removed."
+          confirmLabel="Delete"
+          cancelLabel="Cancel"
+          variant="danger"
+          isLoading={isDeleting}
+          onConfirm={confirmDelete}
+          onCancel={() => setDeleteConfirmId(null)}
+        />
     </div>
   );
 };

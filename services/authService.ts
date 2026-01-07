@@ -1,4 +1,4 @@
-import { signUp, signIn, signOut, getCurrentUser, confirmSignUp, fetchUserAttributes, resendSignUpCode, resetPassword, confirmResetPassword } from 'aws-amplify/auth';
+import { signUp, signIn, signOut, getCurrentUser, confirmSignUp, fetchUserAttributes, resendSignUpCode, resetPassword, confirmResetPassword, fetchAuthSession } from 'aws-amplify/auth';
 import { Amplify } from 'aws-amplify';
 
 /**
@@ -190,9 +190,50 @@ export const authDeleteUser = async (): Promise<void> => {
 export const authRequestDeleteCode = async (): Promise<string> => {
     // Simulate network delay
     await new Promise(resolve => setTimeout(resolve, 1500));
-    // In a real scenario, this code is sent to email. 
+    // In a real scenario, this code is sent to email.
     // For this demo, we'll return it or log it.
     const code = Math.floor(100000 + Math.random() * 900000).toString();
     console.log('Mock Delete Code:', code);
     return code;
+};
+
+/**
+ * Get user's Cognito groups from the current session
+ * Groups are used for authorization (admin, pro)
+ */
+export const authGetUserGroups = async (): Promise<string[]> => {
+  try {
+    const session = await fetchAuthSession();
+    const groups = session.tokens?.accessToken?.payload['cognito:groups'] as string[] || [];
+    return groups;
+  } catch (error) {
+    console.debug('Could not get user groups:', error);
+    return [];
+  }
+};
+
+/**
+ * Check if the current user is an admin
+ * Admin status is determined by Cognito user groups (server-side)
+ */
+export const authIsAdmin = async (): Promise<boolean> => {
+  try {
+    const groups = await authGetUserGroups();
+    return groups.includes('admin');
+  } catch {
+    return false;
+  }
+};
+
+/**
+ * Check if the current user has Pro access
+ * Pro access is determined by Cognito user groups (server-side)
+ */
+export const authIsPro = async (): Promise<boolean> => {
+  try {
+    const groups = await authGetUserGroups();
+    return groups.includes('admin') || groups.includes('pro');
+  } catch {
+    return false;
+  }
 };

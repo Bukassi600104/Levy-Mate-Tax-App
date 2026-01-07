@@ -6,7 +6,8 @@ frontend:
         - npm install --legacy-peer-deps
     build:
       commands:
-        - echo "GEMINI_API_KEY=$GEMINI_API_KEY" >> .env
+        # Paystack public key for checkout (public keys are safe to expose)
+        - echo "VITE_PAYSTACK_PUBLIC_KEY=$VITE_PAYSTACK_PUBLIC_KEY" >> .env
         - npm run build
   artifacts:
     baseDirectory: dist
@@ -27,11 +28,17 @@ frontend:
     - pattern: '**/*'
       headers:
         - key: X-Frame-Options
-          value: SAMEORIGIN
+          value: DENY
         - key: X-Content-Type-Options
           value: nosniff
         - key: X-XSS-Protection
           value: '1; mode=block'
+        - key: Referrer-Policy
+          value: strict-origin-when-cross-origin
+        - key: Permissions-Policy
+          value: camera=(), microphone=(), geolocation=()
+        - key: Content-Security-Policy
+          value: "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://js.paystack.co; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https: blob:; connect-src 'self' https://*.amazonaws.com https://*.appsync-api.*.amazonaws.com wss://*.appsync-realtime-api.*.amazonaws.com https://api.paystack.co https://*.lambda-url.*.on.aws; frame-src https://checkout.paystack.com;"
 customRules:
   # Serve static files directly (sitemap, robots, etc)
   - source: /sitemap.xml

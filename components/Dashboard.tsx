@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { TaxProfile, TaxResult, TaxPolicyYear, EntityType, TaxCalculationHistory } from '../types';
 import { Wallet, BookOpen, Home, Settings, Plus, Crown, BarChart, List, PieChart, TrendingUp, Calendar, AlertTriangle, FileText, MessageSquare, HelpCircle, History, X, Sparkles, ArrowRight, Calculator as CalculatorIcon, MessageCircle, GraduationCap } from 'lucide-react';
 import Calculator from './Calculator';
@@ -19,6 +19,7 @@ import PolicyModal from './PolicyModal';
 import UpgradeModal from './UpgradeModal';
 import CheckoutModal from './CheckoutModal';
 import DeleteAccountModal from './DeleteAccountModal';
+import { useToastContext } from '../contexts/ToastContext';
 
 interface DashboardProps {
   profile: TaxProfile;
@@ -213,6 +214,10 @@ const Dashboard: React.FC<DashboardProps> = ({ profile, onLogout, onProfileUpdat
   const historyKey = profile.id ? getHistoryStorageKey(profile.id) : 'levymate_calculation_history_temp';
   const tutorialKey = profile.id ? getTutorialKey(profile.id) : 'levymate_tutorial_temp';
 
+  // Toast notifications
+  const { toast } = useToastContext();
+  const syncErrorShownRef = useRef(false); // Prevent duplicate error toasts
+
   // Load transactions in background after dashboard mounts (for fast sign-in)
   useEffect(() => {
     const loadTransactions = async () => {
@@ -403,13 +408,22 @@ const Dashboard: React.FC<DashboardProps> = ({ profile, onLogout, onProfileUpdat
     // Only sync if profile has an ID (meaning it's already in database)
     if (!currentProfile.id) return;
 
+    // Reset error flag when profile changes
+    syncErrorShownRef.current = false;
+
     // Debounce database update by 2 seconds to avoid too many writes
     const timeoutId = setTimeout(async () => {
       try {
         await updateProfile(currentProfile.id!, currentProfile);
         onProfileUpdate?.(currentProfile); // Notify parent of update
+        syncErrorShownRef.current = false; // Reset on success
       } catch (err) {
         console.error('Error syncing profile to database:', err);
+        // Only show toast once per error series to avoid spam
+        if (!syncErrorShownRef.current) {
+          syncErrorShownRef.current = true;
+          toast.error('Sync Failed', 'Changes may not be saved. Please check your connection.');
+        }
       }
     }, 2000);
 

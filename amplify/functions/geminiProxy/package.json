@@ -1,0 +1,9 @@
+{
+  "name": "gemini-proxy",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "handler.ts",
+  "dependencies": {
+    "@google/genai": "^1.30.0"
+  }
+}
